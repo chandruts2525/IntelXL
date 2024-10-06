@@ -1,0 +1,674 @@
+[
+  {
+    "questionId": 24,
+    "question": "Benjamin Franklin __________ the lightning conductor.",
+    "status": true,
+    "subTopicId": 2,
+    "answerId": 14,
+    "annimationMasters": [],
+    "answer": {
+      "answerId": 14,
+      "answer": "invented",
+      "description": "There is a difference between 'invent' and 'discover'\r\nInvent means to create something and discover means to find a particular thing which was already there but unknown to human-kind. So, in this context 'invent' is the correct answer and the other options are not.",
+      "status": true,
+      "questionMasters": [
+        null
+      ]
+    },
+    "choiceMasters": [
+      {
+        "choiceId": 77,
+        "choice": "discovered",
+        "status": true,
+        "questionId": 24,
+        "question": null
+      },
+      {
+        "choiceId": 78,
+        "choice": "found",
+        "status": true,
+        "questionId": 24,
+        "question": null
+      },
+      {
+        "choiceId": 79,
+        "choice": "invented",
+        "status": true,
+        "questionId": 24,
+        "question": null
+      },
+      {
+        "choiceId": 80,
+        "choice": "resulted",
+        "status": true,
+        "questionId": 24,
+        "question": null
+      }
+    ],
+    "subTopic": null
+  },
+  {
+    "questionId": 14,
+    "question": "Question1",
+    "status": true,
+    "subTopicId": 2,
+    "answerId": 4,
+    "annimationMasters": [],
+    "answer": {
+      "answerId": 4,
+      "answer": "Q1-CH4",
+      "description": "Q1-ANSWER",
+      "status": true,
+      "questionMasters": [
+        null
+      ]
+    },
+    "choiceMasters": [
+      {
+        "choiceId": 37,
+        "choice": "Q1-CH1",
+        "status": true,
+        "questionId": 14,
+        "question": null
+      },
+      {
+        "choiceId": 38,
+        "choice": "Q1-CH2",
+        "status": true,
+        "questionId": 14,
+        "question": null
+      },
+      {
+        "choiceId": 39,
+        "choice": "Q1-CH3",
+        "status": true,
+        "questionId": 14,
+        "question": null
+      },
+      {
+        "choiceId": 40,
+        "choice": "Q1-CH4",
+        "status": true,
+        "questionId": 14,
+        "question": null
+      }
+    ],
+    "subTopic": null
+  },
+  {
+    "questionId": 22,
+    "question": "The ________ the problem ________ it is to find a solution.",
+    "status": true,
+    "subTopicId": 2,
+    "answerId": 12,
+    "annimationMasters": [],
+    "answer": {
+      "answerId": 12,
+      "answer": "more complicated / the harder",
+      "description": "MORE COMPLICATED is in the comparative degree, so the following adjective will also be in the comparative degree.\r\nAs the complication of the problem increases, it becomes difficult to find a solution. Thus both the adjectives will be in the comparative degree",
+      "status": true,
+      "questionMasters": [
+        null
+      ]
+    },
+    "choiceMasters": [
+      {
+        "choiceId": 69,
+        "choice": "more complicated/hardly",
+        "status": true,
+        "questionId": 22,
+        "question": null
+      },
+      {
+        "choiceId": 70,
+        "choice": "most complicated / the hardest",
+        "status": true,
+        "questionId": 22,
+        "question": null
+      },
+      {
+        "choiceId": 71,
+        "choice": "more complicated / the harder",
+        "status": true,
+        "questionId": 22,
+        "question": null
+      },
+      {
+        "choiceId": 72,
+        "choice": "more complicated / the hardest",
+        "status": true,
+        "questionId": 22,
+        "question": null
+      }
+    ],
+    "subTopic": null
+  },
+  {
+    "questionId": 16,
+    "question": "You want to express your positive opinion about increase in the number of cycle tracks. How will you express it?",
+    "status": true,
+    "subTopicId": 2,
+    "answerId": 6,
+    "annimationMasters": [],
+    "answer": {
+      "answerId": 6,
+      "answer": "In my view, there should be more cycle tracks because a majority of people use cycles.",
+      "description": "While expressing opinion, we have to start by saying, 'IN MY VIEW...\".\r\nThe question demands a positive opinion in increase in number of cycle tracks. Thus we have to say that there should be more cycle tracks.\r\nThus Option A is the correct answer.",
+      "status": true,
+      "questionMasters": [
+        null
+      ]
+    },
+    "choiceMasters": [
+      {
+        "choiceId": 45,
+        "choice": "In my view, there should be more cycle tracks because a majority of people use cycles.",
+        "status": true,
+        "questionId": 16,
+        "question": null
+      },
+      {
+        "choiceId": 46,
+        "choice": "Cycles are the cheapest vehicles. So, most people can afford them.",
+        "status": true,
+        "questionId": 16,
+        "question": null
+      },
+      {
+        "choiceId": 47,
+        "choice": "The number of cycles is increasing, so the number of tracks should also\r\nincrease.",
+        "status": true,
+        "questionId": 16,
+        "question": null
+      },
+      {
+        "choiceId": 48,
+        "choice": "Cycles are the non-polluting vehicles.",
+        "status": true,
+        "questionId": 16,
+        "question": null
+      }
+    ],
+    "subTopic": null
+  },
+  {
+    "questionId": 19,
+    "question": "___you like some tea? No, thanks.",
+    "status": true,
+    "subTopicId": 2,
+    "answerId": 9,
+    "annimationMasters": [],
+    "answer": {
+      "answerId": 9,
+      "answer": "Would",
+      "description": "WOULD is used to express a polite request.\r\nIn the given sentence, the speaker is making a polite request to the person for tea.\r\nHence WOULD is the correct answer.",
+      "status": true,
+      "questionMasters": [
+        null
+      ]
+    },
+    "choiceMasters": [
+      {
+        "choiceId": 57,
+        "choice": "Does",
+        "status": true,
+        "questionId": 19,
+        "question": null
+      },
+      {
+        "choiceId": 58,
+        "choice": "Do",
+        "status": true,
+        "questionId": 19,
+        "question": null
+      },
+      {
+        "choiceId": 59,
+        "choice": "Would",
+        "status": true,
+        "questionId": 19,
+        "question": null
+      },
+      {
+        "choiceId": 60,
+        "choice": "Are",
+        "status": true,
+        "questionId": 19,
+        "question": null
+      }
+    ],
+    "subTopic": null
+  },
+  {
+    "questionId": 18,
+    "question": "Thank you so much for helping.",
+    "status": true,
+    "subTopicId": 2,
+    "answerId": 8,
+    "annimationMasters": [],
+    "answer": {
+      "answerId": 8,
+      "answer": "Not at all. Don't mention it",
+      "description": "When someone thanks us for our help, it is good manners and courtesy to say 'NOT AT ALL. DON'T MENTION IT'. This means that we are helping out of goodwill and are not proud of having helped the other person.\r\nThus Option C is the correct answer.",
+      "status": true,
+      "questionMasters": [
+        null
+      ]
+    },
+    "choiceMasters": [
+      {
+        "choiceId": 53,
+        "choice": "Nothing much",
+        "status": true,
+        "questionId": 18,
+        "question": null
+      },
+      {
+        "choiceId": 54,
+        "choice": "Cheers",
+        "status": true,
+        "questionId": 18,
+        "question": null
+      },
+      {
+        "choiceId": 55,
+        "choice": "Not at all. Don't mention it",
+        "status": true,
+        "questionId": 18,
+        "question": null
+      },
+      {
+        "choiceId": 56,
+        "choice": "Sleep well",
+        "status": true,
+        "questionId": 18,
+        "question": null
+      }
+    ],
+    "subTopic": null
+  },
+  {
+    "questionId": 21,
+    "question": "He ________ empty the contents of his suitcases onto the counter.",
+    "status": true,
+    "subTopicId": 2,
+    "answerId": 11,
+    "annimationMasters": [],
+    "answer": {
+      "answerId": 11,
+      "answer": "was made to",
+      "description": "WAS MADE TO is the grammatically correct answer because the sentence is in the past tense and the infinitive form of the verb empty is to be used.",
+      "status": true,
+      "questionMasters": [
+        null
+      ]
+    },
+    "choiceMasters": [
+      {
+        "choiceId": 65,
+        "choice": "was made",
+        "status": true,
+        "questionId": 21,
+        "question": null
+      },
+      {
+        "choiceId": 66,
+        "choice": "was made to",
+        "status": true,
+        "questionId": 21,
+        "question": null
+      },
+      {
+        "choiceId": 67,
+        "choice": "had made",
+        "status": true,
+        "questionId": 21,
+        "question": null
+      },
+      {
+        "choiceId": 68,
+        "choice": "will be made",
+        "status": true,
+        "questionId": 21,
+        "question": null
+      }
+    ],
+    "subTopic": null
+  },
+  {
+    "questionId": 13,
+    "question": "ad",
+    "status": true,
+    "subTopicId": 2,
+    "answerId": 2,
+    "annimationMasters": [],
+    "answer": {
+      "answerId": 2,
+      "answer": "ad",
+      "description": "ad",
+      "status": true,
+      "questionMasters": [
+        null
+      ]
+    },
+    "choiceMasters": [
+      {
+        "choiceId": 33,
+        "choice": "ad",
+        "status": true,
+        "questionId": 13,
+        "question": null
+      },
+      {
+        "choiceId": 34,
+        "choice": "ad",
+        "status": true,
+        "questionId": 13,
+        "question": null
+      },
+      {
+        "choiceId": 35,
+        "choice": "ad",
+        "status": true,
+        "questionId": 13,
+        "question": null
+      },
+      {
+        "choiceId": 36,
+        "choice": "ad",
+        "status": true,
+        "questionId": 13,
+        "question": null
+      }
+    ],
+    "subTopic": null
+  },
+  {
+    "questionId": 23,
+    "question": "There was a sudden __________ of lightning, which lit up the whole street.",
+    "status": true,
+    "subTopicId": 2,
+    "answerId": 13,
+    "annimationMasters": [],
+    "answer": {
+      "answerId": 13,
+      "answer": "flash",
+      "description": "Lightning is defined as a flash of light that is caused by the discharge of electricity in the atmosphere. An example of lightning is the flash of light often seen before the thunder is heard.\r\nLightning happens in a flash. So, option C is correct and the other options are incorrect because they do not provide the correct information.",
+      "status": true,
+      "questionMasters": [
+        null
+      ]
+    },
+    "choiceMasters": [
+      {
+        "choiceId": 73,
+        "choice": "burn",
+        "status": true,
+        "questionId": 23,
+        "question": null
+      },
+      {
+        "choiceId": 74,
+        "choice": "fire",
+        "status": true,
+        "questionId": 23,
+        "question": null
+      },
+      {
+        "choiceId": 75,
+        "choice": "flash",
+        "status": true,
+        "questionId": 23,
+        "question": null
+      },
+      {
+        "choiceId": 76,
+        "choice": "splash",
+        "status": true,
+        "questionId": 23,
+        "question": null
+      }
+    ],
+    "subTopic": null
+  },
+  {
+    "questionId": 17,
+    "question": "The quality of expressing much in few words is known as:",
+    "status": true,
+    "subTopicId": 2,
+    "answerId": 7,
+    "annimationMasters": [],
+    "answer": {
+      "answerId": 7,
+      "answer": "Brevity",
+      "description": "BREVITY is the quality of expressing much in few words.\r\nEXIGENCY refers to an urgent need or demand.\r\nAPPRISES refers to informing someone.",
+      "status": true,
+      "questionMasters": [
+        null
+      ]
+    },
+    "choiceMasters": [
+      {
+        "choiceId": 49,
+        "choice": "Exigency",
+        "status": true,
+        "questionId": 17,
+        "question": null
+      },
+      {
+        "choiceId": 50,
+        "choice": "Brevity",
+        "status": true,
+        "questionId": 17,
+        "question": null
+      },
+      {
+        "choiceId": 51,
+        "choice": "Apprises",
+        "status": true,
+        "questionId": 17,
+        "question": null
+      },
+      {
+        "choiceId": 52,
+        "choice": "None of the above..",
+        "status": true,
+        "questionId": 17,
+        "question": null
+      }
+    ],
+    "subTopic": null
+  },
+  {
+    "questionId": 12,
+    "question": "ASD",
+    "status": true,
+    "subTopicId": 2,
+    "answerId": 1,
+    "annimationMasters": [],
+    "answer": {
+      "answerId": 1,
+      "answer": "asd",
+      "description": "asd",
+      "status": true,
+      "questionMasters": [
+        null
+      ]
+    },
+    "choiceMasters": [
+      {
+        "choiceId": 29,
+        "choice": "asd",
+        "status": true,
+        "questionId": 12,
+        "question": null
+      },
+      {
+        "choiceId": 30,
+        "choice": "asd",
+        "status": true,
+        "questionId": 12,
+        "question": null
+      },
+      {
+        "choiceId": 31,
+        "choice": "asd",
+        "status": true,
+        "questionId": 12,
+        "question": null
+      },
+      {
+        "choiceId": 32,
+        "choice": "asd",
+        "status": true,
+        "questionId": 12,
+        "question": null
+      }
+    ],
+    "subTopic": null
+  },
+  {
+    "questionId": 20,
+    "question": "Who ________ to Janet ?",
+    "status": true,
+    "subTopicId": 2,
+    "answerId": 10,
+    "annimationMasters": [],
+    "answer": {
+      "answerId": 10,
+      "answer": "was speaking",
+      "description": "The given sentence is in the past tense. WAS SPEAKING is the only option that correctly completes the given sentence.",
+      "status": true,
+      "questionMasters": [
+        null
+      ]
+    },
+    "choiceMasters": [
+      {
+        "choiceId": 61,
+        "choice": "is he speaking",
+        "status": true,
+        "questionId": 20,
+        "question": null
+      },
+      {
+        "choiceId": 62,
+        "choice": "was speaking",
+        "status": true,
+        "questionId": 20,
+        "question": null
+      },
+      {
+        "choiceId": 63,
+        "choice": "did he speak",
+        "status": true,
+        "questionId": 20,
+        "question": null
+      },
+      {
+        "choiceId": 64,
+        "choice": "was he speaking",
+        "status": true,
+        "questionId": 20,
+        "question": null
+      }
+    ],
+    "subTopic": null
+  },
+  {
+    "questionId": 11,
+    "question": "fgh",
+    "status": true,
+    "subTopicId": 2,
+    "answerId": 3,
+    "annimationMasters": [],
+    "answer": {
+      "answerId": 3,
+      "answer": "fgh",
+      "description": "fhh",
+      "status": true,
+      "questionMasters": [
+        null
+      ]
+    },
+    "choiceMasters": [
+      {
+        "choiceId": 25,
+        "choice": "fgh",
+        "status": true,
+        "questionId": 11,
+        "question": null
+      },
+      {
+        "choiceId": 26,
+        "choice": "fgh",
+        "status": true,
+        "questionId": 11,
+        "question": null
+      },
+      {
+        "choiceId": 27,
+        "choice": "fgh",
+        "status": true,
+        "questionId": 11,
+        "question": null
+      },
+      {
+        "choiceId": 28,
+        "choice": "fgh",
+        "status": true,
+        "questionId": 11,
+        "question": null
+      }
+    ],
+    "subTopic": null
+  },
+  {
+    "questionId": 15,
+    "question": "question 2",
+    "status": true,
+    "subTopicId": 2,
+    "answerId": 5,
+    "annimationMasters": [],
+    "answer": {
+      "answerId": 5,
+      "answer": "q2-ch3",
+      "description": "Q2- Answer",
+      "status": true,
+      "questionMasters": [
+        null
+      ]
+    },
+    "choiceMasters": [
+      {
+        "choiceId": 41,
+        "choice": "q2-ch1",
+        "status": true,
+        "questionId": 15,
+        "question": null
+      },
+      {
+        "choiceId": 42,
+        "choice": "q2-ch2",
+        "status": true,
+        "questionId": 15,
+        "question": null
+      },
+      {
+        "choiceId": 43,
+        "choice": "q2-ch3",
+        "status": true,
+        "questionId": 15,
+        "question": null
+      },
+      {
+        "choiceId": 44,
+        "choice": "q2-ch4",
+        "status": true,
+        "questionId": 15,
+        "question": null
+      }
+    ],
+    "subTopic": null
+  }
+]

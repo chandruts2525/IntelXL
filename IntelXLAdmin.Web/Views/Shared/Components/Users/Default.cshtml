@@ -1,0 +1,128 @@
+﻿@model IEnumerable<IntelXLDataAccess.Models.AppUser>;
+@{
+    string searchTerm = ViewBag.SearchTerm ?? "";
+}
+<div class="hdr px-3 d-flex justify-content-around align-content-center">
+    <div class="d-flex align-items-center me-auto"><h1 class="pe-2">All Users </h1><h3><i class="fa-solid fa-users"></i></h3></div>
+    <div class="search-bar d-flex align-items-center">
+        <input class="form-control search-input" id="search-bar" placeholder="Type to search..." @*@(Model?.Any() == true ? "" : "disabled")*@ value="@searchTerm">
+        <div class="btn btn-outline-secondary search-btn" type="button"><i class="fa-solid fa-search"></i></div>
+    </div>
+</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <span asp-for="UserName">UserName</span>
+            </th>
+            <th>
+                <span asp-for="AppRole">AppRole</span>
+            </th>
+            <th>
+                <span asp-for="EmailId">EmailId</span>
+            </th>
+            <th>
+                <span>User Type</span>
+            </th>
+            <th><span>Activate/Deactivate</span></th>
+            <th><span>Actions</span></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model?.Any() == true)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <span asp-for="UserName">@item.UserName</span>
+                    </td>
+                    <td>
+                        <span asp-for="AppRole">@item.AppRole?.RoleName</span>
+                    </td>
+                    <td>
+                        <span asp-for="EmailId">@item.EmailId</span>
+                    </td>
+                    @if (item.UserSubscriptions != null && item.UserSubscriptions.Count() > 0)
+                    {
+                        <td>
+                            <span asp-for="EmailId">PremiumUser</span>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <span></span>
+                        </td>
+                    }
+
+                    @if (@item.AppRole?.RoleName != "SystemAdmin")
+                    {
+                        <td>
+                            <label class="switch">
+                                <input type="checkbox" @(item.Status ? "checked" : "") value="@item.AppUserId" />
+                            </label>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                        </td>
+                    }
+                    <td>
+                        <a type="button" class="btn btn-sm text-black btn-outline-info details-btn" asp-action="Details" asp-route-id="@item.AppUserId">Details</a>
+
+                    </td>
+                </tr>
+                <tr id="no-matches-message" style="display: none;">
+                    <td colspan="4" class="text-center">No matches found</td>
+                </tr>
+            }
+
+        }
+        else
+        {
+            <tr>
+                <td colspan="4" class="text-center">No data Found</td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+@if (ViewBag.TotalPages > 1)
+{
+    <div class="pagination justify-content-center paginationMain">
+        <ul class="pagination">
+            <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                <a class="page-link" href="/Users/Index?page=@(ViewBag.CurrentPage - 1)" aria-label="Previous">
+                    <span aria-hidden="true">Previous</span>
+                </a>
+            </li>
+
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                if (i == 1 || i == ViewBag.TotalPages || Math.Abs(i - ViewBag.CurrentPage) <= 2)
+                {
+                    <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                        <a class="page-link" href="/Users/Index?page=@i">@i</a>
+                    </li>
+                }
+                else if (Math.Abs(i - ViewBag.CurrentPage) == 3)
+                {
+                    <li class="page-item disabled">
+                        <span class="page-link">...</span>
+                    </li>
+                }
+            }
+
+            <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+
+                <a class="page-link" href="/Users/Index?page=@(ViewBag.CurrentPage + 1)">
+                    <span aria-hidden="true">Next</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+}

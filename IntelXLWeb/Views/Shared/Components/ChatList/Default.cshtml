@@ -1,0 +1,48 @@
+﻿@model List<IntelXLDataAccess.Models.Chat>;
+@if (Model != null && Model.Count > 0)
+{
+    @foreach (var item in Model)
+    {
+        var unread = !item.IsRead && item.FromId != ViewBag.ToUserId ? "unread" : "";
+        var id = item.FromId == ViewBag.ToUserId ? item.ToId : item.FromId;
+        var name = item.FromId == ViewBag.ToUserId ? item.ToUser?.FirstName : item.FromUser?.FirstName;
+        <div class="chat_list @unread" data-id="@id" data-name="@name">
+            <div class="chat_people">
+                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                <div class="chat_ib">
+                    <div class="@unread h5 chat-user">
+                        @name
+                        <span class="chat_date">@item.SentAt.ToLocalTime().ToString("d") @item.SentAt.ToLocalTime().ToString("t")</span>
+                        <span class="ellipsis p-2 py-1" data-toggle="archive-btn" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa-solid fa-ellipsis"></i>
+                        </span>
+                        <div class="dropdown-menu archive-btn dropdown-menu-right p-0" id="archive">
+                            @if (item.IsArchived)
+                            {
+                                <button id="archive-btn" class="dropdown-item unarchive py-2" type="button" data-id="@id"><i class="fa-solid pe-2 fa-box-archive"></i> Unarchive Tutor</button>
+                            }
+                            else
+                            {
+                                <button id="archive-btn" class="dropdown-item archive py-2" type="button" data-id="@id"><i class="fa-solid pe-2 fa-box-archive"></i>Archive Tutor</button>
+                            }
+                        </div>
+                    </div>
+                    <p class="msg-text">
+                        @item.Message
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="d-flex justify-content-center text-muted mt-5">
+        <div class="d-flex justify-content-center">
+            <div class="d-flex flex-column justify-content-center text-muted mt-5">
+                <div class="display-value pb-4">You don’t have any active Tutors</div>
+                <div class="d-flex justify-content-center"><a role="button" class=" add-subscription" href="/Tutors/Index">Find your tutor >></a></div>
+            </div>
+        </div>
+    </div>
+}

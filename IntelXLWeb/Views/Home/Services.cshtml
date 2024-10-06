@@ -1,0 +1,191 @@
+﻿@{
+    Layout = "_LayoutWebsite";
+    ViewData["Title"] = "Services";
+}
+<header class="mainheader sftwre-hdr">
+    <video autoplay="autoplay" loop="" muted="" playsinline="" id="bg-video" class="vd-width"><source src="~/images/websiteimages/img/servicepage.mp4" type="video/mp4"></video>
+    <!-- =================---Desktop----====================== -->
+    <nav class="ix-nav ix-moved navbar navbar-expand-lg">
+        <div class="container">
+            <div class="logo mx-2">
+                <a class="navbar-brand" href="/Home/Company">
+                    <img class="desktopViewimg" loading="lazy" src="~/images/websiteimages/img/intelxl-high-resolution-logo.png" alt="Intelxl" />
+                </a>
+            </div>
+            <button type="button" class="navbar-toggler custom-toggler" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBackdrop" aria-controls="offcanvasWithBackdrop" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars fa-lg"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/Home/Company">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Home/AboutUs">About us</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/Home/Services">Services</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/Home/Contact">Contact Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Home/Careers">Careers</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!--offcanvas for mobile responsive-->
+    <div class="offcanvas offcanvas-end text-bg-dark bg-dark" tabindex="-1" id="offcanvasWithBackdrop" aria-labelledby="offcanvasWithBackdropLabel" data-bs-backdrop="true">
+        <div class="offcanvas-header">
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body p-0">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item p-2 ps-5">
+                    <a class="nav-link" href="/Home/Company">Home</a>
+                </li>
+                <li class="nav-item p-2 ps-5">
+                    <a class="nav-link" href="/Home/AboutUs">About us</a>
+                </li>
+                <li class="nav-item active p-2 ps-5">
+                    <a class="nav-link" href="/Home/Services">Services</a>
+                </li>
+                <li class="nav-item p-2 ps-5">
+                    <a class="nav-link" href="/Home/Contact">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Home/Careers">Careers</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="">
+        <div class="caption-txt">
+            <div class="captions">
+                <!-- <h1 class="text-2">IntelXL</h1> -->
+                <div class="text text-center">
+                    <h2>Our Services</h2>
+                </div>
+                <p class="text-center">We drive transformation through smart, inclusive, and resilient public services.</p>
+
+            </div>
+        </div>
+        <div class="service-txt">
+            <div class="text-center"><h5 class="text-white">Know more</h5></div>
+            <div class="text-center align-items-center justify-content-center">
+                <a href="#benefits" data-scroll="" data-scroll-offset="100" class="btn text-white">
+                    <i class="fa-solid arrow1 fa-angles-down"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</header>
+<!-- ============---Header end----=================== -->
+<!-- ============------Body start-----============= -->
+<div class="container-fluid main-content p-0" id="benefits">
+    <div class="softdevopsbody background py-5">
+        <div class="pt-5">
+            <h4 class="heading text-center">Our Services</h4>
+            <p class=" text-center">
+                Knowledge combined with quality gives our clients the edge over other competitors.
+                Value assurance practices and optimized delivery cycles has been our focus from day one.
+            </p>
+        </div>
+        <div class="main">
+            <div class="first py-4 px-5">
+                <div class="pb-2  cardanim">
+                    <h3>Technology that work for you</h3>
+                </div>
+                <p class="cardanim">
+                    At IntelXL, we work with an understanding that technology is no longer a choice for businesses, but unarguable
+                    the most essential element behind the success of any enterprise. We take pride in our offshore development
+                    centre model that allows us to let businesses benefit from the most efficient technology and solutions,
+                    created and supported by a dedicated team of the most competent and qualified professionals – all that at a
+                    price that is highly competitive and reasonable.
+                </p>
+                <p>
+                    Offering technology as a service also allows us to tailor everything right according to your needs as well as
+                    your budget. Our services cover a wide array of services mainly including the following.
+                </p>
+            </div>
+            <div class="second py-3 px-5">
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-4 p-2">
+                        <div class="card cardanim">
+                            <img src="~/images/websiteimages/sdimg/card1.jpg" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title"><a href="#">Enterprise Application Development</a></h5>
+                                <p class="card-text">
+                                    Some quick example text to build on the card title and make up the bulk of the
+                                    card's content.
+                                </p>
+                                @* <a href="#" class="btn btn-primary"><i class="fa-solid fa-angles-right"></i></a> *@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4  p-2">
+                        <div class="card cardanim">
+                            <img src="~/images/websiteimages/sdimg/card2.jpeg" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title"><a href="#">Enterprise Content Management Systems</a></h5>
+                                <p class="card-text">
+                                    Some quick example text to build on the card title and make up the bulk of the
+                                    card's content.
+                                </p>
+                                @* <a href="#" class="btn btn-primary"><i class="fa-solid fa-angles-right"></i></a> *@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4  p-2">
+                        <div class="card cardanim">
+                            <img src="~/images/websiteimages/sdimg/card3.jpg" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title"><a href="#">Enterprise Mobile Application Development</a></h5>
+                                <p class="card-text">
+                                    Some quick example text to build on the card title and make up the bulk of the
+                                    card's content.
+                                </p>
+                                @* <a href="#" class="btn btn-primary"><i class="fa-solid fa-angles-right"></i></a> *@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4  p-2">
+                        <div class="card cardanim">
+                            <img src="~/images/websiteimages/sdimg/card4.jpeg" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title"><a href="#">Automated Software Testing</a></h5>
+                                <p class="card-text">
+                                    Some quick example text to build on the card title and make up the bulk of the
+                                    card's content.
+                                </p>
+                                @* <a href="#" class="btn btn-primary"><i class="fa-solid fa-angles-right"></i></a> *@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4  p-2">
+                        <div class="card cardanim">
+                            <img src="~/images/websiteimages/sdimg/card5.jpg" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title"><a href="#">Cloud Computing Services</a></h5>
+                                <p class="card-text">
+                                    Some quick example text to build on the card title and make up the bulk of the
+                                    card's content.
+                                </p>
+                                @* <a href="#" class="btn btn-primary"><i class="fa-solid fa-angles-right"></i></a> *@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="connectus py-4">
+            <h4 class="text-center text-light">Do You Wish to Work with Us?</h4>
+            <div class="connectbtn"><a href="/Home/Contact"><button>CONNECT US NOW!</button></a></div>
+        </div>
+    </div>
+</div>

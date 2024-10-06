@@ -1,0 +1,131 @@
+﻿@{
+    Layout = "_LayoutWebsite";
+    ViewData["Title"] = "About";
+}
+<header class="mainheader about-hdr">
+    <!-- =================---Desktop----====================== -->
+    <nav class="ix-nav ix-moved navbar navbar-expand-lg">
+        <div class="container">
+            <div class="logo mx-2">
+                <a class="navbar-brand" href="/Home/Company">
+                    <img class="desktopViewimg" loading="lazy" src="~/images/websiteimages/img/intelxl-high-resolution-logo.png" alt="Intelxl" />
+                </a>
+            </div>
+            <button type="button" class="navbar-toggler custom-toggler" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBackdrop" aria-controls="offcanvasWithBackdrop" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars fa-lg"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Home/Company">Home</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/Home/AboutUs">About us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Home/Services">Services</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/Home/Contact">Contact Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Home/Careers">Careers</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="carousel-caption">
+        <div class="captions">
+            <!-- <h1 class="text-2">IntelXL</h1> -->
+            <div class="text-2">INNOVATION AT HEART</div>
+            <p>We are a group of technology veterans come together from multiple industries to solve problems of this digital age.</p>
+        </div>
+        <div class="btn btn-lg text-white abt-btn btn-success"><a class="" href="/Home/Contact">Get in touch <i class="fa-solid fa-arrow-right"></i></a></div>
+    </div>
+
+    <!--offcanvas for mobile responsive-->
+
+    <div class="offcanvas offcanvas-end text-bg-dark bg-dark" tabindex="-1" id="offcanvasWithBackdrop" aria-labelledby="offcanvasWithBackdropLabel" data-bs-backdrop="true">
+        <div class="offcanvas-header">
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body p-0">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item p-2 ps-5">
+                    <a class="nav-link" href="/Home/Company">Home</a>
+                </li>
+                <li class="nav-item active p-2 ps-5">
+                    <a class="nav-link" href="/Home/AboutUs">About us</a>
+                </li>
+                <li class="nav-item p-2 ps-5">
+                    <a class="nav-link" href="/Home/Services">Services</a>
+                </li>
+                <li class="nav-item p-2 ps-5">
+                    <a class="nav-link" href="/Home/Contact">Contact Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Home/Careers">Careers</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+<!-- ============---Header end----=================== -->
+
+
+<div class="container-fluid main-content p-0">
+    <div class="content p-4 pt-2">
+        <h2 class="text-center our-service-text">IntelXL</h2>
+        <p class="mb-0">
+            IntelXL is a leading IT solutions provider and offshore development center that offers world-class
+            services that
+            are responsive and customer focused. With years of experience under our belt, we are a complete IT Solution
+            and Service Provider offering full-featured web services that also include e-commerce solutions for B2B and
+            B2C businesses. Our experts work closely with our clients to come up with genuine and proven solutions that
+            help them reach their goals.
+        </p>
+    </div>
+    <div class="main">
+        <div class="parallax p-5 about-parallax">
+            <div class="row d-flex align-items-center mb-5">
+
+                <div class="col-12 col-md-6">
+                    <div>
+                        <h5 class="our-service-text">Our Offshore Development Center Philosophy and Mission!</h5>
+                        <p class="text-white">
+                            The sole purpose of our company is to offer our clients with an unmatched and accurate representation of
+                            their business or cause, and to continually dedicate ourselves to the adoption, design, and implementation
+                            of new technologies. We value each and every client as an individual and we make sure that their
+                            individual needs and requirements are met in the timeliest and professional manner possible.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 mb-1 imgleft">
+                    <div class="middle-image">
+                        <a><img src="~/images/websiteimages/Aboutimg/Teammeet-1.jfif" alt="teammeet" class="img-fluid"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row d-flex align-items-center mb-4">
+                <div class="col-12 col-md-6 mb-1 imgleft">
+                    <div class="middle-image">
+                        <a><img src="~/images/websiteimages/Aboutimg/Teammeet-2.png" alt="teammeet" class="img-fluid"></a>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div>
+                        <h5 class="our-service-text">Our Offshore Development Center Philosophy and Mission!</h5>
+                        <p class="text-white">
+                            The sole purpose of our company is to offer our clients with an unmatched and accurate representation of
+                            their business or cause, and to continually dedicate ourselves to the adoption, design, and implementation
+                            of new technologies. We value each and every client as an individual and we make sure that their
+                            individual needs and requirements are met in the timeliest and professional manner possible.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

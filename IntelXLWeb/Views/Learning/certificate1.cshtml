@@ -1,0 +1,131 @@
+﻿<style>
+
+    .banner-image {
+        height: 350px;
+        position: absolute;
+    }
+
+    .medal img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .superb-text {
+        font-size: 3vw;
+    }
+
+    .certificate-text {
+        padding: 1vw;
+    }
+
+    .certificate-para {
+        font-size: 2vw;
+    }
+
+    .certificate-result {
+        top: 47%;
+        position: absolute;
+    }
+
+    .result-container {
+        width: 50vw;
+        min-width: 450px;
+        background-color: #FFB9D0;
+        border-radius: 8px;
+        color: #fff;
+    }
+
+    .smart-score {
+        border-right: 1px solid #0e07e3;
+        border-left: 1px solid #0e07e3;
+    }
+
+    .explore-more {
+        position: absolute;
+        top: 60%;
+    }
+
+    .explore-text {
+        font-size: 30px;
+        color: #707070;
+    }
+
+    .choose-explore, .learn-explore {
+        border-radius: 5px;
+        background-color: #b3deff;
+    }
+
+    .recommend-btn {
+        color: #fff;
+        background-image: linear-gradient(to right, #068a04, #09cf06);
+    }
+
+        .recommend-btn:hover {
+            color: #fff;
+            background-image: linear-gradient(to right, #09cf06, #068a04);
+        }
+</style>
+<div class="container-fluid certificate-banner p-0">
+    <img class="banner-image" src="~/images/certificate-banner.png" />
+    <div class=" d-flex justify-content-center">
+        <div class="certificate-text text-center text-white">
+            <div class="superb-text">Superb!</div>
+            <div class="certificate-para">You have mastered the skill and earned a gold medal.</div>
+            <div class="medal"><img src="~/images/medal1.gif" /></div>
+            <div class=""><h6>Win more prizes!</h6></div>
+            <div class=""><h6> <a href="/Learning/Math">Keep practicing >></a></h6></div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid certificate-result">
+    <div class="container result-container d-flex justify-content-center p-3">
+        <div class="time-spent text-center mx-5">
+            <div><i class="fa-solid fa-stopwatch fa-lg"></i></div>
+            <div><b>Time spent</b></div>
+            <div>
+                <span>@ViewBag.Time</span>
+            </div>
+        </div>
+        <div class="smart-score text-center mx-2.5 px-5">
+            <div><i class="fa-regular fa-lightbulb fa-lg"></i></div>
+            <div><b>Smart score</b></div>
+            <div>@ViewBag.Score</div>
+        </div>
+        <div class="qus-correct text-center mx-5">
+            <div><i class="fa-regular fa-circle-check fa-lg"></i></div>
+            <div><b>Questions correct</b></div>
+            <div>@ViewBag.Result</div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid explore-more">
+    <div class="d-flex justify-content-center">
+        <div class="text-center">
+            <div class="explore-text my-">Explore more skills to practice</div>
+            <div class="d-flex my-3">
+                <div class="choose-explore d-flex p-2 mx-2 px-5">
+
+                    <div><i class="fa-regular fa-gem"></i></div>
+                    <a href="/Learning/Math"> <div class="mx-2"> Choose the number that you hear - up to 3</div></a>
+
+                </div>
+                <div class="learn-explore d-flex p-2 mx-2 px-5">
+
+                    <div><i class="fa-regular fa-gem"></i></div>
+                    <a href="/Learning/Math"><div class="mx-2"> Learn to count 3</div></a>
+
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center my-3">
+                <div class="choose-explore d-flex p-2 mx-2 px-5">
+
+                    <div><i class="fa-regular fa-gem"></i></div>
+                    <a href="/Learning/Math"><div class="mx-2">Identify number - up to 5</div></a>
+
+                </div>
+            </div>
+            <a><div class="btn px-4 my-5 recommend-btn" type="button">Go to recommendations</div></a>
+        </div>
+    </div>
+</div>

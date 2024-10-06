@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Topics";
+}
+<link href="~/css/style.css" rel="stylesheet" />
+
+<partial name="_LearningLoading" />
+
+
+@section Scripts{
+
+    <script>
+        let courseId = @Html.Raw(ViewBag.CourseId);
+        //let subject = '@ViewBag.Subject';
+        let subject = '@Html.Raw(ViewBag.Subject)';
+        $(document).ready(function () {           
+            $.ajax({
+                type: "GET",
+                url: "/learning/gettopics?courseId=" + courseId + '&subjectName=' + encodeURIComponent(subject),
+                success: function (data) {
+                    $('main').html(data);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Request failed: " + status + ", " + error);
+                }
+            });
+
+            $(document).on('click', '.topic_click', function () {              
+                let topic = $(this).siblings('.topic_value').val();
+                window.location.href = "/Learning/SubTopics?courseId=" + courseId + '&subjectName=' + subject + '&topicName=' + topic;
+            });
+
+            $(document).on('click', '.subject-navigator', function (event) {
+                event.preventDefault();
+                //Data to pass to the controller.
+               //var courseId = 10;
+                var subject_val = $(this).data("name");
+
+                window.location.href = '/Learning/Index?courseId=' + courseId + '&subject=' + subject_val;
+            });
+            
+
+        })
+    </script>
+}

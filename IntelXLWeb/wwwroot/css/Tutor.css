@@ -1,0 +1,119 @@
+﻿
+.form-control:focus, .form-control.is-invalid:focus, .form-check-input:focus, .btn:focus {
+    box-shadow: none;
+}
+
+.reg-form:focus, .reg-form.is-invalid:focus, .select-position:focus, .select-position.is-invalid:focus {
+    box-shadow: none;
+}
+
+.info {
+    margin: 0 10%;
+}
+
+.info-check {
+    margin-left: 28%;
+    margin-right: 20%;
+    display: flex;
+}
+
+.name-inputs input {
+    border-radius: 6px;
+}
+
+.btn-register:hover {
+    box-shadow: 1px 1px 10px #5c5c5c;
+    transform: scale(0.9);
+}
+
+
+.form-label {
+    width: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.fm-register {
+    padding-top: 42px;
+}
+
+@media (max-width: 550px) {
+
+    .info {
+        display: flex;
+        flex-direction: column;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .form-label {
+        width: auto;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+    }
+
+    .info-check {
+        margin: auto;
+        height: auto;
+        display: block;
+    }
+}
+
+@media (max-width: 376px) {
+    .fm-register {
+        padding-top: 0px;
+    }
+}
+
+.login-bg, .register-bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    min-height: calc(100vh - 130px);
+    background: linear-gradient(177deg,#e6f5e5 50%,#f3f3f3 100%);
+}
+
+.login-box {
+    width: 25vw;
+    min-width: 350px;
+    background-image: linear-gradient(to bottom, #fff 80%, #ffff);
+    border-radius: 10px;
+    box-shadow: 2px 2px 15px #000;
+}
+
+.register-box {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    min-width: 300px;
+    height: auto;
+    background-image: linear-gradient(to bottom, #fff 80%, #ffff);
+    border-radius: 10px;
+    box-shadow: 2px 2px 15px #000;
+}
+
+.sub-btn {
+    color: #fff;
+    background: linear-gradient(139deg,#60d500 50%,#52b700 100%);
+}
+
+    .sub-btn:hover {
+        color: #fff;
+        background: linear-gradient(129deg,#55b904 50%,#97f749 100%);
+    }
+
+.toast-top-center {
+    top: 10% !important;
+}
+.login-form:focus {
+    box-shadow: none;
+}
+
+.add-account-link {
+    color: #0a58ca;
+    text-decoration:none;
+}
+

@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Subject";
+}
+
+<link href="~/css/style.css" rel="stylesheet" />
+
+<partial name="_SubTopicsLoading" />
+
+@section Scripts{
+    <script>
+        let course_id = "@ViewBag.Data[0]";
+        let class_id = "@ViewBag.Data[1]";
+        let subject_name = "@ViewBag.Data[2]";
+        $(document).ready(function(){            
+            $(document).on('click', ".nav_topic",function(){               
+                window.location.href = "/Learning/Topics?courseId=" + course_id + "&subjectName=" + encodeURIComponent(subject_name);
+            });
+        })
+    </script>          
+    <script src="~/js/learning_subjects.js"></script>
+}
+
+

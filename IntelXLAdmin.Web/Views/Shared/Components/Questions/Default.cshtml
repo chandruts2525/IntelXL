@@ -1,0 +1,154 @@
+﻿@model IEnumerable<IntelXLDataAccess.Models.QuestionMaster>;
+@if (Model?.Any() == true)
+{
+    @foreach ((var item, Index index) in Model.Select((item, idx) => (item, (Index)(idx + 1 + (ViewBag.ItemsPerPage * (ViewBag.CurrentPage - 1))))))
+    {
+        var choiceindex = 'A';
+        <div class="ques_div">
+            <div class="ques_txt">
+                <div class="">
+                    <div class="mx-2" style="float: right;">
+                        @if (!item.IsVerified && User.IsInRole("ContentEditor") || User.IsInRole("SystemAdmin"))
+                        {
+                            <a href="/Question/CloneQuestion?id=@item.QuestionId">
+                                <i class="fa-regular fa-clone" style="color:#008000"></i><span class="ps-1" style="color:#008000">Clone</span>
+                            </a>
+                            <a href="/Question/EditQuestion?id=@item.QuestionId">
+                                <i class="fa-regular fa-pen-to-square px-2 ques_edit" style="color:#0398fc"></i>
+                            </a>
+                            if (item.Status)
+                            {
+                                <a href="" class="ques_delete" data-id="@item.QuestionId">
+                                    <i class="fa-regular fa-trash-can px-2" style="color:#fc0303"></i>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="" class="ques_restore" data-id="@item.QuestionId">
+                                    <i class="fas fa-undo-alt px-2" style="color:#fc0303"></i>
+                                </a>
+                            }
+
+                        }
+                        @if (User.IsInRole("SystemAdmin"))
+                        {
+                            @if (!item.IsVerified)
+                            {
+                                <a href="#" class="ques_verify" data-id="@item.QuestionId">
+                                    <i class="fa-regular fa-circle-check" style="color:#008000"></i><span class="ps-1" style="color:#008000">Verify</span>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="#" class="ques_unverify" data-id="@item.QuestionId">
+                                    <i class="fa-regular fa-circle-check" style="color:#008000"></i><span class="ps-1" style="color:#008000">UnVerify</span>
+                                </a>
+                            }
+                        }
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p style="text-align:justify;">
+                                <h6 class="question-text d-flex" style="max-width:80vw;word-break:break-word;">
+                                    <span class="index-value"><b>@index.&nbsp;&nbsp;  </b> </span><b>@Html.Raw(item.Question)</b>
+
+                                </h6>
+                            </p>
+                        </div>
+
+                        <div class="ix-verifed" style="color:#008000">
+                            @if (item.IsVerified)
+                            {
+                                <b>
+                                    <i class="ps-2 fa-regular fa-circle-check"></i>
+                                    <span class="ps-1">Verified</span>
+                                </b>
+                            }
+                        </div>
+
+                    </div>
+                    @* <p class="d-flex" style="text-align:justify;">
+            <h6 class="question-text d-flex" style="max-width:80vw;word-break:break-word;"><span class="index-value"><b>@index.&nbsp;&nbsp;  </b> </span><b>@Html.Raw(item.Question)</b>
+            </h6>
+            </p>*@
+                    <input type="hidden" value="@item.QuestionId">
+                </div>
+            </div>
+            <ul class="choices px-5 mb-3 ">
+                @foreach (var choice in item.ChoiceMasters)
+                {
+                    if (!string.IsNullOrEmpty(choice.Choice))
+                    {
+                        <li style="list-style-type:none;display:flex;">
+                            <p style="max-width:80vw;word-break:break-word; "><b>@choiceindex.  </b>@Html.Raw(choice.Choice)</p>
+                        </li>
+                    }
+                    choiceindex++;
+                }
+            </ul>
+
+            <button class="p-2 m-3 ans-coll-btn">
+                <h6 class="answer-text mx-2"><b>Answer</b><span class="arrow float-end"><i class="fa-solid fa-caret-down ms-2"></i></span></h6>
+            </button>
+
+
+            <div class="collapse ans_details" id="demo">
+                <div class="answer-div">
+                    <p class="p-2">@Html.Raw(item.Answer?.Answer)</p>
+                </div>
+                <hr />
+                <div class="explain-div p-2 m-3">
+                    <h4>Explanation:</h4>
+                    <p class="p-2 mb-0">
+                        @Html.Raw(item.Answer?.Description)
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (ViewBag.TotalPages > 1)
+    {
+        <div class="pagination justify-content-center paginationMain">
+            <ul class="pagination">
+                <li class="page-item @((ViewBag.CurrentPage == 1) ? "disabled" : "")">
+                    <a class="page-link" href="/Question/AllQuestions?id=@ViewBag.SubTopicId&page=@(ViewBag.CurrentPage - 1)&status=@ViewBag.Status" aria-label="Previous">
+                        <span aria-hidden="true">Previous</span>
+                    </a>
+                </li>
+
+                @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                {
+                    if (i == ViewBag.CurrentPage || Math.Abs(i - ViewBag.CurrentPage) <= 2 || i == 1 || i == ViewBag.TotalPages)
+                    {
+                        <li class="page-item @((i == ViewBag.CurrentPage) ? "active" : "")">
+                            <a class="page-link" href="/Question/AllQuestions?id=@ViewBag.SubTopicId&page=@i&status=@ViewBag.Status">@i</a>
+                        </li>
+                    }
+                    else if (Math.Abs(i - ViewBag.CurrentPage) == 3)
+                    {
+                        <li class="page-item disabled">
+                            <span class="page-link">...</span>
+                        </li>
+                    }
+                }
+
+                <li class="page-item @((ViewBag.CurrentPage == ViewBag.TotalPages) ? "disabled" : "")">
+                    <a class="page-link" href="/Question/AllQuestions?id=@ViewBag.SubTopicId&page=@(ViewBag.CurrentPage + 1)&status=@ViewBag.Status" aria-label="Next">
+                        <span aria-hidden="true">Next</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    }
+}
+else
+{
+    <partial name="_EmptyQuestion" />
+}
+
+@section Scripts{
+    <script>
+        let totalPages = @Html.Raw(ViewBag.TotalPages);
+    </script>
+    }

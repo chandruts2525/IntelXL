@@ -1,0 +1,93 @@
+﻿@model IEnumerable<IntelXLDataAccess.Models.AppUser>
+
+
+@{
+    ViewData["Title"] = "Tutors";
+}
+<style>
+    .ix-tutor-heading.round a {
+        border-radius: 50%;
+        -webkit-border-radius: 50%;
+        margin-right: 20px;
+        display: inline-block;
+    }
+
+    .ix-tutor-heading a img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        -webkit-border-radius: 50%;
+    }
+
+    .ix-tutor-name {
+        font-size: 22px;
+        margin-bottom: 5px;
+    }
+
+    .ix-tutor-email {
+        font-size: 12px;
+    }
+    .ix-custom-col{
+        border:1px solid #ddd;
+        border-radius:5px;
+    }
+      .hdr h3{
+        color: #008080;
+    }
+</style>
+
+<div class="container pt-4">
+    <div class="d-flex hdr justify-content-between align-items-center">
+        <div class="me-auto mt-3">
+                    <a href="#" style="color: #207bff; text-decoration: none;" onclick="goBackWithSelectedOptions()"><i class="fa-solid fa-arrow-left-long me-2"></i>Back</a>
+                </div>
+        <h3 class="me-auto mb-0">New Tutors <i class="fa-solid ps-2 fa-chalkboard-user"></i></h3>
+    </div>
+    <div class="ix-tutors-wrap mt-5">
+    @if (Model.Any())
+    {
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            @foreach (var tutor in Model)
+            {
+                    <div class="col">
+                        <div class="ix-custom-col p-3">
+                            <div class="d-flex align-items-center">
+                                <div class="ix-tutor-heading text-black round">
+                                    @if (string.IsNullOrEmpty(tutor.TutorDetails?.ProfileUrl))
+                                    {
+                                        <a href="#">
+                                            <img src="~/images/user.png" onerror="this.src=' ~ /images/user.png';" alt="">
+                                        </a>
+                                    }else{
+                                        <a href="#">
+                                            <img src="@tutor.TutorDetails?.ProfileUrl"  alt="">
+                                        </a>
+                                    }
+                                </div>
+                            <div>
+                                <h1 class="ix-tutor-name">@tutor.FirstName @tutor.LastName</h1>
+                                <p class="ix-tutor-email m-0">@tutor.EmailId</p>
+                            </div>
+                            <div class="ms-auto col-3">
+                                <a href="/Tutors/Details?tutorId=@tutor.AppUserId" style="color:#4787ed; font-size:14px">
+                                    View more details <i class="fa-solid fa-angle-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="text-muted d-flex justify-content-center">No new tutors registered</div>
+    }
+</div>
+
+</div>
+<script>
+     function goBackWithSelectedOptions() {
+            window.location.href = "/Home/Index";
+        }
+</script>

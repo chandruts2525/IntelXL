@@ -1,0 +1,184 @@
+﻿@*@model IntelXLDataAccess.Models.AppUser;*@
+<style>
+    .reg-content {
+        height: 600px;
+        background-image: url('/images/register-img.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        border: none;
+    }
+
+    .reg-hdr {
+        border-bottom: none;
+        display: flex;
+    }
+
+    .reg-container {
+        width: 550px;
+        height: 600px;
+        border-left: 1px solid #dee2e6;
+    }
+
+    .reg_btn, #regmodelbtn {
+        background-color: #08b3d5;
+        color: #fff;
+    }
+
+        .reg_btn:hover {
+            color: #fff;
+            background-color: #00a1c1;
+            box-shadow: 1px 1px 10px #0dcaf0;
+        }
+
+        .reg_btn:active {
+            transform: translateY(1.5px);
+        }
+
+    .gmail-signin-text {
+        font-size: 14px;
+        color: #8d8888;
+    }
+
+    .login-link {
+        color: #0d6efd;
+    }
+
+    .info-cta-33-15 {
+        font-size: 15px;
+        height: 33px;
+        line-height: 33px;
+    }
+
+    .error-msg {
+        display: flex;
+        justify-content: center;
+        font-size: 10px;
+    }
+
+    .password-check {
+        margin-left: 28%;
+        margin-right: 20%;
+        display: flex;
+    }
+
+    .name-inputs input {
+        border-radius: 6px;
+    }
+
+    .btn-register:hover {
+        box-shadow: 1px 1px 10px #5c5c5c;
+        transform: scale(0.9);
+    }
+
+
+    #registerModal .form-label {
+        width: 90px;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+    }
+
+    @@media (max-width: 560px) {
+
+        .info {
+            display: flex;
+            flex-direction: column;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .form-label {
+            width: auto;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+        }
+
+        .password-check {
+            margin: auto;
+            height: auto;
+            display: block;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .modal-dialog {
+            max-width: 100%;
+        }
+    }
+
+    .btn-close:focus {
+        box-shadow: none;
+    }
+</style>
+
+<div class="modal" id="registerModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 800px;">
+        <div class="modal-content reg-content">
+            <div class="modal-body d-flex justify-content-end p-0 add-new-body">
+
+                <div class="reg-container">
+                    <div class=" reg-hdr p-2 justify-content-between">
+                        <h1 class="modal-title" id="exampleModalLabel" style="color: #08b3d5;">Sign up as a Student</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                   @* <div class="px-3"><a href="/Tutors/Register" class="text-decoration-underline">Sign up as a tutor</a> </div>*@
+                    <div class="reg-body p-5">
+                        <form id="registrationform" action="/User/Register" method="POST">
+
+                            <div class="input input-sm mb-3 name-inputs">
+                                <div class="d-flex info">
+                                    <label for="id-country" class="label-country col-1 form-label mx-2">First Name <span class="text-danger">*</span></label>
+                                    <input type="text" maxlength="15" class="form-control reg-control" id="first-name" name="FirstName" placeholder="First name">
+                                </div>
+                                @* <span id="first-name-error" class="text-danger error-msg"></span>*@
+
+                                <div class="d-flex mt-4 info">
+                                    <label for="id-country" class="label-country col-1 form-label mx-2">Last Name <span class="text-danger">*</span></label>
+                                    <input type="text" maxlength="15" class="form-control reg-control" id="last-name" name="LastName" placeholder="Last name">
+                                </div>
+                                @*<span id="last-name-error" class="text-danger error-msg"></span>*@
+                               
+                                <div class="d-flex info mt-4">
+                                    <label for="id-country" class="label-country col-1 form-label mx-2">Email <span class="text-danger">*</span></label>
+                                    <input class="form-control reg-control" id="email" name="EmailId" placeholder="Email">
+                                </div>
+                                @*<span id="email-error" class="text-danger error-msg"></span>*@
+
+                                <div class="d-flex info mt-4">
+                                    <label for="Password" class="label-country col-1 form-label mx-2">Password <span class="text-danger">*</span></label>
+                                    <input type="password" class="form-control reg-control" id="password" name="Password" placeholder="Password">
+                                </div>
+                                @*<span id="password-error" class="text-danger error-msg"></span>*@
+
+                                <div class="d-flex info mt-4">
+                                    <label for="id-country" class="label-country text-nowrap col-1 form-label mx-2">Confirm Password <span class="text-danger">*</span></label>
+                                    <input type="password" class="form-control reg-control" id="confirm-password" placeholder="Confirm Password">
+                                </div>
+                                <div class="errorfield text-danger"></div>
+                                <div class="d-flex mt-1 password-check">
+                                    <input class="px-1 form-check-inputab-content" type="checkbox" id="show-password">
+                                    <label class="form-check-label ps-1" for="show-password">Show password</label>
+                                </div>
+                                @*<span id="confirm-password-error" class="text-danger error-msg"></span>*@
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <div id="submit-btn">
+                                    <button class="btn reg_btn px-4" id="register-button" type="button">Register</button>
+                                    <button id="regmodelbtn" type="button" class="btn px-4" style="display:none;cursor:not-allowed">
+                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                        Registering...
+                                    </button>
+                                </div>
+                            </div>
+                            <input type="hidden" id="hdnRole" value="" name="AppRoleId" />
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+

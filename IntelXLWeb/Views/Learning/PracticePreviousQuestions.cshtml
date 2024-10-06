@@ -1,0 +1,383 @@
+﻿@{
+    ViewData["Title"] = "Practice";
+}
+<style>
+    body {
+        scrollbar-width: thin;
+        scrollbar-color: transparent transparent;
+        z-index: 99;
+    }
+
+        body::-webkit-scrollbar {
+            width: 0;
+        }
+
+    .form-check-input:focus {
+        box-shadow: none;
+    }
+
+    .qus-ans {
+        background-color: #8CC713;
+        color: #fff;
+    }
+
+    .qus-ans-count {
+        background-color: #ebebeb;
+    }
+
+    .qus-details {
+        width: 110px;
+    }
+
+    .time-elapsed {
+        background-color: #1FB2E4;
+        color: #fff;
+    }
+
+    .time-status {
+        background-color: #ebebeb;
+        color: #c7c7c7
+    }
+
+    .smart-score {
+        background-color: #E76836;
+        color: #fff;
+    }
+
+    .smart-score-value {
+        background-color: #ebebeb;
+    }
+
+    .sub-btn {
+        background-color: #52B700;
+        color: #fff;
+    }
+
+        .sub-btn:hover {
+            background-color: #489e02;
+            box-shadow: 1px 1px 20px #52B700;
+            color: #fff;
+        }
+
+        .sub-btn:active {
+            transform: translateY(2px);
+        }
+
+    .tic-mark {
+        border: 2px solid #009416;
+        border-right: none;
+    }
+
+    .msg-success {
+        color: #009416;
+        border: 2px solid #009416;
+        border-left: none;
+    }
+
+    .success-msg {
+        display: none;
+    }
+
+    .content-last {
+        background-color: #ebffd6;
+        box-shadow: 2px 2px 20px #009416;
+        border: 1px solid #009416;
+    }
+
+    .last3-qus {
+        display: none;
+    }
+
+    .last3-head {
+        color: #1FB2E4;
+    }
+
+    .last-count {
+        width: 51.34px;
+        height: 92px;
+        color: #02c8fa;
+        font-size: 40px;
+        font-weight: 800;
+    }
+
+    .qus-head {
+        color: #ff0000;
+    }
+
+    .detail-head {
+        color: #45ba43;
+    }
+
+    .btn-outline-primary.active {
+        box-shadow: none;
+        background-color: #0067bb;
+        color: white;
+    }
+
+        .btn-outline-primary.active:focus {
+            box-shadow: none;
+        }
+
+    .prac_ans_container {
+        border: 1px solid #c4c4c4;
+        border-radius: 5px;
+    }
+
+    .ans-status {
+        border: 0.5px solid #ffb0ab;
+        border-radius: 5px;
+    }
+
+    .ans-details {
+        border: 0.5px solid #129e10;
+        border-radius: 5px;
+    }
+
+    .prac_ques_div {
+        background-color: #f2f2f2;
+    }
+
+    .practice-side {
+        min-width: 55vw;
+        border: 1px solid #d1d1d1;
+        border-radius: 5px;
+        box-shadow: 2px 2px 10px #e8e8e8 inset;
+    }
+
+    .prac_submit {
+        border-radius: 3px;
+        background-image: linear-gradient(to top,#9dc207, #769106);
+        color: #fff;
+    }
+
+        .prac_submit:hover {
+            border-radius: 5px;
+            background-image: linear-gradient(to top, #769106,#9dc207);
+            color: #fff;
+        }
+
+        .prac_submit:active, prac_gotit:active {
+            transform: translateY(3px);
+        }
+
+    .prac_gotit {
+        border-radius: 3px;
+        background-image: linear-gradient(to top,#38acec, #2d8abd);
+        color: #fff;
+    }
+
+        .prac_gotit:hover {
+            border-radius: 5px;
+            background-image: linear-gradient(to top, #2d8abd,#38acec);
+            color: #fff;
+        }
+
+    .fa-star {
+        color: #fcba03;
+    }
+
+    .prac_ques {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .modal-body {
+        height: 116px;
+    }
+
+    .non-member-toast {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 50px;
+        border-radius: 10px;
+        border: 3px solid #fdbebe;
+        background-color: #ffe3e3;
+    }
+
+    .member-txt {
+        color: #2da6ff;
+        border-bottom: 1px solid #2da6ff;
+    }
+
+    .membershiptoast {
+        display: none;
+    }  
+    .keep-practice-content{
+        min-height:350px;
+        border-radius:15px;
+    }
+    .btn-practice{
+        border-radius:5px;
+        color: #fff;
+    }
+    .practice-first {
+        
+        background: linear-gradient(315deg, rgba(19,149,0,1) 0%, rgba(40,208,16,1) 52%, rgba(0,195,22,1) 100%);
+    }
+    .practice-wrong{
+        background: linear-gradient(315deg, rgba(0,108,149,1) 0%, rgba(16,158,208,1) 52%, rgba(0,132,195,1) 100%);
+    }
+    .back-subtopic{
+        text-decoration:underline;
+        color: #757575;
+    }
+</style>
+
+<div class="container question-container">
+    <div class="d-flex justify-content-between">
+        <div class="success-msg">
+            <div class="d-flex p-3 mt-5">
+                <div class="tic-mark p-2">
+                    <img src="~/images/tic-image.png" />
+                </div>
+                <div class="msg-success display-4 p-2"><b></b></div>
+            </div>
+        </div>        
+        <div class="prac_ques_container mb-4" style="display: none">
+            @*<div class="membershiptoast">
+                <div class="non-member-toast px-4 py-2 mt-3">
+                    <div class="warning-img px-2"><img src="~/images/warning.png" width="25" /></div>
+                    <p class="m-0">You have reached your daily practice limit.<a class="member-txt text-nowrap" href="/Membership/Index"> Become a member</a> for unlimited practice.</p>
+                </div>
+            </div>*@
+            <div class="prac_ans_container p-4 m-3" style="display: none">
+                <div class="ans-status p-2 px-3 my-2">
+                    <h2 class=" qus-head mb-3">Incorrect, I'm sorry...</h2>
+                    <p class=""><b>The correct answer is:</b></p>
+                    <p class="p-2 prac_ans"></p>
+                </div>
+                <div class="ans-details  p-2 px-3">
+                    <h6 class="mb-3 detail-head">Explanation :</h6>
+                    <p class="p-2 mb-0 prac_ans_detail">
+                    </p>
+                </div>
+            </div>
+            <div class="removeablebtns">
+                <button type="button" class="btn  m-3 mx-5 px-4 prac_gotit" style="display: none">Got it</button>
+            </div>
+            <div class="practice-side m-3">
+                <div class="prac_ques_div p-2">
+                    <div class="">
+                        <p class="p-2 m-0 d-flex" style="text-align:justify;">
+                            <span><i class="fa-solid fa-star me-2"></i></span><span class="prac_ques"></span>
+                        </p>
+                    </div>
+                </div>
+                <hr class="m-0" />
+                <div class="prac_choices px-5 mb-3">                  
+                </div>
+            </div>
+            <div class="removeablebtns">
+                <button type="button" class="btn prac_submit m-3 mx-5 px-4">Submit</button>                
+            </div>           
+        </div>
+       
+        <div class="prac_emtyqns mx-auto my-auto" style="display:none;">
+            <div class="text-secondary"><h2>No questions found</h2></div>
+        </div>
+        <div class="prac_loading mx-auto my-auto">
+            <img src="~/images/practice_ques_ani.gif" />
+        </div>
+
+        <div class="qus-details px-2 text-center">
+            <div class="qus-ans p-1"><b>Questions answered</b></div>
+            <div class="qus-ans-count p-4">
+                <b><span class="completed_count">0</span><span>/<span class="total_count">0</span></span></b>
+            </div>
+            <div class="time-elapsed p-1"><b>Time elapsed</b></div>
+            <div class="time-status py-3">
+                <b>00 : 00 : 00</b>
+            </div>          
+        </div>
+    </div>
+</div>
+<div class="modal" id="practiceModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content practice-content overflow-hidden">
+            <div class="modal-header pt-1 pb-1" style="border-bottom:none;background-color:#0a58ca;">
+                <h3 class="modal-title text-light" id="ModalLabel">Incomplete Answer</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-2 d-flex justify-content-center align-items-center" style="transform: none; top: 0; left: 0; position: relative;">
+                <p class="ps-4 m-0">You did not finish the question. Do you want to go back to the question?</p>
+            </div>
+            <div class="btn ms-auto p-2 me-4">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Go back</button>
+                <button type="button" id="prac-modal-submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="indicationModel" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content keep-practice-content overflow-hidden">
+            <div class=" p-2 d-flex flex-column justify-content-center align-items-center" style="transform: none; top: 0; left: 0; position: relative;height:60%;background-color: #e8ffea70;">
+                <div class="image-section">
+                    <div class="d-flex justify-content-center"><img src="~/images/completed-img.png" width="150" height=" 150" /></div>
+                    <h2 class="text-center">Completed!</h2>
+                    <p class="ps-4 m-0">You have finished all questions available in this section.</p>                    
+                    <div class="text-center"><a class="back-subtopic" href="#">Back to subtopic!</a></div>
+                    <div class="text-center"><p class="text-center m-0">(or)</p></div>
+                </div>
+                <div class="p-2 pt- mb-3 d-flex justify-content-center align-items-center ">
+                    <button type="button" class="btn btn-practice px-3 me-1 practice-wrong">Recapitulate</button>
+                    <button type="button" class="btn btn-practice px-3 ms-1 practice-first">Practice Again</button>
+                </div>
+            </div>           
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/practice-common.js"></script>
+    <script>
+        let subjectId = @Html.Raw(ViewBag.SubjectId);
+        let year = @Html.Raw(ViewBag.Year);
+        let subTopicId = 0; 
+        let userId = @Html.Raw(ViewBag.UserId);
+        let answeredStatus = 2;
+        let isPrevious = `@Html.Raw(ViewBag.IsPrevious)`;             
+        let url="";
+        //var completedQuestions=1;       
+        if (isPrevious=="True") {
+            url = "/Learning/GetPreviousQuestions?subjectId=" + subjectId + "&year=" + year + "&userId=" + userId;
+        }
+        else{
+            url = "/Learning/GetProbableQuestions?subjectId=" + subjectId + "&year=" + year + "&userId=" + userId;
+        }       
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (data) {
+                questionsLength = data?.questions?.length;
+                count=data.count;
+                if (questionsLength !=0) {
+                    questions = data.questions;
+                    showQuestion(questions[0]);
+                    //scoreIncrement = 100 / questionsLength;
+                    subTopicId = questions[0].subTopicId;
+                    $(".total_count").html(count);
+                    ansCount += data.count - questionsLength;
+                    $(".completed_count").text(ansCount);
+                }
+                else {
+                    $(".prac_loading").remove();
+                    if (data.count != 0 && data.questions.length == 0) {
+                        $(".prac_emtyqns").html(`<div class="text-secondary"><h2>You have practiced all Question! <a class="practice-again" href="" style="color:#0d6efd;text-decoration: underline;">Practice again</a></h2></div>`).show();
+                    }
+                    else {
+                        $(".prac_emtyqns").show();
+                    }
+                    console.log('No questions availble to practice.');
+                }
+            },
+            error: function (error) {
+                console.error('Error fetching questions:', error);
+            }
+        });        
+    </script>
+   
+}
+

@@ -1,0 +1,82 @@
+﻿@{
+    Layout = "_LayoutTutor";
+    ViewData["Title"] = "Tutor Login";
+}
+@section Styles{
+    <link href="~/css/tutor.css" rel="stylesheet" />
+}
+<div class="container-fluid login-bg p-0">
+    <div class="login-box m-2 p-4">
+        <h2 class="text-center">Login as tutor</h2>
+        <div class="login">
+            <form id="loginForm" asp-controller="Users" asp-action="Login" method="post">
+                <div class="error-msg text-danger"></div>
+                <div class="form-group my-2">
+                    <label class="my-1">Email</label>
+                    <input type="email" id="email" maxlength="25" class="form-control login-form" placeholder="Enter an email" name="EmailId">
+                </div>
+                <div class="form-group my-4">
+                    <label class="my-1">Password</label>
+                    <input type="password" id="password" maxlength="20" class="form-control login-form" placeholder="Enter a password" name="Password">
+                </div>
+                <div class="form-check my-2">
+                    <input type="checkbox" class="form-check-inputab-content login-form" id="remember">
+                    <label class="form-check-label" for="remember">Remember</label>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button id="loginBtn" type="button" class="btn my-3 px-5 sub-btn">Login</button>
+                </div>
+            </form>
+            <div class="add-account"><a class="add-account-link" href="/Tutors/Register">Add an Account <i class="fa-solid fa-user-plus"></i></a></div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#loginBtn').on("click", function () {
+                let isValid = true;
+                $("input").each(function () {
+                    if (!$(this).val().trim()) {
+                        $(this).addClass("is-invalid");
+                        isValid = false;
+                    }
+                    else {
+                        $(this).removeClass("is-invalid");
+                    }
+                });
+                if (isValid) {
+                    $(".error-msg").text("");
+                    let id = $("#email").val().trim().toLowerCase();
+                    let password = $("#password").val();
+                    validateUser(id, password)
+                }
+                else {
+                    $(".error-msg").text("Enter an email and password")
+                }
+            });
+
+            function validateUser(emailId, password) {
+                let isPersist = $("#remember").is(':checked');
+                $.ajax({
+                    url: "/Tutors/ValidateUser?email=" + emailId + "&password=" + password,
+                    type: "POST",
+                    success: function (response) {
+                        console.log(response)
+                        if (!response.email) {
+                            $('.error-msg').text("Email id or password is invalid!");
+                        }                        
+                        else {
+                            window.location.href = "/Tutors/Signin?emailId=" + emailId + "&password=" + password + "&isPersist=" + isPersist;
+                        }
+
+                    }, error: function (xhr, status, error) {
+                        alert("Unable to login");
+                        console.error("Error: " + error);
+                    }
+                });
+            }           
+        });
+
+    </script>
+}

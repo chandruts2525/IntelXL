@@ -1,0 +1,166 @@
+html {
+    font-size: 14px;
+    margin: 0;
+    --themecolor: #008080;
+    --themecolor1: #147cc4;
+    position: relative;
+    min-height: 100%;
+}
+body {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+    z-index: 99;
+}
+    body::-webkit-scrollbar {
+        width: 0;
+    }
+
+    /*body::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+
+    body::-webkit-scrollbar-thumb {
+        background-color: transparent;
+    }*/
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+.main-content {
+    margin-top: 79px;
+    min-height: calc(100vh - 141.5px);
+}
+.form-control:focus, .form-control.is-invalid:focus, .form-check-input:focus {
+    box-shadow: none;
+}
+
+.btn:focus, .btn-success:focus, .btn-primary:focus, .btn-secondary:focus, .btn-info:focus, .btn-danger:focus, .btn-warning:focus, .btn-close:focus {
+    box-shadow: none;
+}
+
+.sitenav {
+    background-color: var(--themecolor);
+}
+
+.nav-link {
+    font-size: 20px;
+}
+
+.join-btn {
+    border-radius: 5px;
+    background-color: #e1e1e1;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+    a:hover {
+        color: #4ea601;
+    }
+
+/*.....Footer CSS.....*/
+footer {
+    position: static;
+    bottom: 0;
+    width: 100%;
+    padding: 20px 0;
+    background-color: var(--themecolor);
+}
+.utility-links {
+    text-align: center;
+    font-size: 15px;
+    color: #aca899;
+}
+    .utility-links a {
+        color: #fff;
+    }
+/*.....Login CSS.....*/
+
+
+.login-bg, .register-bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    min-height: calc(100vh - 141.5px);
+    background: linear-gradient(177deg,#d2f7f7 50%,#7be5e5 100%);
+}
+
+.login-box {
+    width: 25vw;
+    min-width: 350px;
+    background-image: linear-gradient(to bottom, #fff 80%, #ffff);
+    border-radius: 10px;
+    box-shadow: 2px 2px 15px #000;
+}
+.register-box {
+    position:relative;
+    width: 100%;
+    max-width: 600px;
+    min-width: 300px;
+    height: auto;
+    background-image: linear-gradient(to bottom, #fff 80%, #ffff);
+    border-radius: 10px;
+    box-shadow: 2px 2px 15px #000;
+}
+
+.sub-btn {
+    color: #fff;
+    background: linear-gradient(139deg,#00dbdb 50%,#009d9d 100%);
+}
+
+    .sub-btn:hover {
+        color: #fff;
+        background: linear-gradient(129deg,#009d9d 50%,#50ffff 100%);
+    }
+.add-qus {
+    color: #fff;
+    background-color: var(--themecolor);
+}
+
+    .add-qus:hover {
+        color: #fff;
+        background-color: #016161;
+    }
+.optionText p{
+    margin-bottom:0px;
+}
+@keyframes checkboxAnimation {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+input[type="checkbox"].isCorrectAns:checked {
+    animation: checkboxAnimation 0.5s ease;
+}
+#demo{
+    padding:5px;
+    margin:5px;
+}
+.btn:focus{
+    box-shadow:none;
+}
+.navbar-nav{
+    flex-direction:row;
+}
+.toast-top-center {
+    top: 10% !important;
+}
+#toast-container.toast-top-center > div {
+    width: 350px !important;
+    text-wrap: nowrap;
+    opacity:1;
+}

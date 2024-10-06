@@ -1,0 +1,421 @@
+﻿@using IntelXLDataAccess.Models;
+@model List<IntelXLDataAccess.Models.SubscriptionMaster>;
+@{
+    ViewData["Title"] = "Subscriptions";
+}
+@{
+    string[] borderColors = { "#fd9726", "#2acfd3", "#7a57ce", "#8bc427", "#f24422" };
+    int colorIndex = 0;
+    string[] backgroundColors = { "linear-gradient(128deg,#f7e5d2 50%,#f9af79 100%)", "linear-gradient(128deg,#d2f5ff 50%,#77d8f5 100%)", "linear-gradient(128deg,#daeeff 50%,#98cbff 100%)",
+    "linear-gradient(128deg,#f0f7e6 50%,#c4f17b 100%)","linear-gradient(128deg,#f7d9d9 50%,#ff8888 100%)" };
+    int gradient = 0;
+}
+<style>
+    .form-control:focus {
+        box-shadow: none;
+    }
+
+    .subscriptions-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 20px; /* Spacing between grid items */
+    }
+
+    .subscription-card {
+        border-radius: 5px;
+    }
+
+    .subscription-content {
+        max-height: 518px;
+        height: auto;
+        min-height: 440px;
+    }
+
+    .subscription-input {
+        margin-bottom: 10px; /* Adds space between each detail */
+    }
+
+    .detail {
+        display: flex;
+        flex-direction: column;
+    }
+
+        .detail label, .detail .display-value {
+            margin-bottom: 5px; /* Provides space between label and value */
+        }
+
+    .subscription-label, .modal-label {
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .list-container {
+        min-height: calc(100vh - 141.5px);
+        background-color: #daeeff5c;
+        padding: 42px;
+    }
+
+    .subscription-hdr {
+        color: mediumpurple;
+    }
+
+    .modal-input:focus {
+        border-color: mediumpurple;
+    }
+
+    .modal-input {
+        border-color: mediumpurple;
+    }
+
+    .btnAdd {
+        background-color: mediumpurple;
+    }
+
+    @@media screen and (max-width: 992px) {
+        .img-div {
+            display: none;
+        }
+    }
+
+    @@media screen and (max-width: 475px) {
+        .list-container {
+            padding: 10px;
+        }
+    }
+/*
+    .success-toast {
+        display: none;
+        position: fixed;
+        left: 50%;
+        transform: translate(-50%);
+        top: 10%;
+        z-index: 99;
+        color: #28802e;
+        background: #c4eac7;
+        border: 2px solid #37ed41;
+    }
+
+    .error-toast {
+        display: none;
+        position: fixed;
+        left: 50%;
+        transform: translate(-50%);
+        top: 10%;
+        z-index: 99;
+        color: #f54b4b;
+        background: #f5b3b3;
+        border: 1px solid #ed1313;
+    }
+*/
+    .modal.modal-static .modal-dialog {
+        -webkit-transform: none !important;
+        transform: none !important;
+    }
+    .toast-top-center {
+        top: 10% !important;
+    }
+</style>
+
+<section class=" container subscriptions_wrap ">
+
+    <div class="container list-container">
+        <div class="d-flex justify-content-center pb-3">
+            <div class="me-auto">
+                <a href="#" onclick="history.go(-1);" style="color: #207bff; text-decoration: none;"><i class="fa-solid fa-arrow-left-long me-2"></i>Back</a>
+            </div>
+          
+            <button class="btn ms-auto btn-warning  " data-bs-toggle="modal" data-bs-target="#addSubscription"><i class="fa-solid fa-plus"></i> Add a plan</button>
+        </div>
+        @if (Model != null && Model.Count > 0)
+        {
+            <div class="subscriptions-grid">
+                @foreach (var item in Model)
+                {
+                    var currencyArray = new[] { "USD", "INR" };                   
+                    var otherCurrencies = currencyArray.Except(new[] { item.CurrencyType }).ToArray();
+                    char currency = (item.CurrencyType == "USD") ? '$' : '₹';
+                    <form class="editSubscription">
+                        <input class="hdnSubscriptionId" type="hidden" name="SubscriptionId" value="@item.SubscriptionId">
+                        <input type="hidden" name="CourseId" value="@item.CourseId">
+                        <input type="hidden" name="ClassId" value="@item.ClassId">
+                        <div class="subscription-card" style=" border: 1px solid @borderColors[colorIndex];background-color:#fff">
+                            <div class="subscription-content p-3">
+                                <div class="subscription-input">
+                                    <div class="detail">
+                                        <label class="subscription-label" for="subscriptionName">Subscription Name</label>
+                                        <span class="display-value">@item.SubscriptionName</span>
+                                    </div>
+                                    <input type="text" name="subscriptionName" value="@item.SubscriptionName" maxlength="20" class="edit-value form-control edit-required" style="display: none;">
+                                </div>  
+                                <div class="subscription-input d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <div class="detail">
+                                            <label class="subscription-label" for="subscriptionAmount">Subscription Amount</label>
+                                            <span class="display-value">@currency @item.SubscriptionAmount </span>
+                                        </div>
+                                        <input type="number" name="subscriptionAmount" value="@item.SubscriptionAmount" maxlength="5" class="edit-value  form-control edit-required col-4" style="display: none;">
+                                    </div>
+
+
+                                    <div class="col-4 currency-edit" style="display: none;">
+                                        <label for="CurrencyType" class="subscription-label">Currency</label>
+                                        <select id="edt-currency" class=" form-control form-select" name="CurrencyType">
+                                            <option selected value="@item.CurrencyType">@item.CurrencyType</option>
+                                            @* <option value="@otherCurrencies[0]">@otherCurrencies[0]</option> *@
+                                        </select>
+                                    </div>
+                                </div>
+
+                                @*<div class="subscription-input">
+                                    <div class="detail">
+                                        <label class="subscription-label" for="subscriptionAmount">Subscription Amount</label>
+                                        <span class="display-value">@currency @item.SubscriptionAmount</span>
+                                    </div>
+                                    <input type="number" name="subscriptionAmount" value="@item.SubscriptionAmount" class="edit-value  form-control edit-required col-8" style="display: none;">*@
+                                   @* <select class="edit-value form-control form-select" name="CurrencyType" asp-items="@Html.GetEnumSelectList<IntelXLDataAccess.Models.CurrencyType>()" style="display: none;">
+                                    </select>
+                                </div>*@
+
+                                <div class="subscription-input">
+                                    <div class="detail">
+                                        <label class="subscription-label" for="subscriptionDuration">Subscription Duration (Month)</label>
+                                        <span class="display-value">@item.SubscriptionDuration</span>
+                                    </div>
+
+                                    <input type="number" name="subscriptionDuration" value="@item.SubscriptionDuration" maxlength="5" class="edit-value form-control edit-required" style="display: none;">
+                                </div>
+
+                                <div class="subscription-input">
+                                    <div class="detail">
+                                        <label class="subscription-label" for="coupon">Coupon</label>
+                                        <span class="display-value">@item.Coupon</span>
+                                    </div>
+                                    <input type="text" name="coupon" value="@item.Coupon" maxlength="15" class="edit-value form-control" style="display: none;" oninput="this.value = this.value.toUpperCase();">
+                                </div>
+
+                             @*   <div class="subscription-input">
+                                    <div class="detail">
+                                        <label class="subscription-label" for="subjectCode">Subject Code</label>
+                                        <span class="display-value">@item.SubjectCode</span>
+                                    </div>
+                                    <input type="text" name="subjectCode" value="@item.SubjectCode" class="edit-value form-control" style="display: none;">
+                                </div>*@
+                                <div class="subscription-input">
+                                    <div class="detail">
+                                        <label class="subscription-label" for="subscriptionDetails">Subscription Details</label>
+                                        <span class="display-value">@item.SubscriptionDetails</span>
+                                    </div>
+                                    <textarea type="text" name="subscriptionDetails" maxlength="40" class="edit-value form-control" style="display: none;">@item.SubscriptionDetails</textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer border-0">
+                                <button class="edit-button btn-sm btn px-3 btn-primary" type="button"><i class="fa-solid fa-pencil pe-1"></i>Edit</button>
+                                <button class="delete-button btn-sm btn btn-danger" type="button"><i class="fa-solid fa-trash-can pe-1"></i>Delete</button>
+                                <button type="reset" class="cancel-button btn  btn-sm px-3 btn-secondary" style="display: none;">Cancel</button>
+                                <button class="edt-save-button btn-sm px-4 btn btn-success" type="button" style="display: none;" disabled>Save</button>
+                            </div>
+                        </div>
+                    </form>
+                    colorIndex = (colorIndex + 1) % borderColors.Length;
+                    gradient = (gradient + 1) % backgroundColors.Length;
+                }
+            </div>
+        }
+        else
+        {
+            <partial name="_emptySubscription" />
+        }
+
+
+    </div>
+
+    <div class="modal" id="addSubscription" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addSubscriptionLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down">
+            <div class="modal-content">
+
+                <div class="modal-body p-0 d-flex">
+                    <div class="img-div" style="width: 45%;">
+                        <img src="~/images/subscription.png" style="width: 100%; height: 100%; border-radius: 0.3rem;" alt="Image Description" />
+                    </div>
+                    <div class="p-3 " style="width: 100%;">
+                        <div class="modal-header border-0">
+                            <h3 class="subscription-hdr">New Subscription Plan</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="p-4">
+                            <form id="addForm">
+
+                                <div class="mb-2">
+                                    <label for="SubscriptionName" class="form-label modal-label">Subscription Name<span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control modal-input input-val" maxlength="20" placeholder="Subscription Name" name="SubscriptionName" value="">
+                                </div>
+                              @*  <div class="mb-2">
+                                    <label for="SubscriptionAmount" class="form-label modal-label">Subscription Amount ($)<span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control modal-input input-val" placeholder="Subscription Amount" name="SubscriptionAmount">
+                                </div>*@
+                                <div class="mb-2 d-flex align-items-center justify-content-between">
+                                    <div class="col-7">
+                                        <label for="SubscriptionAmount" class="form-label modal-label">Subscription Amount<span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control modal-input input-val" maxlength="5" placeholder="Subscription Amount" name="SubscriptionAmount">
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="currency" class="form-label  modal-label">Currency<span class="text-danger">*</span></label>
+                                        <select id="courseDuretion" class="select-Currency form-control modal-input form-select" name="CurrencyType">
+                                            @* <option selected value="USD">USD</option> *@
+                                            <option value="INR">INR</option>
+                                        </select>
+                                     
+                                       
+                                      @* <select id="courseDuration" class="select-Currency form-control modal-input form-select" name="CurrencyType" asp-items="@Html.GetEnumSelectList<IntelXLDataAccess.Models.CurrencyType>()">
+
+                                       </select>*@
+
+                                     </div>
+                                </div>
+                                <div class="mb-2">
+                                    <label for="SubscriptionDuration" class="form-label modal-label">Subscription Duration (Month)<span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control modal-input input-val" maxlength="5" placeholder="Subscription Duration" name="SubscriptionDuration">
+                                </div>
+                               @* <div class="mb-2 d-flex align-items-center justify-content-between">
+                                    <div class="col-7">
+                                        <label for="SubscriptionDuration" class="form-label modal-label">Subscription Duration<span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control modal-input input-val" placeholder="Subscription Duration" name="SubscriptionDuration">
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="CourseDuretion" class="form-label  modal-label">Course<span class="text-danger">*</span></label>
+                                        <select id="courseDuretion" class="select-Duretion form-control modal-input form-select" name="CourseDuretion">
+                                            <option selected value="Month">Month</option>
+                                            <option value="Year">Year</option>
+                                        </select>
+                                    </div>
+                                </div>*@
+                                <div class="mb-2">
+                                    <label for="Coupon" class="form-label modal-label">Coupon Code</label>
+                                    <input type="text" class="form-control modal-input" maxlength="15" placeholder="Coupon Code" name="Coupon" oninput="this.value = this.value.toUpperCase();">
+                                </div>
+                               @* <div class="mb-2">
+                                    <label for="CourseId" class="form-label modal-label">Course<span class="text-danger">*</span></label>
+                                    <select id="courseSub" class="select-course form-control modal-input form-select" name="CourseId">
+                                        <option selected disabled value="">Select here...</option>
+                                    </select>
+                                </div>*@
+                                <div class="mb-2 d-flex align-items-center">
+                                   <div class="col-6 pe-1">
+                                        <label for="CourseId" class="form-label modal-label">Course<span class="text-danger">*</span></label>
+                                        <select id="courseSub" class="select-course form-control modal-input form-select" name="CourseId">
+                                            <option selected disabled value="">Select here...</option>
+                                        </select>
+                                   </div>
+                                    <div class="col-6 pe-1">
+                                        <label for="ClassId" class="form-label modal-label">Class<span class="text-danger">*</span></label>
+                                        <select id="classSub" class="select-class form-control modal-input form-select" name="ClassId" disabled>
+                                            <option selected disabled value="">Select here...</option>
+                                        </select>
+                                    </div>
+                                    @*<div class="col-4">
+                                        <label for="SubjectId" class="form-label modal-label">Subject</label>
+                                        <select id="SubjectSub" class="select-subject form-control modal-input form-select" disabled>
+                                            <option selected disabled value="">Select here...</option>
+                                        </select>
+                                    </div>*@
+                                </div>
+                                <div class="mb-2">
+                                    <label for="SubscriptionDetails" class="form-label modal-label">Subscription Details</label>
+                                    <textarea type="text" class="form-control modal-input" maxlength="40" placeholder="Subscription Details" name="SubscriptionDetails"></textarea>
+                                </div>
+                                <div class="modal-footer border-0 justify-content-between">
+                                    <div class="error-info text-danger py-1"></div>
+                                    <button type="button" class="btn px-4 btn-sm btnAdd text-white"> <i class="fa-solid fa-circle-plus pe-2"></i>Add</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="delDiscardModal" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered modal-lg" style="width: fit-content;">
+            <div class="modal-content">
+                <div class="modal-header text-white border-0 px-3 p-2" style="    background-color: #008080;">
+                    <h5 class="modal-title">Delete</h5>
+                    <button type="button" class="btn-close text-white float-end" id="cls-btn" style="box-shadow:none;" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body ps-20px pt-2 pb-0 d-flex align-items-center" style="height:70px;">
+                    <h5 class="text-secondary">Are you sure want to delete this subscription?</h5>
+                </div>
+                <div class="modal-footer border-0">
+                    <button id="ok-btnDiscard" type="button" style="background-color: #008080;" class="btn text-white btn-sm px-4 ">OK</button>
+                    <button id="cancel_Discard" type="button" class="btn btn-sm btn-secondary " data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script src="~/js/subscription.js"></script>
+    <script>
+        $(document).ready(function () {           
+            $('.btnAdd').on('click', function () {
+                let isValid = true;                
+                $(".input-val").each(function () {
+                    if ($(this).val().trim() === "") {
+                        $(this).addClass("is-invalid");
+                        isValid = false;
+                    }
+                });
+                if (!($(".select-course").val())) {                   
+                    $(".select-course,#classSub").addClass("is-invalid");
+                    isValid = false;                   
+                }
+               if (!($("#classSub").val())) 
+               {
+                    $("#classSub").addClass("is-invalid");
+                    isValid = false;
+                }
+                if (!isValid) {
+                    $(".error-info").text("*fields are required");
+                    return false;
+                }
+                else {
+                    $(".error-info").text("");
+                    $(".input-val").removeClass("is-invalid");
+                    let form = document.getElementById('addForm');
+                    let formData = new FormData(form);
+                    $.ajax({
+                        url: "/Subscriptions/AddSubscription",
+                        type: "POST",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (data) {
+                            if (data) {
+                                $("#addSubscription").modal("hide");
+                                showtoast("success", "Subscription added Successfully");
+                                setTimeout(function () {
+                                    window.location.href = "/Subscriptions/Index";
+                                }, 5000);
+                                
+                               
+                            }
+                            else {
+                                $("#addSubscription").modal("hide");
+                                showtoast("error", "Something went wrong. Please try again");
+                            }
+                        },
+                        error: function (error) {
+                            $("#addSubscription").modal("hide");
+                            showtoast("error", "Something went wrong. Please try again");
+                        }
+                    });
+                }
+            });
+            $('#addSubscription').on('hidden.bs.modal', function () {
+                $('input,select').removeClass('is-invalid');
+                $(".error-info").text("");
+                $("#addForm")[0].reset();
+            });
+        });        
+    </script>
+}

@@ -1,0 +1,337 @@
+﻿.form-control:focus, .form-control.is-invalid:focus, .form-check-input:focus {
+    box-shadow: none;
+}
+
+.btn:focus, .btn-success:focus, .btn-primary:focus, .btn-secondary:focus, .btn-info:focus, .btn-danger:focus, .btn-warning:focus, .btn-close:focus {
+    box-shadow: none;
+}
+
+li {
+    list-style: none;
+}
+
+
+
+.setup-progress, .setup-progress .ordinal, .setup-progress .step {
+    display: flex;
+    align-items: center;
+}
+
+    .setup-progress .subscription-creation-step.active .ordinal, .setup-progress .subscription-creation-step.completed .ordinal {
+        background-color: #00aeef;
+    }
+
+    .setup-progress .active.step .ordinal {
+        color: #fff;
+    }
+
+    .setup-progress .ordinal {
+        justify-content: center;
+        flex: 0 0 auto;
+        box-sizing: border-box;
+        width: 30px;
+        height: 30px;
+        border-radius: 100%;
+        font-size: 15px;
+    }
+
+    .setup-progress .subscription-creation-step .step-name, .setup-progress .subscription-creation-step:not(.active):not(.completed) .ordinal {
+        color: #00aeef;
+    }
+
+    .setup-progress .connector {
+        flex: 1 0 28px;
+        margin-left: 12px;
+        margin-right: 12px;
+        height: 1px;
+        background-color: #ddd;
+    }
+
+    .setup-progress .account-setup-step:not(.active):not(.completed) .ordinal {
+        border: 2px solid #fdb532;
+    }
+
+.subscription-page {
+    background: #f3fffe;
+    padding-left: calc((100% - 1050px)/ 2);
+    padding-right: calc((100% - 1050px)/ 2);
+    min-height: calc(100vh - 183.5px);
+}
+@media (min-width: 661px) {
+    .setup-progress .step-name {
+        font-size: 18px;
+    }
+}
+
+@media (min-width: 481px) {
+    .setup-progress .step-name {
+        margin-left: 12px;
+    }
+}
+
+@media (min-width: 975px) {
+    .subscription-page .setup-progress {
+        margin-left: auto;
+        margin-right: auto;
+        width: 760px;
+    }
+}
+
+.setup-progress .activation-confirmation-step:not(.active):not(.completed) .ordinal {
+    border: 2px solid #1eb7bd;
+}
+
+.setup-progress .activation-confirmation-step .step-name, .setup-progress .activation-confirmation-step:not(.active):not(.completed) .ordinal {
+    color: #1eb7bd;
+}
+/*...........Subscribtion form.............*/
+@media (min-width: 975px) {
+    .content-centered-page-layout, .subscription-creation-form {
+        padding-left: calc((100% - 1050px)/ 2);
+        padding-right: calc((100% - 1050px)/ 2);
+    }
+}
+
+.subscription-creation-form {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 32px;
+    padding-bottom:60px;
+    background: #f3fffe;
+}
+
+@media (min-width: 801px) {
+    .subscription-creation-form .payment-plan-field {
+        margin-right: 52px;
+    }
+}
+
+@media (min-width: 481px) {
+    .subscription-flow-form-group .description {
+        font-size: 24px;
+    }
+}
+
+.subscription-flow-form-group .description {
+    margin-bottom: 20px;
+    color: #25385e;
+    font-family: "Trebuchet MS",sans-serif;
+}
+.payment-plan-field {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   min-width: 310px;
+    height: 45px;
+    border: 1px solid #d1d1d1;
+    background-color: #fff;
+    border-radius: 50px;
+}
+
+.des-text {
+    color: #828282;
+    font-size:15px;
+}
+.payment-plan-field .content {
+    display: flex;
+}
+
+.payment-plan-field .subscription-flow-radio-button-field:nth-child(1) {
+    border-radius: 50px;
+}
+
+.payment-plan-field .subscription-flow-radio-button-field.active {
+    color: #fff;
+    background-color: #1eb7bd;
+}
+
+    .payment-plan-field .subscription-flow-radio-button-field {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+        min-width: 150px;
+        height: 35px;
+        background-color: #fff;
+        cursor: pointer;
+        outline: 0;
+    }
+
+.subscription-flow-radio-button-field .input {
+    display: none;
+}
+
+.subscription-flow-body-plaintext {
+    color: #3a3a3a;
+}
+
+.subscription-flow-body-plaintext, .subscription-flow-body-text, .subscription-flow-text-input-like {
+    font-size: 14px;
+    font-family: Verdana,sans-serif;
+}
+
+
+.payment-plan-field .subscription-flow-radio-button-field.with-saving-banner {
+    position: relative;
+}
+
+.payment-plan-field .subscription-flow-radio-button-field:nth-child(2) {
+    border-radius: 50px;
+}
+
+
+.payment-plan-field .subscription-flow-radio-button-field.with-saving-banner:not(.active)::after {
+    top: -17px;
+    right: -8px;
+}
+
+.payment-plan-field .subscription-flow-radio-button-field.with-saving-banner::after {
+    display: block;
+    content: '';
+    position: absolute;
+    width: 79px;
+    height: 29px;
+    background-size: 100%;
+}
+
+.child-count-field .content {
+    display: flex;
+    align-items: center;
+}
+
+.child-count-stepper {
+    display: inline-flex;
+    align-items: center;
+    
+    border-radius: 6px;
+    outline: 0;
+    overflow: hidden;
+}
+
+    .child-count-stepper .step-button {
+        transition: all .1s ease-in-out;
+        box-sizing: border-box;
+        padding: 0;
+        cursor: pointer;
+        outline: 0;
+        border: none;
+        width: 46px;
+        height: 44px;
+        background-color: rgba(255,255,255,.65);
+    }
+
+.subscription-flow-body-plaintext {
+    color: #3a3a3a;
+}
+
+.child-count-stepper .child-count {
+    align-self: stretch;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    width: 61px;
+    background-color: #fff;
+}
+
+.child-count-field .child-rate {
+    margin-left: 12px;
+}
+
+.child-rate {
+    font-size: 12px;
+    font-family: Verdana,sans-serif;
+    color: #7f7f7f;
+}
+
+.subscription-creation-form > :not(.payment-plan-field):not(.child-count-field) {
+    width: 100%;
+}
+
+.subscription-creation-form .product-package-fieldset {
+    margin-top: 40px;
+}
+
+
+
+
+.subscription-creation-form .subscription-creation-form-column-swap-drop {
+    margin-top: 36px;
+}
+
+.subscription-creation-form-column-swap-drop {
+    display: flex;
+    flex-direction: column;
+    border-radius: 6px;
+    background-image: linear-gradient(to right, #1cc967,#1cc9c9);
+    overflow: hidden;
+    color:#fff;
+}
+@media (min-width: 481px) {
+    .subscription-creation-form-column-swap-drop .description {
+        font-size: 24px;
+    }
+}
+.form-control:focus, .form-select:focus {
+    box-shadow: none;
+}
+
+.card:hover {
+    transform: scale(1.02);
+    /*cursor:pointer;*/
+}
+.decre-btn:hover,.incre-btn:hover {
+    background-color: #1eb7bd;
+}
+.package-selection-card-btn, .subscription-flow-primary-button {
+    transition: transform 0.3s ease;
+}
+
+    .package-selection-card-btn:hover, .subscription-flow-primary-button:hover {
+        transform: scale(1.1);
+    }
+.SubscriptionId{
+    display:none;
+}
+.owl-stage-outer {
+    padding:1rem 0;
+}
+/* Custom styles for Owl Carousel navigation buttons */
+.owl-carousel .owl-nav {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+}
+
+.owl-prev, .owl-next {
+    background-color: #e0dfdf91;
+    color: #848484;
+    font-size: 18px;
+    padding: 10px;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%; 
+    cursor: pointer;
+}
+
+.owl-prev {
+    left: -10px; 
+}
+
+.owl-next {
+    right: -10px; 
+}
+.Join-Container {
+    border: 1px solid #1eb7bd;
+    border-radius:10px;
+}
+#course-selection {
+    border: 1px solid #1eb7bd;
+}

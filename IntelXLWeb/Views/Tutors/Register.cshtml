@@ -1,0 +1,65 @@
+﻿@{
+    Layout = "_LayoutTutor";
+    ViewData["Title"] = "Tutor Register";
+}
+@section Styles{
+    <link href="~/css/tutor.css" rel="stylesheet" />
+}
+<div class="container-fluid register-bg p-0">
+    <div class="register-box m-2 p-3">
+        <h2 class="text-center">Sign up as a tutor</h2>
+        <div class="register">
+            <div class="">
+                <form id="registrationform" method="post" asp-controller="Tutors" asp-action="Register" class="fm-register box-shadow-container m-0">
+                    <div class="input input-sm name-inputs">
+                        <div class="d-flex info">
+                            <label for="id-country" class="label-country col-1 form-label mx-2">First Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control reg-form" id="first-name" name="FirstName" placeholder="Enter a first name">
+
+                        </div>
+                        <div class="d-flex mt-3 info">
+                            <label for="id-country" class="label-country col-1 form-label mx-2">Last Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control reg-form" id="last-name" name="LastName" placeholder="Enter a last name">
+
+                        </div>
+                        <div class="d-flex info mt-3">
+                            <label for="id-country" class="label-country col-1 form-label mx-2">Email <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control reg-form" id="email" name="Email" placeholder="Enter a email (intelxl@gmail.com)">
+                        </div>
+                       @* <div class="d-flex info mt-3">
+                            <label for="id-country" class="label-country col-1 form-label mx-2">Phone<span class="text-danger">*</span></label>
+                            <input type="number" class="form-control reg-form" id="phone" name="PhoneNumber" placeholder="Enter a phone number">
+                        </div>
+                        <div class="d-flex info mt-3">
+                            <label for="id-country" class="label-country col-1 form-label mx-2">ShortBio <span class="text-danger">*</span></label>
+                            <textarea type="email" class="form-control reg-form" id="shortBio" name="ShortBio" placeholder="Describe your journey briefly.."></textarea>
+                        </div>*@
+                        <div class="d-flex info mt-3">
+                            <label for="Password" class="label-country col-1 form-label mx-2">Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control reg-form" id="password" name="Password" placeholder="Enter a password">
+                        </div>
+
+                        <div class="d-flex info mt-3">
+                            <label for="id-country" class="label-country text-nowrap col-1 form-label mx-2">Confirm Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control reg-form" id="confirm-password" placeholder="Re-enter your password">
+                        </div>
+                        <div class="d-flex info-check p-2">
+                            <input type="checkbox" id="show-password"> <label class="ps-2" for="show-password"> Show password</label>
+                        </div>
+                        <div class="error-info text-danger py-1"></div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button id="register-button" type="button" class="btn my-3 px-5 sub-btn">Register</button>
+                    </div>
+                </form>
+                <div class="p-2">Already have an account?<a class="add-account-link" href="/Tutors/Login">&nbsp;Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/js/tutor.js"></script>
+}

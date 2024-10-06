@@ -1,0 +1,173 @@
+﻿@model IntelXLWeb.ViewModel.SubjectBasedClassesViewModel;
+<link href="https://fonts.googleapis.com/css2?family=Schoolbell&display=swap" rel="stylesheet">
+@*<link href="~/css/style.css" rel="stylesheet" />*@
+@{
+    string[] backgroundColors = { "#fd9726", "#2acfd3", "#7a57ce", "#8bc427", "#f24422", "#587bf8", "#f48521", "#15a085", "#3aa9fc", "#fece36", "#2ac", "#2cce8c", "#f96855", "#a95edb" };
+    int colorIndex = 0;
+    string[] img = { "/images/books (1).png" };
+    int Icons = 0;
+}
+<div class="container">
+    <nav class="nav nav-pills nav-fill">
+        @if (Model.Subjects != null)
+        {
+            @foreach (var subject in Model.Subjects)
+            {
+                var border = subject.SubjectName?.TrimEnd() == Model.SubjectName?.TrimEnd() ? "border-bottom:2px solid #009491;border-radius:0px;" : "";
+                <a class="nav-item nav-link sub-nav-item subject-navigator" href="#" style="@border" data-name="@subject.SubjectName">
+                    @subject.SubjectName
+                </a>
+                Icons = (Icons + 1) % img.Length;
+            }
+        }
+        @*<a class="nav-item nav-link sub-nav-item" style="color:#009491;" href="#"><img src="~/images/flags.png" style="height:20px;width:20px;" /> National curriculum</a>
+        <a class="nav-item nav-link sub-nav-item" style="color:#009491;" href="#"><img src="~/images/award.png" style="height:20px;width:20px;" /> Awards</a>*@
+    </nav>
+</div>
+<div class="container-fluid" style="background-color:#edffff;">
+    <div class="container d-flex ViewBy-Container">
+        <div class="mx-2 py-2">View by :</div>
+        <div class="mx-2 px-2 py-2 active" style="background-image:linear-gradient(to bottom, #edffff,#c2ffd6);color:#000;border-bottom:2px solid #0000ff;">
+            Classes
+        </div>
+       @* <div class="mx-2 px-2 py-2 topic_navigator"><a class="topic_click" style="color:#38acec">Topics</a></div>*@
+    </div>
+</div>
+<section class="container-fluid topics pb-2 align-items-center" style="position: relative;">
+    <div class="gradient-overlay"></div>
+    <div class="d-flex align-items-center justify-content-center">
+        <div class="text-center my-4">
+            <h1 class="display-5" style="font-family: 'Schoolbell', cursive;text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);position:relative;z-index:999;">
+                IntelXL @Model.SubjectName
+            </h1>
+        </div>
+
+    </div>
+    <div class="text-center my-3" style="position:relative;z-index:999;">
+        <p>
+            On IntelXL, @Model.SubjectName.ToLower() is more than just numbers. With unlimited questions,
+            engaging item types, and real-world scenarios,<br /> IntelXL helps learners
+            experience math at its most mesmerizing!
+        </p>
+    </div>
+
+</section>
+
+<div class="container-fluid topics-content" style="background-image:linear-gradient(to top, #fff,#c4e7fa);">
+    @if (Model.Classes != null)
+    {
+        foreach (var item in Model.Classes)
+        {
+            int subTopicsCount = 0;
+            int skillsCount = 0;
+            <div class="container d-flex justify-content-center ">
+                <div class="d-flex my-4 p-2 content-card rounded-2 shadow-lg" style="border-left:15px solid @backgroundColors[colorIndex]; ">
+                    <div class="col-10 skill-content">
+                        <div class="link-div">
+                            <div class="btn col topic-btn" onclick="allSkills('@item.ClassId')">
+                                <h4 style="color:@backgroundColors[colorIndex]; margin: 0;">@item.ClassName</h4>
+
+                            </div>
+                            <div class="col-3 skill-link-col">
+                                @if (Model.SubTopics != null)
+                                {
+                                    foreach (var subtopic in Model.SubTopics)
+                                    {
+                                        if (item == subtopic.Key)
+                                        {
+                                            skillsCount = subtopic.Value.Count();
+                                        }
+                                    }
+                                }
+                                <a class="skills-link" style="color:@backgroundColors[colorIndex];cursor:pointer;" onclick="allSkills('@item.ClassId')">See all @skillsCount skills >></a>
+                            </div>
+
+                        </div>
+                        <div class="d-flex px-2">
+                            <div>
+                                <p class="mb-0 text-wrap subtitles_wrap " style="color:#5c5c5c;line-height:20px;font-size:14px; max-height:40px;overflow:hidden;">
+                                    Includes:
+                                    @if (Model.SubTopics != null)
+                                    {
+                                        foreach (var subtopic in Model.SubTopics)
+                                        {
+                                            if (item == subtopic.Key)
+                                            {
+                                                foreach (var value in subtopic.Value.Take(6))
+                                                {
+                                                    <span class="contentSpan" style="visibility:hidden;">
+                                                        @if (value != subtopic.Value.First())
+                                                        {
+                                                            <span> |</span>
+                                                        }
+                                                        <span class="child-item" href="/Learning/Practice?subTopicId=@value.SubTopicId">@value.SubTopic</span>
+                                                    </span>
+                                                }
+                                                subTopicsCount = subtopic.Value.Count();
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted"> No subtopics available</span>
+                                    }
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="skills-btn col-2 justify-content-center align-items-center">
+                        <button type="button" class="btn px-2 justify-content-center align-items-center skill-btn" onclick="allSkills('@item.ClassId')" style="background-color:@backgroundColors[colorIndex]; color:#fff;font-size:14px;">
+                            See all @subTopicsCount skills
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+            @* Increment the colorIndex and loop back to the beginning if it exceeds the array length *@
+            colorIndex = (colorIndex + 1) % backgroundColors.Length;
+        }
+    }
+</div>
+
+<script>
+    $(document).ready(function(){
+        updateSkillNodeTextWrapping();
+        window.addEventListener("resize", debounceUpdateTextWrapping(200));       
+    });
+
+    function debounceUpdateTextWrapping(e) {
+        var t;
+        return function () {
+            clearTimeout(t),
+                t = setTimeout(function () {
+                    t = null,
+                        updateSkillNodeTextWrapping()
+                }, e)
+        }
+    }
+
+    function updateSkillNodeTextWrapping() { 
+        var e = document.querySelectorAll(".content-card");
+        //Iterating over each content card
+        Array.prototype.forEach.call(e, function (e) {
+            var t = e.querySelector(".subtitles_wrap")
+                //Getting bottom position of subtitles_wrap
+                , i = t.getBoundingClientRect().bottom
+                , o = t.querySelectorAll(".contentSpan")
+                , n = -1
+                , r = 0;
+            //Iterating over each content span
+            for (Array.prototype.forEach.call(o, function (e, index) { 
+                "visible" === e.style.visibility && (n = index),
+                    e.getBoundingClientRect().bottom <= i && (r = index)                  
+            }); n > r;)
+                o[n].style.visibility = "hidden",
+                    n--;
+            for (; r > n;)
+                o[r].style.visibility = "visible",
+                    r--;  
+        });
+    }
+</script>
+

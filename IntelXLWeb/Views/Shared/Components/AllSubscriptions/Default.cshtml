@@ -1,0 +1,100 @@
+﻿@model List<IntelXLDataAccess.Models.SubscriptionMaster>;
+@{
+    string[] colors = { "#66c", "#1eb7bd", "#5ab24f", "#f39317", "#00a1de", "#8d33aa", "#185f75" };
+    int i = 0;   
+}
+
+<div class=" owl-carousel owl-theme d-flex justify-content-center">
+    @if (Model != null && Model.Count > 0)
+    {
+        foreach (var item in Model)
+        {
+            char currency = (item.CurrencyType == "USD") ? '$' : '₹';
+
+            <div class="col">
+                <div class="card package-selection-card mx-2">
+
+                    <div class="card-body" style="border:1px solid @colors[i];border-radius:5px;box-shadow:2px 2px 8px @colors[i]">
+                        <h5 class="card-title p-3 text-center" style="background-color:@colors[i];color:#fff;border-radius:5px;">@item.SubscriptionName</h5>
+                        <div class="p-2" style="height:20vh;">
+                            <p class="card-text"><b>@item.Course?.CourseName</b> (@item.Class?.ClassName)</p>
+                            @if (item.Class?.SubjectMasters != null)
+                            {
+                                @foreach (var data in item.Class.SubjectMasters.Take(3))
+                                {                                  
+                                    <p class="card-text"><span style="display: inline-block; margin-right: 5px;">&bull;</span>@data.SubjectName</p>
+                                }
+                                if (item.Class?.SubjectMasters.Count() > 3)
+                                {
+                                    
+                                }
+                                @*<span>+ @(item.Class?.SubjectMasters.Count - 3) more</span>*@
+                            }
+                            
+                            @* <p class="card-text"><b>Language arts</b> (pre-K to 12)</p>
+                            <p class="card-text"><b>Science</b> (Grades to 8)</p>
+                            <p class="card-text"><b>Social studies</b> (Grades to 8)</p>*@
+                        </div>
+                        <div class="text-center">
+                            <div class="subscription-price"> <h2><b>@currency <span class="amt">@item.SubscriptionAmount</span></b></h2></div>
+                            <input type="hidden" class="hdnprice" value="@item.SubscriptionAmount">
+                            @* <div class="btn px-5 package-selection-card-btn" style="background-color:@colors[i];color:#fff;">Pay <input type="radio" class="SubscriptionId" value="@item.SubscriptionId" name="Sub_Id" /></div> *@
+                           
+                           @if (item == Model.FirstOrDefault())
+                            {
+                                <div  class="btn px-5 package-selection-card-btn" style="background-color:@colors[i];color:#fff;">Selected</div>
+                                <input type="radio" class="SubscriptionId" value="@item.SubscriptionId" name="Sub_Id" checked />
+                            }
+                            else
+                            {
+                                <div class="btn px-5 package-selection-card-btn" style="background-color:@colors[i];color:#fff;">Select</div>
+                                <input type="radio" class="SubscriptionId" value="@item.SubscriptionId" name="Sub_Id" />
+                            }
+                        </div>
+                                     
+                    </div>
+                </div>
+            </div>
+            i = (i + 1) % colors.Length;
+        }
+    }
+    else
+    {
+        <div class="NoPackage-Container" style="color:#b7b7b7;">
+           
+            <div class="d-flex justify-content-center">
+                <img class="" src="~/images/emptyIcon.png" style="width:150px;height:150px;" />
+                
+            </div>
+            <h5 class="text-center">No packages found!</h5>
+         
+        </div>
+
+
+    }
+</div>
+    <link href="~/lib/owlcarousel2/assets/owl.carousel.min.css" rel="stylesheet" />
+    <script src="~/lib/owlcarousel2/owl.carousel.min.js"></script>
+    <script>
+        $('.owl-carousel').owlCarousel({
+            loop: false,
+            margin: 30,
+            nav: true,
+            navText: ['<div class="owl-prev"><i class=" fas fa-chevron-left"></i></div>', '<div class="owl-next"><i class=" fas fa-chevron-right"></i></div>'],
+            autoplay: false,
+            items: 3,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 2
+                },
+                1000: {
+                    items: 3
+                }
+            }
+        })
+
+    </script>
+

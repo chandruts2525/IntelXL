@@ -1,0 +1,194 @@
+﻿@{
+    ViewData["Title"] = "Certificate";
+}
+<style>
+    .certificate-banner {
+        position:relative;
+        object-fit: fill;
+        height:350px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+
+    .certificate-content {
+        padding-bottom: 42px;
+        margin-right: 50%;
+        min-width: 320px;
+        width: 100%;
+    }
+
+
+    .banner-image {
+        height: 400px;
+        position: absolute;
+        width: 100%;
+    }
+
+    .medal img {
+        width: 100px;
+        height: 80px;
+    }
+
+    .superb-text {
+        font-size:4rem;
+        padding-top: 15px;
+        font-style: italic;
+        color: #10708f;
+        font-weight: 1000;
+        font-family: auto;
+    }
+
+    .certificate-text {
+        padding: 1vw;
+    }
+
+    .certificate-para {
+        color: #10708f;
+    }
+
+    .certificate-result {
+        left: 50%;
+        transform: translate(-50%,-50%);
+        bottom:auto;
+        top: 100%;
+        position: absolute;
+    }
+
+    h6 {
+        font-size: 1rem;
+        color: #10708f;
+    }
+
+    .result-container {
+        width: clamp(30vw, 70vw, 770px);
+        background-color: #a779e5;
+        border-radius: 8px;
+        color: #fff;
+    }
+
+    .smart-score {
+        border-right: 1px solid #0e07e3;
+        border-left: 1px solid #0e07e3;
+    }
+    .explore-text {
+        font-size: 30px;
+        color: #707070;
+    }
+
+    .choose-explore, .learn-explore {
+        border-radius: 5px;
+        background-color: #b3deff;
+    }
+
+    .recommend-btn {
+        color: #fff;
+        background-image: linear-gradient(to right, #068a04, #09cf06);
+    }
+
+        .recommend-btn:hover {
+            color: #fff;
+            background-image: linear-gradient(to right, #09cf06, #068a04);
+        }
+    
+
+    .certificate-page{
+        min-height: calc(100vh - 183.5px);
+    }
+
+    .certificate-body{
+        min-height: calc(100vh - 533.5px);
+    }
+
+    @@media screen and (max-width: 768px) {
+        .certificate-page {
+            min-height: calc(100vh - 103px);
+        }
+
+        .certificate-body {
+            min-height: calc(100vh - 453px);
+        }
+    }
+</style>
+@{
+    string[] imgUrl = { "url('/images/certificate-banner-1.png')", "url('/images/certificate-banner-4.png')", "url('/images/certificate-banner-2.png')", "url('/images/certificate-banner-5.png')", "url('/images/certificate-banner-6.png')" };
+    string[] superbtext = { "Superb", "Dynamite", "Outstanding", "Marvelous", "Fantastic"};
+    Random rand = new Random();
+    int randomIndex = rand.Next(imgUrl.Length);
+    string randomImageUrl = imgUrl[randomIndex];
+
+    int randomTextIndex = rand.Next(superbtext.Length);
+    string randomSuperbText = superbtext[randomTextIndex];
+}
+<div class="container-fluid p-0 certificate-page">
+    <section class="certificate-banner p-0" style="background-image:@randomImageUrl;">
+        <div class=" certificate-content text-center">
+            <h2 class="superb-text d-flex justify-content-center">
+                @randomSuperbText!
+            </h2>
+            <h4 class="certificate-para">You have mastered the skill and earned a gold medal.</h4>
+            <div class="medal"><img src="~/images/medal1.gif" /></div>
+            <div class=""><h6>Win more prizes!</h6></div>
+            <div class=" btn prac-btn" type="button"> <a href="/Learning/Practice?subTopicId=@ViewBag.SubTopicId&classId=@ViewBag.ClassId"><h6>Continue practicing >></h6></a></div>
+
+        </div>
+        <div class="container-fluid certificate-result">
+            <div class="container result-container d-flex justify-content-center p-2">
+                <div class="time-spent text-center mx-sm-3 mx-md-5">
+                    <div><i class="fa-solid fa-stopwatch fa-lg"></i></div>
+                    <div><b>Time spent</b></div>
+                    <div>
+                        <span>@ViewBag.Time</span>
+                    </div>
+                </div>
+                <div class="smart-score text-center mx-2 px-sm-3 px-md-5">
+                    <div><i class="fa-regular fa-lightbulb fa-lg"></i></div>
+                    <div><b>Smart score</b></div>
+                    <div>@ViewBag.Score</div>
+                </div>
+                <div class="qus-correct text-center mx-sm-3 mx-md-5">
+                    <div><i class="fa-regular fa-circle-check fa-lg"></i></div>
+                    <div><b>Questions correct</b></div>
+                    <div>@ViewBag.Result</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="certificate-body">
+       
+        <div class="container-fluid explore-more">
+            <div class="d-flex pt-5 justify-content-center">
+                <div class="text-center">
+                    <div class="explore-text my-">Explore more skills to practice</div>
+                    <div class="d-flex my-3">
+                        <div class="choose-explore d-flex p-2 mx-2">
+
+                            <div><i class="fa-regular fa-gem"></i></div>
+                            <a href="/Learning/Math"> <div class="mx-2"> Choose the number that you hear - up to 3</div></a>
+
+                        </div>
+                        <div class="learn-explore d-flex p-2 mx-2">
+
+                            <div><i class="fa-regular fa-gem"></i></div>
+                            <a href="/Learning/Math"><div class="mx-2"> Learn to count 3</div></a>
+
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center my-3">
+                        <div class="choose-explore d-flex p-2 mx-2">
+
+                            <div><i class="fa-regular fa-gem"></i></div>
+                            <a href="/Learning/Math"><div class="mx-2">Identify number - up to 5</div></a>
+
+                        </div>
+                    </div>
+                    <a><div class="btn px-4 my-3 recommend-btn" type="button">Go to recommendations</div></a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+

@@ -1,0 +1,416 @@
+﻿@model IntelXLDataAccess.Models.QuestionMaster;
+@{
+    ViewData["Title"] = "Edit Question";
+}
+
+@section Styles{
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/lib/summernote/summernote-lite.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-multiselect/css/bootstrap-multiselect.min.css" rel="stylesheet" />
+    <style>
+        .hide-div {
+            display: none;
+        }
+        .multiselect-container {
+            max-height: 115px;
+            overflow-y: auto;
+        }
+    </style>    
+}
+<div class="container pt-5 container-2">
+    <div class="">
+        <form>
+            <div class="back-btn me-auto" role="button" onclick="goBackWithSelectedOptions()"><h6><i class="fa-solid fa-arrow-left-long"></i> Back</h6></div>
+            <div class="d-flex justify-content-between px-5">
+                <div class="breadcrumb my-0"></div>
+                <div class="topic-drop-down d-flex align-items-center">
+                    <label class="form-label text-secondary" style="white-space: nowrap;"><b>Change Topic:&nbsp;</b></label>
+                    <select class="form-select text-secondary" id="topic">
+                    </select>
+                </div>
+                <div class="subtopic-drop-down d-flex align-items-center">
+                    <label class="form-label text-secondary" style="white-space: nowrap;"><b>Change Subtopic:&nbsp;</b></label>
+                    <select class="form-select text-secondary" id="subtopic">
+                    </select>
+                </div>
+            </div>
+
+
+           
+            <div id="formPage-2" class="p-5 pt-2">
+                @* <div class="container">
+                <div class="row">
+                <div class="col-md-4 col-sm-6 mb-3">
+                <div class="clone-content">
+                <div class="p-4 d-flex justify-content-between" role="button" data-bs-toggle="collapse" data-bs-target="#collapseCourse" aria-expanded="false" aria-controls="collapseCourse">
+                Course
+                <div class="accordion-icon"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="collapse pb-3" id="collapseCourse">
+                <div class="list-group ms-3">
+                <div class="clone-item d-flex py-2 mt-2">
+                <input type="checkbox" class="form-check-input ix-clone-checkbox" name="cloneItem" id="tnpse" />
+                <label class="form-check-label ms-4" for="tnpse">TNPSE</label>
+                </div>
+                <div class="clone-item d-flex py-2 mt-2">
+                <input type="checkbox" class="form-check-input ix-clone-checkbox" name="cloneItem" id="tnusrb" />
+                <label class="form-check-label ms-4" for="tnusrb">TNUSRB</label>
+                </div>
+                <div class="clone-item d-flex py-2 mt-2">
+                <input type="checkbox" class="form-check-input ix-clone-checkbox" name="cloneItem" id="banking" />
+                <label class="form-check-label ms-4" for="banking">Bank Exam</label>
+                </div>
+                <div class="clone-item d-flex py-2 mt-2">
+                <input type="checkbox" class="form-check-input ix-clone-checkbox" name="cloneItem" id="ssc" />
+                <label class="form-check-label ms-4" for="ssc">SSC</label>
+                </div>
+                <!-- Add more course items as needed -->
+                </div>
+                </div>
+                </div>
+                </div>
+                <div class="col-md-4 col-sm-6 mb-3">
+                <div class="clone-content">
+                <div class="p-4 d-flex justify-content-between" role="button" data-bs-toggle="collapse" data-bs-target="#collapseClass" aria-expanded="false" aria-controls="collapseClass">
+                Class
+                <div class="accordion-icon"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="collapse pb-3" id="collapseClass">
+                <div class="list-group ms-3">
+                <div class="clone-item d-flex py-2 mt-2">
+                <input type="checkbox" class="form-check-input ix-clone-checkbox" name="cloneItem" id="class10" />
+                <label class="form-check-label ms-4" for="class10">Class 10</label>
+                </div>
+                <div class="clone-item d-flex py-2 mt-2">
+                <input type="checkbox" class="form-check-input ix-clone-checkbox" name="cloneItem" id="class11" />
+                <label class="form-check-label ms-4" for="class11">Class 11</label>
+                </div>
+                <div class="clone-item d-flex py-2 mt-2">
+                <input type="checkbox" class="form-check-input ix-clone-checkbox" name="cloneItem" id="class12" />
+                <label class="form-check-label ms-4" for="class12">Class 12</label>
+                </div>
+                <!-- Add more class items as needed -->
+                </div>
+                </div>
+                </div>
+                </div>
+                <div class="col-md-4 col-sm-6 mb-3">
+                <div class="clone-content">
+                <div class="p-4 d-flex justify-content-between" role="button" data-bs-toggle="collapse" data-bs-target="#collapseSubject" aria-expanded="false" aria-controls="collapseSubject">
+                Subjects
+                <div class="accordion-icon"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="collapse pb-3" id="collapseSubject">
+                <div class="list-group ms-3">
+                <div class="clone-item d-flex py-2 mt-2">
+                <input type="checkbox" class="form-check-input ix-clone-checkbox" name="cloneItem" id="maths" />
+                <label class="form-check-label ms-4" for="maths">Maths</label>
+                </div>
+                <div class="clone-item d-flex py-2 mt-2">
+                <input type="checkbox" class="form-check-input ix-clone-checkbox" name="cloneItem" id="english" />
+                <label class="form-check-label ms-4" for="english">English</label>
+                </div>
+                <div class="clone-item d-flex py-2 mt-2">
+                <input type="checkbox" class="form-check-input ix-clone-checkbox" name="cloneItem" id="science" />
+                <label class="form-check-label ms-4" for="science">Science</label>
+                </div>
+                <div class="clone-item d-flex py-2 mt-2">
+                <input type="checkbox" class="form-check-input ix-clone-checkbox" name="cloneItem" id="tamil" />
+                <label class="form-check-label ms-4" for="tamil">Tamil</label>
+                </div>
+                <!-- Add more subject items as needed -->
+                </div>
+                </div>
+                </div>
+                </div>
+                <div class="col-md-4 col-sm-6 mb-3">
+                <div class="clone-content">
+                <div class="p-4 d-flex justify-content-between" role="button" data-bs-toggle="collapse" data-bs-target="#collapseUnit" aria-expanded="false" aria-controls="collapseUnit">
+                Unit
+                <div class="accordion-icon"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="collapse pb-3" id="collapseUnit">
+                <div class="list-group ms-3">
+                <div class="clone-item d-flex py-2 mt-2">
+                <input type="checkbox" class="form-check-input ix-clone-checkbox" name="cloneItem" id="tnpse" />
+                <label class="form-check-label ms-4" for="tnpse">TNPSE</label>
+                </div>
+                <div class="clone-item d-flex py-2 mt-2">
+                <input type="checkbox" class="form-check-input ix-clone-checkbox" name="cloneItem" id="tnusrb" />
+                <label class="form-check-label ms-4" for="tnusrb">TNUSRB</label>
+                </div>
+                <div class="clone-item d-flex py-2 mt-2">
+                <input type="checkbox" class="form-check-input ix-clone-checkbox" name="cloneItem" id="banking" />
+                <label class="form-check-label ms-4" for="banking">Bank Exam</label>
+                </div>
+                <div class="clone-item d-flex py-2 mt-2">
+                <input type="checkbox" class="form-check-input ix-clone-checkbox" name="cloneItem" id="ssc" />
+                <label class="form-check-label ms-4" for="ssc">SSC</label>
+                </div>
+                <!-- Add more course items as needed -->
+                </div>
+                </div>
+                </div>
+                </div>
+                <div class="col-md-4 col-sm-6 mb-3">
+                <div class="clone-content">
+                <div class="p-4 d-flex justify-content-between" role="button" data-bs-toggle="collapse" data-bs-target="#collapseTopics" aria-expanded="false" aria-controls="collapseTopics">
+                Topics
+                <div class="accordion-icon"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="collapse pb-3" id="collapseTopics">
+                <div class="list-group ms-3">
+                <div class="clone-item d-flex py-2 mt-2">
+                <input type="checkbox" class="form-check-input ix-clone-checkbox" name="cloneItem" id="class10" />
+                <label class="form-check-label ms-4" for="class10">Class 10</label>
+                </div>
+                <div class="clone-item d-flex py-2 mt-2">
+                <input type="checkbox" class="form-check-input ix-clone-checkbox" name="cloneItem" id="class11" />
+                <label class="form-check-label ms-4" for="class11">Class 11</label>
+                </div>
+                <div class="clone-item d-flex py-2 mt-2">
+                <input type="checkbox" class="form-check-input ix-clone-checkbox" name="cloneItem" id="class12" />
+                <label class="form-check-label ms-4" for="class12">Class 12</label>
+                </div>
+                <!-- Add more class items as needed -->
+                </div>
+                </div>
+                </div>
+                </div>
+                <div class="col-md-4 col-sm-6 mb-3">
+                <div class="clone-content">
+                <div class="p-4 d-flex justify-content-between" role="button" data-bs-toggle="collapse" data-bs-target="#collapseSubtopics" aria-expanded="false" aria-controls="collapseSubtopics">
+                Subtopics
+                <div class="accordion-icon"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="collapse pb-3" id="collapseSubtopics">
+                <div class="list-group ms-3">
+                <div class="clone-item d-flex py-2 mt-2">
+                <input type="checkbox" class="form-check-input ix-clone-checkbox" name="cloneItem" id="maths" />
+                <label class="form-check-label ms-4" for="maths">Maths</label>
+                </div>
+                <div class="clone-item d-flex py-2 mt-2">
+                <input type="checkbox" class="form-check-input ix-clone-checkbox" name="cloneItem" id="english" />
+                <label class="form-check-label ms-4" for="english">English</label>
+                </div>
+                <div class="clone-item d-flex py-2 mt-2">
+                <input type="checkbox" class="form-check-input ix-clone-checkbox" name="cloneItem" id="science" />
+                <label class="form-check-label ms-4" for="science">Science</label>
+                </div>
+                <div class="clone-item d-flex py-2 mt-2">
+                <input type="checkbox" class="form-check-input ix-clone-checkbox" name="cloneItem" id="tamil" />
+                <label class="form-check-label ms-4" for="tamil">Tamil</label>
+                </div>
+                <!-- Add more subject items as needed -->
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>*@
+                <div class="alert success-toast alert-dismissible text-center px-5 py-2">
+                    <strong>Question added successfully</strong>
+                </div>
+                <div class="alert error-toast alert-dismissible text-center px-5 py-2">
+                    <button type="button" class="btn-close pb-1" data-bs-dismiss="alert"></button>
+                    <strong>Something went wrong. Please try again</strong>
+                </div>
+                <div class="">
+                    <h5 class="text-center py-3 my-0 qus-head"><b>Question</b></h5>
+                    <div class="question px-4 py-3 mb-4">
+                        <div class="mx-5">
+                            <p class="ps-2 fw-bold mb-1">Type:</p>
+                            <div class="px-5 my-3 d-flex justify-content-between">
+                                @if (Model.QuestionType == 1)
+                                {
+                                    <div class="d-flex align-items-center">
+                                        <input class="square-radio mx-1" type="radio" name="type" checked value="1" />
+                                        <label>Normal Question</label>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <input class="square-radio mx-1" type="radio" name="type" value="2" />
+                                        <label>Formated Question</label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="d-flex align-items-center">
+                                        <input class="square-radio mx-1" type="radio" name="type" checked value="2" />
+                                        <label>Formated Question</label>
+                                    </div>
+                                }
+                                @*<div class="d-flex align-items-center">
+                                <input class="square-radio mx-1" type="radio" name="type" disabled />
+                                <label>Free text</label>
+                                </div>*@
+                            </div>
+                            <div class="d-flex">
+                                <div>
+                                    <p class="ps-2 fw-bold mb-1">Question Text:</p>
+                                </div>
+                                <div class="Question-warning">
+                                </div>
+                            </div>
+                            @if (Model.QuestionType == 1)
+                            {
+                                <textarea class="w-100 qus-text-type-1 form-control mb-2 note-pad" placeholder="Enter question" rows="6">@Model.Question</textarea>
+                                <textarea class="ms-2 w-100 qus-text form-control summernote" placeholder="Enter question" rows="4">@Model.Question</textarea>
+                            }
+                            else
+                            {
+                                <textarea class="ms-2 w-100 qus-text form-control summernote" placeholder="Enter question" rows="4">@Model.Question</textarea>
+                            }
+                            @*<input class="ques_id" type="hidden" value="@Model.QuestionId" />*@
+                        </div>
+                    </div>
+                    <h5 class="text-center  my-0 py-3 option-head"><b>Options</b></h5>
+                    <div class="answer p-4 mb-4 pb-0">
+                        <div class="mx-5 mt-2">
+                            <div class="options">
+                                @foreach (var item in Model.ChoiceMasters)
+                                {
+                                    <div class="row mx-0">
+                                        <div class="col-1 pe-0 text-md-center py-1">
+                                            @{
+                                                bool isThisAns = (item.Choice == Model.Answer?.Answer);
+                                            }
+                                            <div style="width: 15px; height: 15px; background-color:@(isThisAns ? "green" : "red") ;border-radius: 50%;"></div>
+                                        </div>
+                                        <div class="col flex-grow-1 optionText">@Html.Raw(item.Choice)</div>
+                                        <div class="col-1 w-10 text-danger text-end"><i class="fa-solid fa-xmark optionRemove"></i></div>
+                                        <input class="choice_check" type="checkbox" style="display: none" @(isThisAns ? "checked" : "") />
+                                        @*<input class="choice_id" type="hidden" value="@item.ChoiceId"/>*@
+                                        <hr class="my-1" style="color: @(isThisAns ? "green" : "red")" />
+                                    </div>
+                                }
+                            </div>
+                            <div class="my-2">
+                                <div class="d-flex">
+                                    <div>
+                                        <p class="ps-2 fw-bold mb-1">Option Text:</p>
+                                    </div>
+                                    <div class="option-warning">
+                                    </div>
+                                </div>
+                                @if (Model.QuestionType == 1)
+                                {
+                                    <textarea class="w-100 ans-text-type-1 form-control mb-2 note-pad" rows="6" placeholder="Enter option"></textarea>
+                                    <textarea class="ms-2 w-100 ans-text optionTxtArea form-control summernote" rows="4" placeholder="Enter option"></textarea>
+                                }
+                                else
+                                {
+                                    <textarea class="ms-2 w-100 ans-text optionTxtArea form-control summernote" rows="4" placeholder="Enter option"></textarea>
+                                }
+                                <div class="py-4 mx-2 d-flex justify-content-end align-items-center">
+                                    <input type="checkbox" class="ms-2 isCorrectAns" id="isCorrectAns" />
+                                    <label for="isCorrectAns" class="mx-2 correct-text">This is a correct answer</label>
+                                    <button type="button" class="btn option-create-btn px-4">Create</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h5 class="text-center my-0 py-3 detail-head">Answer detail</h5>
+                    <div class="ans_detail">
+                        <div class="mx-5 py-4">
+                            <div class="d-flex">
+                                <div>
+                                    <p class="ps-2 fw-bold mb-1">Answer detail Text:</p>
+                                </div>
+                                <div class="answer-warning">
+                                </div>
+                            </div>
+                            @if (Model.QuestionType == 1)
+                            {
+                                <textarea class="ans-detail-type-1 form-control mb-2 note-pad" id="ans_detail_txt" placeholder="Enter answer detail" rows="6">@Model.Answer?.Description</textarea>
+                                <textarea class="ans_detail_txt form-control summernote" id="ans_detail_txt" placeholder="Enter answer detail" rows="6">@Model.Answer?.Description</textarea>
+                            }
+                            else
+                            {
+                                <textarea class="ans_detail_txt form-control summernote" id="ans_detail_txt" placeholder="Enter answer detail" rows="6">@Model.Answer?.Description</textarea>
+                            }
+                            @*<input class="ans_id" type="hidden" value="@Model.AnswerId" />*@
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end my-2">
+                    <div class="d-flex align-items-center">
+                        <div style="padding: 8px 0px;">
+                            <input class="mx-1 previous-question" type="checkbox" name="previous-question" checked=@Model.IsPreviousYearQuestion id="previous-question" />
+                            <label for="previous-question">Previous Question</label>
+                        </div>
+                        <div class="ms-1 year-div @(Model.IsPreviousYearQuestion ? "" : "hide-div")">
+                            <label for="previous_year">Year:</label>
+                            <select id="previous_year" class="previous-year form-select" name="previous_year" multiple>
+                                </select>   
+                            @*<input class="form-control year-input" type="text" placeholder="Enter years(2023,2024,...)" style="display:none"/>*@
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div style="padding: 8px 0px;">
+                            <input class="mx-1 probable-question" type="checkbox" name="probable-question" checked=@Model.IsProbable id="probable-question" />
+                            <label for="probable-question">Probable Question</label>
+                        </div>
+                        <div class="ms-1 probable-year-div @(Model.IsProbable ? "" : "hide-div")">
+                            <label for="probable_year">Year:</label>
+                            <select id="probable_year" class="probable-year form-select" name="probable_year" multiple>
+                            </select>
+                            @* <input class="form-control probable-year" type="text" placeholder="Enter years(2023,2024,...)" style="display:none" />*@
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center my-4">
+                    <div>
+                        <button type="button" class="btn question-cancel-btn px-4 mx-3"><i class="fa-solid fa-ban"></i> Clear</button>
+                        <button type="button" class="btn question-add-btn px-4"><i class="fa-regular fa-floppy-disk"></i> Save</button>
+                        <button type="button" id="adding" class="btn fw-500 rounded-1 text-light ms-2" style="background-color:#138a1f;box-shadow:none; display:none">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Saving...
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+
+        let subTitleId = @Html.Raw(Model.SubTopicId);
+        let quesId = @Html.Raw(Model.QuestionId);
+        let ansId = @Html.Raw(Model.AnswerId);
+        let choices = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.ChoiceMasters));
+        let answer = `@Html.Raw(Model.Answer?.Answer)`;
+        let answerDetail = `@Html.Raw(Model.Answer?.Description)`;
+        let questionType = @Html.Raw(Model.QuestionType);      
+        let optionsArray = choices.map(choice => choice.Choice);
+        let previousYears = `@Html.Raw(Model.PreviousYear)`;
+        let probableYears = `@Html.Raw(Model.ProbableYear)`;
+
+        function goBackWithSelectedOptions() {
+            history.back();
+        }
+        function updateBreadcrumb() {
+            var courseText = localStorage.getItem('Course');
+            var classText = localStorage.getItem('Class');
+            var subjectText = localStorage.getItem('Subject');
+            var unitText = localStorage.getItem('Unit');
+            var topicText = localStorage.getItem('Topic');
+            var subtopicText = localStorage.getItem('Subtopic');
+            //var breadcrumbContent = `<div>${courseText} > ${classText} > ${subjectText} > ${unitText} > ${topicText} >  <span class="subtopic-bread-crumb">${subtopicText}</span></div>`;
+            var breadcrumbContent = `<div>${courseText} > ${classText} > ${subjectText} > ${unitText}</div>`;
+            $(".breadcrumb").html(breadcrumbContent);
+        }
+        $(document).ready(function(){
+            if (questionType==1) {
+                $('head').append('<style>.note-editor { display: none; }</style>');
+            }
+        });
+    </script>
+    <script src="~/lib/summernote/summernote-lite.min.js"></script>
+    <script src="~/js/editquestion.js"></script>
+    <script src="~/js/summernote-customs.js"></script>
+    <script src="~/lib/bootstrap-multiselect/js/bootstrap-multiselect.js"></script>
+    <script src="~/js/multiselect-custom.js"></script>
+}

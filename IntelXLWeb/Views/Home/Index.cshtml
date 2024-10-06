@@ -1,0 +1,322 @@
+﻿@*@model IntelXLDataAccess.Models.ClassMaster;*@
+@{
+    ViewData["Title"] = "Home";
+}
+<link href="~/lib/select2/css/select2.min.css" rel="stylesheet" />
+
+<style>
+    .select2-search--dropdown {
+        padding: 0 !important;
+    }
+
+    .select2-search--dropdown .select2-search__field {
+        display: none !important;
+    }
+
+    .select2-container--default .select2-selection--single {
+        display: flex;
+        align-items: center;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        display: flex;
+        align-items: center;
+    }
+
+    .select2-container--default .select2-selection--single {
+        border: none;
+        border-bottom: 0.5px solid #52B701;
+        border-radius: 0;
+    }
+
+    .select2-container--default .select2-results__option--highlighted[aria-selected] {
+        background-color: #caffc2;
+        color: #000;
+    }
+
+    .my-custom-label {
+        color: #52B701;
+    }
+
+    .select2-container--default .select2-results__option[aria-selected=true] {
+        background-color: #52b700;
+        color: #fff;
+    }
+    .medium-label {
+        font-size: 3vh;
+    }
+
+    .select2-container {
+        width: 200px !important;
+    }
+
+    .my-custom-label{
+        width:fit-content;
+    }
+
+    .ix-row {
+        width: 100%;
+        float: left;
+        margin-bottom: 10px;
+        padding: 0 15px;
+    }
+
+    .label-span{
+        color: #52B701;
+        font-size: large;
+        display: inline-block;
+        font-weight: 600;
+    }
+</style>
+<div class="container-fluid bannerimg p-0 d-flex justify-content-center align-items-end ">
+    @* <a href="/Tutors/Index"><div type="button" class="btn join-btn px-5 my-4">Book a tutor</div></a> *@
+</div>
+<div class="container d-flex justify-content-center my-4">
+    <a href="https://play.google.com/store/apps/details?id=com.intelxlmobile&hl=en_IN&gl=US" target="_blank"><img src="~/images/adsimage/adsbannerimg.png" style="width:100%;" /></a>
+</div>
+<div class="container mt-5 mb-3">
+   
+    <div class="d-flex flex-nowrap align-items-center mb-3 ix_languageSelection" style="visibility:hidden; width: 300px;">
+        <div class="ix-row">
+            <p>
+               <select id="selectMedium" class="form-select select2-search--inline  ix_language rounded-0" asp-items="ViewBag.languages"></select>
+            </p>
+        </div>
+    </div>
+   @*  <div>
+        <p>Choose your course</p>
+    </div> *@
+    <div class="course-btn-container mx-1 d-flex align-items-center" style="visibility:hidden;">        
+        <div class="scroll-btn left-btn"><i class="fa-solid arrow1 fa-angles-left "></i></div>
+        <div class="course-bg-div px-4">
+            <div class="d-flex course-div align-items-center px-4">
+                @if (ViewBag.Courses != null && ViewBag.Courses.Count > 0)
+                {
+                    foreach (var item in ViewBag.Courses)
+                    {
+                        <div class="btn-inner text-center py-2 my-1 mx-2">
+                            @if (item == ViewBag.Courses[0])
+                            {
+                                <a href="#" class="courseSelection">
+                                    <input type="hidden" id="hdnCourseId" value="@item.CourseId" />
+                                    <div type="button" class="btn course-btn text-nowrap course-active px-4">@item.CourseName</div>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="#" class="courseSelection">
+                                    <input type="hidden" id="hdnCourseId" value="@item.CourseId" />
+                                    <div type="button" class="btn text-nowrap course-btn px-4">@item.CourseName</div>
+                                </a>
+                            }
+                        </div>
+
+                    }
+
+                }
+            </div>
+        </div>
+        <div class="scroll-btn right-btn"><i class="fa-solid arrow fa-angles-right"></i></div>
+    </div>
+</div>
+
+
+<div class="container ">
+
+    <div class="">
+        <div class="row class-wrap ">
+        </div>
+        <div class="row home-animation" style="display:none">
+            @for (var i = 0; i < 9; i++)
+            {
+                <div class="col-sm-4 ">
+                    <div class="card-body lkgcard-anime m-2 " style="border:1px solid #c2c2c2; border-radius: 5px; height:250px">
+                        <div class="">
+                            <div class="heading-anime animated-background my-1 w-50" style="height:30px;"></div>
+                        </div>
+                        <div class="class-details">
+                            <div class="para1-anime animated-background my-2" style="height:20px;"></div>
+                            <div class="para2-anime animated-background my-2 w-75" style="height:20px;"></div>
+                            <hr />
+                        </div>
+                        <div class="py-2" style="display:flex;justify-content:space-between;">
+                            <div class="sub1-anime animated-background my-1 w-50" style="height:30px;"></div>
+                            <div class="sub1-anime animated-background my-1" style="height:30px;width:100px;"></div>
+                        </div>
+                        <div class="py-2" style="display:flex;justify-content:space-between;">
+                            <div class="sub2-anime animated-background my-1 w-50" style="height:30px;"></div>
+                            <div class="sub1-anime animated-background my-1" style="height:30px;width:100px;"></div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+
+<div class="container-fluid skill-container">
+    <div class="container my-3 skill-plan">
+
+        <div class="text-center skill-text py-3"><h1>The exact skills you need</h1></div>
+        <p class="text-center py-1 skill-para">Planning a lesson or prepping for an exam? We've custom-built IntelXL skills to reinforce each topic within your</p>
+        <div class="skill-content row text-center">
+            <div class="col-sm-4">
+                <img class="skill-state" src="~/images/India Map.jpg" />
+                <h3 class="py-3 state-text">State standards</h3>
+                <p>State's standards tailored for your precise skills.</p>
+            </div>
+            <div class="col-sm-4">
+                <img class="skill-book" src="~/images/literature.png" />
+                <h3 class="py-3 book-text">Textbooks</h3>
+                <p>See the skill sets that correspond with each of the 500+ key questions.</p>
+            </div>
+            <div class="col-sm-4">
+                <img class="skill-assignment" src="~/images/assignment.png" />
+                <h3 class="py-3 assist-text">Assessments</h3>
+                <p>Use IntelXL for competitive exams like TNPSC, TNUSRB, BANKING, RAILWAY, and more.</p>
+            </div>
+        </div>
+        <div class="text-center py-5 my-2">
+            <a href="/Home/Awards"><div type="button" class="btn skill-journey-btn">Explore Your Skills Journey!</div></a>
+        </div>
+    </div>
+</div>
+<div class="container-fluid support-container">
+    <div class="container">
+        <div class="text-center">
+            <h1 class="py-3">Explore how IntelXL fosters achievement for all learners!</h1>
+            <h5>IntelXL gives tutor's everything they need to personalize instruction</h5>
+        </div>
+        <div class="row text-center achivement-container my-5">
+            <div class="col-lg-3 col-sm-6 my-2">
+                <div class="Curriculum-content bg-white rounded-3 p-5 my-2 d-flex flex-column  align-items-center">
+                    <img class="mb-4 Curriculum-img" src="~/images/child.png" style="width:80px;height:80px;" />
+                    <h4 class="Curriculum-text">Comprehensive Curriculum</h4>
+                    <p class="Curriculum-text-para">Explore resources to complement almost any lesson, featuring over 200+ exams encompassing more than 10,000+ questions.</p>
+@*                     <h6 class="Curriculum-btn">Browse skill</h6>
+ *@                </div>
+            </div>
+            <div class="col-lg-3  col-sm-6 my-2">
+                <div class="Diagnostic-content bg-white rounded-3 p-5 my-2 d-flex flex-column  align-items-center">
+                    <img class="mb-4 Diagnostic-img" src="~/images/controls.png" style="width:80px;height:80px;" />
+                    <h4 class="Diagnostic-text">Real-Time Diagnostic</h4>
+                    <p>Identify the current knowledge of your aspirants and precisely determine the next steps to facilitate their improvement.</p>
+@*                     <h6 class="Diagnostic-btn">Learn how it works</h6>
+ *@                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 my-2">
+                <div class="Guidance-content bg-white rounded-3 p-5 my-2 d-flex flex-column align-items-center">
+                    <img class="mb-4 Guidance-img" src="~/images/two.png" style="width:80px;height:80px;" />
+                    <h4 class="Guidance-text"> Personalized Guidance</h4>
+                    <p>View recommended skills to assist each aspirints in addressing knowledge gaps.</p>
+@*                     <h6 class="Guidance-btn">Explore recommendations</h6>
+ *@                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 my-2">
+                <div class="Analytics-content bg-white rounded-3 p-5 my-2 d-flex flex-column  align-items-center">
+                    <img class="mb-4 Analytics-img" src="~/images/bar-graph.png" style="width:80px;height:80px;" />
+                    <h4 class="Analytics-text">Actionable Analytics</h4>
+                    <p>Gain instant insights to make your instructional efforts more effective every day.</p>
+@*                     <h6 class="Analytics-btn">View insights </h6>
+ *@                </div>
+            </div>
+        </div>
+        <div class="text-center py-3 my-2">
+            <a href="/Home/Contact" target="_blank"><div type="button" class="btn join-support-btn px-4">Join Our Circle!</div></a>
+        </div>
+        <hr />
+        <div class="text-center my-5" style="font-family:Rockwell;">
+            <h1>Recognize the changes IntelXL brings to aspiring learners!</h1>
+        </div>
+        <div class="text-center row pb-5">
+            <div class="col-sm-4">
+                <img src="~/images/kids team.jpg" class="research-image" />
+                <h3>Proven effective</h3>
+                <p style="height:50px;">
+                    Consistent research findings demonstrate that IntelXL consistently delivers tangible results.
+                </p>
+              @*   <a href="/Home/UnderDevelopment"><div type="button" class="btn research-btn  px-4 my-4">See the research</div></a> *@
+            </div>
+            <div class="col-sm-4">
+                <img src="~/images/kids class-room.jpg" class="stories-image" />
+                <h3>Flexible classroom</h3>
+                <p style="height:50px;">Explore our case studies to understand how IntelXL contributes to success in classrooms across the country.</p>
+              @*   <a href="/Home/UnderDevelopment"><div type="button" class="btn Flexible-btn  px-4 my-4">Here their stories</div></a> *@
+            </div>
+            <div class="col-sm-4">
+                <img src="~/images/kids-teacher.jpg" class="inspired-image" />
+                <h3>Trusted tutors</h3>
+                <p style="height:50px;">The Elite 100 reveal why they rely on IntelXL to facilitate the growth of their aspirants.</p>
+              @*   <a href="/Home/UnderDevelopment"><div type="button" class="btn Trusted-btn  px-4 my-4">Get inspired</div></a> *@
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid testimonial-banner p-5">
+    <div class="container text-center p-5 testimonial-content">
+        <h2 class="py-3 test-text">Testimonials</h2>
+        <p class="py-2">Discover success stories with our Testimonials, where individuals share their experiences and 
+            achievements using our products or services. Gain insights into the positive impact IntelXL has made on learners,
+            as told by those who have benefited firsthand. Join a community of satisfied users who have found value and success 
+            through our offerings</p>
+    @*     <div class="py-3">
+            <a href="/Home/UnderDevelopment"><div type="button" class="btn px-3 testmonial-btn">Read more</div></a>
+        </div> *@
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/home.js"></script>
+    <script src="~/lib/select2/js/select2.full.min.js"></script>
+    <script>
+        //Remove after mobile subscription
+        var isSignedIn = `@Html.Raw(ViewBag.IsSignedIn)`;
+
+        let course_id= @Html.Raw(ViewBag.CourseId);
+        let multiplyBy = @Html.Raw(ViewBag.MultiplyBy);
+        function updateScrollButtonVisibility() {
+            var courseDiv = document.querySelector(".course-div");
+            var buttonInners = document.querySelectorAll(".btn-inner");
+            var lastButtonNode = buttonInners[buttonInners.length - 1];
+            var courseDivRight = courseDiv.getBoundingClientRect().right;
+            var lastButtonNodeRight = lastButtonNode.getBoundingClientRect().right;
+            if (lastButtonNodeRight < courseDivRight) {
+                $(".scroll-btn").hide();
+            } else {
+                $(".scroll-btn").show();
+            }
+        }
+
+        function debounceScrollButtonVisibility(delay) {
+            var timeout;
+            return function () {
+                clearTimeout(timeout);
+                timeout = setTimeout(function () {
+                    timeout = null;
+                    updateScrollButtonVisibility();
+                }, delay);
+            };
+        }
+
+        $(document).ready(function () {
+            //Remove after mobile subscription
+            if (isSignedIn == 'True') {
+                $("#LoginModal").modal("show");
+            }
+
+            updateScrollButtonVisibility();
+            window.addEventListener("resize", debounceScrollButtonVisibility(200));
+
+            $(".left-btn").on("click", function () {
+                $(".course-div").animate({ scrollLeft: "-=110px" }, "slow");
+            });
+
+            $(".right-btn").on("click", function () {
+                $(".course-div").animate({ scrollLeft: "+=110px" }, "slow");
+            });
+            $("#selectMedium").select2({
+            });
+        });
+       
+    </script>
+}

@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IntelXL-@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/lib/font-awesome/css/fontawesome.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/solid.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="img/fav-icon.png" />
+    <link href="~/css/webstyle.css" rel="stylesheet" />
+    <link href="~/css/weblayout.css" rel="stylesheet" />
+    @await RenderSectionAsync("Styles", required: false) 
+</head>
+
+<body>
+   <div>
+        <main role="main" class="">
+            @RenderBody()
+        </main>
+   </div>
+    <!-- ======footer===== -->
+    <footer>
+        <div class="container">
+            <div class="footerContent py-4 text-center"> © Copyright @DateTime.Now.Year IntelXL. All Rights Reserved. </div>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/website.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

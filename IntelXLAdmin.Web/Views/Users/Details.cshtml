@@ -1,0 +1,146 @@
+﻿@using System.Globalization;
+@model IntelXLDataAccess.Models.AppUser
+
+@{
+    ViewData["Title"] = "Details";
+}
+<style>
+    .detail-row div {
+        margin-bottom: 10px;
+    }
+
+    .detail-row .fw-bold {
+        color: #3b71cadd;
+    }
+
+    hr {
+        border: none;
+        border-left: 1px solid hsla(200, 10%, 50%,100);
+        height: 100vh;
+        width: 1px;
+    }
+
+    .pymt-col {
+        flex-direction: column;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+
+    .pymt-label, .sub-label {
+        font-weight: 600;
+    }
+
+    .user-info {
+        width: 100%;
+        float: left;
+        margin-bottom: 10px;
+        padding: 0 15px;
+    }
+
+    .label-span {
+        width: 150px;
+        display: inline-block;
+        font-weight: 600;
+    }
+
+</style>
+<div class="container">
+    <div class="my-3 me-auto pt-3">
+        <a href="#" onclick="history.go(-1);" style="color: #207bff; text-decoration: none;"><i class="fa-solid fa-arrow-left-long me-2"></i>Back</a>
+    </div>
+    <div class="card user-detail">
+        <div class="card-header">
+            <div class="my-2"><h3 style="color: #029978dd;">User Details</h3></div>
+        </div>
+        <div class="card-body p-4 ">
+            @if (Model != null)
+            {
+                <div class="user-info">
+                    <p><span class="label-span">Email address </span>: @Model.EmailId</p>
+                </div>
+                <div class="user-info">
+                    <p><span class="label-span">First Name </span>: @Model.FirstName</p>
+                </div>
+                <div class="user-info">
+                    <p><span class="label-span">Last Name </span>: @Model.LastName</p>
+                </div>
+
+            }
+        </div>
+
+    </div>
+    <div class="card my-3">
+        <div class="card-header text-center">
+            <h3 style="color: #029978dd;">Payment Details</h3>
+        </div>
+       
+            @if (Model?.UserPayments != null && Model?.UserPayments.Count() > 0)
+            {
+                foreach (var item in Model.UserPayments)
+                {
+                <div class="card-body d-flex">
+                    <div class="pymt-col col">
+                        <div class="pymt-label">Payment Status</div>
+                        <div class="col pt-2">@item.Status</div>
+                    </div>
+                    <hr style="height:5vh">
+                    <div class="pymt-col col">
+                        <div class="pymt-label">Payment Created</div>
+                        <div class="col pt-2">@item.PaymentDate</div>
+                    </div>
+                    <hr style="height:5vh">
+                    <div class="pymt-col col">
+                        <div class="pymt-label">Amount</div>
+                        <div class="col pt-2">$ @item.AmountPaid</div>
+                    </div>                    
+                </div>
+                <div class="d-flex justify-content-center"><hr style="width:80%"></div>
+            }
+            
+            }
+            else
+            {
+                <div class="text-muted d-flex justify-content-center p-4"><h4>No Subscription Found</h4></div>
+            }        
+
+    </div>
+    <div class="card Subscription-detail mb-2">
+        <div class="card-header">
+            <div class="my-2"><h3 style="color: #029978dd;">Subscription Details</h3></div>
+        </div>
+        <div class="card-body p-4 ">
+            @if (Model?.UserSubscriptions != null && Model?.UserSubscriptions.Count()>0)
+            {
+                foreach (var item in Model.UserSubscriptions)
+                {
+                    <div class="my-3 row">
+                        <div class="col-3"><span class="sub-label">Subscription Name</span> -</div>
+                        <div class="col">@item.Subscription?.SubscriptionName</div>
+                    </div>
+                    <div class="my-3 row">
+                        <div class="col-3"><span class="sub-label">Duration</span> -</div>
+                        <div class="col">@item.Subscription?.SubscriptionDuration <span>Months</span></div>
+                    </div>
+                    <div class="my-3 row">
+                        <div class="col-3"><span class="sub-label">Start Date</span> -</div>
+                        <div class="col">@item.CreatedDttm.ToLocalTime().ToString("D")</div>
+                    </div>
+                    <div class="my-3 row">
+                        <div class="col-3"><span class="sub-label">End Date</span> -</div>
+                        <div class="col">@item.ExpireDttm.ToLocalTime().ToString("D")</div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="text-muted d-flex justify-content-center"><h4>No Subscription Found</h4></div>
+            }
+        </div>
+
+    </div>
+
+
+
+</div>
+

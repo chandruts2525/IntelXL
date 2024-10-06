@@ -1,0 +1,123 @@
+﻿@model IEnumerable<IntelXLDataAccess.Models.UserPayment>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@section Styles{
+    <link href="~/css/style.css" rel="stylesheet" />
+    <style>
+        .paymt-hdr {
+            color: #029978dd;
+        }
+
+        th {
+            color: #029978dd;
+        }
+
+        td {
+            border-bottom: 1px solid #02e5e5;
+        }
+
+        .btn-info:focus, .btn:focus {
+            box-shadow: none;
+        }
+    </style>
+}
+
+<div class="container ">
+    <div class="my-3 me-auto pt-3">
+        <a href="#" onclick="history.go(-1);" style="color: #207bff; text-decoration: none;"><i class="fa-solid fa-arrow-left-long me-2"></i>Back</a>
+    </div>
+    <h1 class="paymt-hdr">All Payments <img src="~/images/payment-icon.png" width="50"/></h1>
+  
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <span asp-for="FirstName">First Name</span>
+                </th>
+                <th>
+                    <span asp-for="UserEmail">Email</span>
+                </th>
+                <th>
+                    <span asp-for="PaymentStatus">Status</span>
+                </th>
+               
+                <th>
+                    <span asp-for="Amount">Amount ($)</span>
+                </th>               
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model?.Any() == true)
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <span asp-for="FirstName">@item.AppUser?.FirstName</span>
+                        </td>
+                        <td>
+                            <span asp-for="EmailId">@item.AppUser?.EmailId</span>
+                        </td>
+                        <td>
+                            <span asp-for="AppRole">@item.Status</span>
+                        </td>
+                       
+                        <td>
+                            <span asp-for="Amount">@item.AmountPaid</span>
+                        </td>                      
+                        <td>                          
+                            <a type="button"  class="btn btn-sm text-black btn-outline-info details-btn" asp-action="Details" asp-route-id="@item.PaymentId">Details</a>
+                          
+                        </td>
+                    </tr>
+                }
+
+            }
+            else
+            {
+                <tr>
+                    <td class="d-flex justify-content-center">No data Found</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+    @if (ViewBag.TotalPages > 1)
+    {
+        <div class="pagination justify-content-center paginationMain">
+            <ul class="pagination">
+                <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                    <a class="page-link" href="/Payments/Index?page=@(ViewBag.CurrentPage - 1)" aria-label="Previous">
+                        <span aria-hidden="true">Previous</span>
+                    </a>
+                </li>
+
+                @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                {
+                    if (i == 1 || i == ViewBag.TotalPages || Math.Abs(i - ViewBag.CurrentPage) <= 2)
+                    {
+                        <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                            <a class="page-link" href="/Payments/Index?page=@i">@i</a>
+                        </li>
+                    }
+                    else if (Math.Abs(i - ViewBag.CurrentPage) == 3)
+                    {
+                        <li class="page-item disabled">
+                            <span class="page-link">...</span>
+                        </li>
+                    }
+                }
+
+                <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+                    <a class="page-link" href="/Payments/Index?page=@(ViewBag.CurrentPage + 1)" aria-label="Next">
+                        <span aria-hidden="true">Next</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    }
+</div>
+

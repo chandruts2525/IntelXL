@@ -1,0 +1,67 @@
+﻿
+@{
+
+    Layout = "_Layout_Profile";
+}
+@section Styles{
+   <style>
+       body{
+            background: linear-gradient(240deg,#d9f7d2 50%,#c1ffa8 100%);
+            min-height:100vh;
+       }
+    .loginbox {
+        position: absolute;
+        max-width: 650px;
+        width: 100%;
+        background-color: #fff;
+        box-shadow: 1px 1px 8px #d4d4d4;
+        margin: 0 auto;
+        padding: 20px;
+        left: 50%;
+        transform: translate(-50%);
+        top: 20%;
+        z-index: 99;
+    }
+
+    .loginbox img {
+        height: 80px;
+        width: 80px;
+    }
+
+    @@media (max-width: 768px) {
+        .loginbox {
+            height: auto;
+        }
+    }
+
+    @@media (max-width: 650px) {
+            body {
+                background:#fff;
+            }
+        .loginbox {
+            width: 100%;
+            max-width: none;
+            left: 0;
+            transform: none;
+            top: 20%;
+                box-shadow: none;
+        }
+
+        .loginbox img {
+            height: 60px;
+            width: 60px;
+        }
+    }
+</style>
+  }
+<div class="loginbox mx-auto my-5">
+    <div class="d-flex justify-content-center">
+        <img class="mt-4" src="~/images/hourglass.gif" style="height: 80px; width: 80px;" />
+    </div>
+    <div class="h4 text-center mt-3">Your session has expired!</div>
+    <div class="h6 text-center mt-4">Please sign in again to continue...</div>
+    <br>
+    <div class="d-flex justify-content-center">
+        <a href="/Home/Index" class="btn btn-primary">Home</a>
+    </div>
+</div>

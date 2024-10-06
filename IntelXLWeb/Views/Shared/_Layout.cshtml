@@ -1,0 +1,270 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IntelXL-@ViewData["Title"]</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons.png" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="~/lib/font-awesome/css/fontawesome.css" rel="stylesheet" />
+    <link href="~/css/join.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/solid.css" rel="stylesheet" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2989692698545677"
+            crossorigin="anonymous"></script>
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+    <header>
+        <nav class="navbar p-0 navbar-expand-sm navbar-toggleable-sm signin-nav navbar-light bg-white">
+            <div class="container p-1">
+                <a href="/Home"><img class="mx-3" src="~/images/IntelxLOGO.png" style="width:100px;height:65px;object-fit:contain;" /></a>
+                @*<input class="form-control searchbar mr-sm-2 border-top-0 border-start-0 border-end-0 me-4" style="box-shadow:none;border-radius:0;width:40vw;" type="search" placeholder="Search topics and skills" aria-label="Search">*@
+                @if (User?.Identity?.IsAuthenticated == true)
+                {                    
+                    int userId = 0;
+                    var claim = User.FindFirst("UserID");
+                    if (claim != null)
+                    {
+                        userId = int.Parse(claim.Value);
+                    }
+                    var Username = !string.IsNullOrEmpty(User.Identity.Name) ? User.Identity.Name : "User";
+                    <div class="user-profile dropdown">
+                        <a class="nav-link d-flex align-items-center dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="~/images/userImage.png" width="30" height="30" class="rounded-circle">
+                            <div class="user-name text-black ps-2">
+                                <p class="m-0 UserName">@Username</p>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu dropContainer" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="/User/Profile?userId=@userId">My Account</a>
+                           @* <a class="dropdown-item" href="#">Settings</a>*@
+                            <a class="dropdown-item" role="button" id="logoutbtn">Sign Out</a>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="ms-auto">
+                        <div class="login-conent">
+                            <input type="email" class="form-control input-xs user" placeholder="Username" style="width:10vw;">
+                            <input type="password" class="form-control input-xs mx-2 password" placeholder="Password" style="width:10vw;">
+
+                           @*  <div class="form-check mt-2">
+                                <input class="form-check-input remember" type="checkbox" value="" id="flexCheckDefault">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Remember
+                                </label>
+                            </div> *@
+                        </div>
+                    </div>
+                    <button id="loginbtn" type="button" class="btn btn-success btn-sm mx-2 px-4 text-nowrap">Sign In</button>
+                    <button id="loging" type="button" class="btn btn-success btn-sm mx-2 px-4 text-nowrap" style="display:none;cursor:not-allowed">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Logging in...
+                    </button>
+                }
+            </div>
+        </nav>
+
+
+        <nav class="navbar  sitenav navbar-expand-sm navbar-toggleable-sm navbar-light py-1">
+
+            <div class="container justify-content-start">
+                <div class="bg-white" style="border-radius:3px;">
+                    <a href="/Home"><img class="hidden-nav me-auto px-1" src="~/images/intelxlogo.png" style=" width:12vw;height:31px;object-fit:contain;" /></a>
+                </div>
+               @*  @if (User?.Identity?.IsAuthenticated == true)
+                {
+                    <div class="chat-btn">
+                        <div class="position-relative">
+                        <i class="fa-regular fa-comment-dots comment">
+
+                        </i>
+                    </div>
+                    <span id="notification-badge" class="position-absolute translate-middle p-2 bg-danger border border-light rounded-circle" style="top: 8px;right: -10px; display:none">
+                        <span class="visually-hidden">New alerts</span>
+                    </span>
+                </div>
+                }*@
+                <ul class="navbar-nav mr-auto">
+
+                    <li class="nav-item active mx-2 learn">
+                        <a class="nav-link text-white nav-text" href="/Learning/Index?courseId=2&subject=Tamil" title="Header">
+                            Learning
+                        </a>
+                    </li>
+                    @* @if (User?.Identity?.IsAuthenticated == false)
+                    {
+                        <li class="nav-item mx-2">
+                            <a class="nav-link text-white" href="/Tutors/Register">Become a tutor</a>
+                    </li>
+                    }*@
+                    <li class="nav-item mx-2">
+                        <a class="nav-link text-white nav-text" href="/Home/AboutUs" target="_blank">About Us</a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link text-white nav-text" href="/Home/Contact" target="_blank">Contact Us</a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link text-white nav-text" href="/Home/Company" target="_blank">Company</a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link text-white nav-text" href="/Home/Careers" target="_blank">Careers</a>
+                    </li>
+                    
+                   @* 
+                    <li class="nav-item mx-2">
+                        <a class="nav-link text-white nav-text" href="#">Analytics</a>
+                    </li>
+                    <li class="nav-item mx-2">
+                    <a class="nav-link text-white nav-text" href="#">Take off</a>
+                    </li>*@
+                </ul>
+
+                <div class="d-flex justify-content-end btn-inspriration ms-auto">
+                    @*<div class="search-container  hidden-nav px-4">
+                        <input type="text" class="form-control" style="width:55vw;" placeholder="Search topics and skills.." title="Type in a category">
+                    </div>*@                   
+                   @*  @if (User?.Identity?.IsAuthenticated == false)
+                    {
+                        <div class="ins-btn mx-4">
+                            <a href="/Tutors/Register" type="button" class="btn btn-sm px-4 text-dark">Become a tutor</a>
+                        </div>
+                    }*@
+                    <div class="join-btn memb-btn ">
+                        <a href="/Membership/Index" type="button" class="btn btn-sm  px-4 text-dark">Membership</a>
+                    </div>
+                </div>               
+                <button type="button" class="navbar-toggler ms-2" data-bs-toggle="offcanvas" data-bs-target="#demo">
+                    <i class="fa-solid fa-bars fa-lg"></i>
+                </button>
+            </div>
+        </nav>
+        <div class="offcanvas offcanvas-start" id="demo" style="width:40vw;min-width: 300px;">
+            <div class="offcanvas-header p-1" style="border-bottom: 0.5px solid #afe7fb;">
+                <div class="m-2" style="border-radius:3px;">
+                    <a href="/Home/Index"><img class="me-auto px-1" src="~/images/intelxlogo.png" style=" width:75px;object-fit:contain;" /></a>
+                </div>
+                <button type="button" class="btn-close ms-auto m-2" data-bs-dismiss="offcanvas"></button>
+            </div>
+            <div class="offcanvas-body">
+                @if (User?.Identity?.IsAuthenticated == true)
+                {
+                    int userId = 0;
+                    var claim = User.FindFirst("UserID");
+                    if (claim != null)
+                    {
+                        userId = int.Parse(claim.Value);
+                    }
+                    var Username = !string.IsNullOrEmpty(User.Identity.Name) ? User.Identity.Name : "User";
+                    <div class="user-profile hidden-nav">
+                        <a class="nav-link d-flex align-items-center" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="~/images/userImage.png" width="30" height="30" class="rounded-circle">
+                            <div class="user-name text-black ps-2">
+                                <p>@Username</p>
+                            </div>
+                        </a>
+                        <div><a class="off-items" href="/User/Profile?userId=@userId"><i class="fa-regular fa-circle-user pe-2"></i> My Account</a></div>
+                        @*<div class="off-items" href="#">Edit Profile</div>
+                        <div class="off-items" href="#">Settings</div>*@
+                        <div class="off-items" id="logoutbtn" role="button" style="border-bottom:0.5px solid #afe7fb;"><i class="fa-regular fa-user pe-2"></i>Sign Out</div>
+                    </div>
+                }
+                else
+                {
+                    <div class="off-items text-success hidden-nav" style="border-bottom: 0.5px solid #afe7fb;" id="loginbtn"><h5 class="my-1" style="cursor: pointer;"><i class="fa-regular fa-user pe-2"></i>  Sign In </h5></div>
+                }
+                <div class="off-items"><h5 class="my-1"><a class="off-link" href="/Learning/Index?courseId=2&subject=Tamil"><i class="fa-solid fa-graduation-cap pe-2"></i>  Learning</a></h5></div>
+                @* @if (User?.Identity?.IsAuthenticated == false)
+                {
+                    <div class="off-items"><h5 class="my-1" href="/Tutors/Register"><i class="fa-solid fa-list-check pe-2"></i>  Become a tutor</h5></div>
+                }*@
+                @*<div class="off-items"><h5 class="my-1" href="/Tutors/Register"><i class="fa-solid fa-list-check pe-2"></i> Assessment</h5></div>
+                <div class="off-items"><h5 class="my-1" href="#"><i class="fa-solid fa-chart-simple pe-2"></i>  Analytics </h5></div>
+                <div class="off-items"><h5 class="my-1" href="#"><i class="fa-solid fa-dove pe-2"></i>  Take off </h5></div>*@
+               @* @if (User?.Identity?.IsAuthenticated == false)
+                {
+                    <div class="off-items  hidden-nav"><h5 class="my-1 "><i class="fa-regular fa-lightbulb pe-2"></i><a class="off-link" href="/Tutors/Register"> Become a tutor</a></h5></div>
+                }*@
+                <div class="off-items  hidden-nav"><h5 class="my-1 "><i class="fa-solid fa-medal pe-2" style="transform: scaleY(-1);"></i><a class="off-link" href="/Membership/Index">  Membership</a></h5></div>
+            </div>
+        </div>
+
+
+        <div class="learning-slide container">
+            @*<div class="d-flex justify-content-between p-5">
+                <div class="sub-slide">
+
+                    <div class="my-3 math-slide"><b>Math</b></div>
+                    <div class="d-flex">
+
+                        <div class="bullet-point">Skills</div>
+                        <div class="bullet-point mx-3">Videos</div>
+                        <div class="bullet-point">Games</div>
+                    </div>
+                    <div class="my-3 lang-slide"><b>Language arts</b></div>
+                    <div class="d-flex ">
+                        <div class="bullet-point">Skills</div>
+                        <div class="bullet-point mx-3">Videos</div>
+                        <div class="bullet-point">Games</div>
+                    </div>
+                    <div class="my-3 science-slide"><b>Science</b></div>
+                    <div class="my-3 social-slide"><b>Social studies</b></div>
+                    <div class="my-3 span-slide"><b>Spanish</b></div>
+                </div>
+
+
+                <div class="recomend-slide">
+                    <div class="my-3 recomends-slide"><b>Recommendations</b></div>
+                    <div>Recommendations wall</div>
+                </div>
+
+
+                <div class="skill-slide">
+                    <div class="my-3 skills-slide"><b>Skill plans</b></div>
+                    <div>InetXl plans</div>
+                    <div class="my-3">Textbooks</div>
+                    <div>Test prep</div>
+                </div>
+                <div class="awards-slide">
+                    <div class="my-3 award-slide"><b>Awards</b></div>
+            <div><a href="/Home/Awards">Student awards</a></div>
+                </div>
+            </div>*@
+        </div>
+
+    </header>
+    <div class="container-fluid p-0 main-container position-relative">
+        <main role="main" class="">
+            @RenderBody()
+        </main>
+    </div>
+    <partial name="_Footer" />
+    <partial name="_Login" />
+    <partial name="_Register" />
+    <partial name="_Chat" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/js/signalrfunctions.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        $(document).ready(function(){
+            $.ajax({
+                url: '/Home/GetSlider',
+                type: 'GET',
+                success: function (response) {
+                    $(".learning-slide").html(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error: " + error);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

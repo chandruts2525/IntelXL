@@ -1,0 +1,199 @@
+﻿@{
+    ViewData["Title"] = "IntelXL";
+}
+
+<style>
+    .category{
+        border: 1px solid #c7c7c7;
+    }
+   .btn:focus{
+        box-shadow:none;
+    }
+
+   
+    .card:hover {
+            transform: scale(1.1);
+    }
+
+    .qns-content {
+        padding: 20px;
+        padding-bottom: inherit;
+        box-sizing: border-box;
+        margin: 0 auto;
+        max-width: 1040px;
+        min-width: 320px;
+        width: 100%;
+    }
+
+    .card {
+        background-color: #f2f2f2;
+        border-radius: 5px;
+        box-shadow: 2px 2px 10px #c9c9c9;
+        box-shadow: 2px 2px 10px #c9c9c9 inset;
+        transition: transform 0.3s ease;
+        margin: 0 auto 30px auto;
+        max-width: 192px;
+        width: 100%;
+        height:  245px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+  
+    @@media (max-width: 440px) {
+        .card{
+            max-width: 100%;
+        }
+    }
+    .tile img{
+        width:96px;
+    }
+</style>
+<section class="qns-content p-5">
+    @if (User?.Identity?.IsAuthenticated==true)
+    {
+        if (User.IsInRole("SystemAdmin"))
+        {
+            <div class=" tiles p-lg-5 ">
+                <div class="tiles-group row">
+                    <div class="card col-lg-2">
+                        <a href="/Question/Index">
+                            <div class="tile p-5">
+                                <img src="~/images/question-management.png" />
+                                <div class="py-2 text-center"><h6>Question<br /> Management</h6></div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class=" card col-lg-2">
+                        <a href="/Users/Index">
+                            <div class="tile p-5">
+                                <img src="~/images/accounts-management.png" />
+                                <div class="py-2 text-center"><h6>Accounts<br /> Management</h6></div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="card col-lg-2">
+                        <a href="/Subscriptions/Index">
+                            <div class="tile p-5">
+                                <img src="~/images/subscription-management.png" />
+                                <div class="py-2 text-center"><h6>Subscriptions<br /> Management</h6></div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="card col-lg-2">
+                        <a href="/Payments/Index">
+                            <div class="tile p-5">
+                                <img src="~/images/payment-management (2).png" />
+                                <div class="py-2 text-center"><h6>Payments<br /> Management</h6></div>
+                            </div>
+                        </a>                       
+                    </div>
+
+                    <div class="card col-lg-2">
+                        <a href="/Tutors/Index">
+                            <div class="tile p-5">
+                                <img src="~/images/tutor.png" />
+                                <div class="py-2 text-center"><h6>Tutors<br /> Management </h6></div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="card col-lg-2">
+                        <a href="/Coupons/Index">
+                            <div class="tile p-5">
+                                <img src="~/images/voucher.png" />
+                                <div class="py-2 text-center"><h6>Coupons<br /> Management </h6></div>
+                            </div>
+                        </a>
+                    </div>                    
+
+                    <div class="card col-lg-2">
+                        <div class="tile p-5">
+                            <img src="~/images/icons8-open-box-96.png" />
+                            <div class="py-2"><h4>Action 7</h4></div>
+                        </div>
+                    </div>
+
+                    <div class="card col-lg-2">
+                        <div class="tile p-5">
+                            <img src="~/images/icons8-color-palette-96.png" />
+                            <div class="py-2"><h4>Action 8</h4></div>
+                        </div>
+                    </div>
+                    <div class="card col-lg-2">
+                        <div class="tile p-5">
+                            <img src="~/images/icons8-open-box-96.png" />
+                            <div class="py-2"><h4>Action 5</h4></div>
+                        </div>
+                    </div>
+
+                    <div class="card col-lg-2">
+                        <div class="tile p-5">
+                            <img src="~/images/icons8-haiku-96.png" />
+                            <div class="py-2"><h4>Action 6</h4></div>
+                        </div>
+                    </div>
+
+                    <div class="card col-lg-2">
+                        <div class="tile p-5">
+                            <img src="~/images/icons8-color-palette-96.png" />
+                            <div class="py-2"><h4>Action 7</h4></div>
+                        </div>
+                    </div>
+
+                    <div class="card col-lg-2">
+                        <div class="tile p-5">
+                            <img src="~/images/icons8-thunder-96.png" />
+                            <div class="py-2"><h4>Action 8</h4></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class=" tiles p-lg-5 ">
+                <div class="tiles-group row">
+                    <div class="card col-lg-2">
+                        <a href="/Question/Index">
+                            <div class="tile p-5">
+                                <img src="~/images/question-management.png" />
+                                <div class="py-2 text-center"><h6>Question<br /> Management</h6></div>
+                            </div>
+                        </a>
+                    </div>
+
+                    @*<div class="card col-lg-2">
+                        <a href="/Content/Index">
+                            <div class="tile p-5">
+                                <img src="~/images/icons8-thunder-96.png" />
+                                <div class="py-2 text-center"><h6>Content<br /> Management</h6></div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="card col-lg-2">
+                        <div class="tile p-5">
+                            <img src="~/images/icons8-haiku-96.png" />
+                            <div class="py-2"><h4>Action 2</h4></div>
+                        </div>
+                    </div>
+
+                    <div class="card col-lg-2">
+                        <div class="tile p-5">
+                            <img src="~/images/icons8-open-box-96.png" />
+                            <div class="py-2"><h4>Action 3</h4></div>
+                        </div>
+                    </div>*@
+
+                   
+
+                </div>
+            </div>
+        }
+    }
+   
+</section>

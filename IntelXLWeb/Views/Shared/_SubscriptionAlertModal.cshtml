@@ -1,0 +1,83 @@
+﻿<style>
+    .card .card-body {
+        padding: 1rem 1rem
+    }
+
+    .card-body {
+        flex: 1 1 auto;
+    }
+
+    .subscription-modal {
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        width: 100%;
+        pointer-events: auto;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid rgba(0,0,0,.2);
+        border-radius: 32px;
+        outline: 0;
+    }
+
+    .card-body p {
+        font-size: 17px;
+    }
+
+    .card-body h4 {
+        margin-top: 18px
+    }
+
+    .cross {
+        /*padding: 26px;*/
+        color: #4CAF50;
+        cursor: pointer;
+        /*padding-top: 22px;*/
+    }
+
+        .cross i {
+            font-size: 20px;
+        }
+
+    .continue:focus {
+        outline: none
+    }
+
+    .continue {
+        border-radius: 5px;
+        text-transform: capitalize;
+        font-size: 14px;
+        padding: 8px 108px;
+        cursor: pointer;
+        color: #fff;
+        background-color: #4CAF50;
+    }
+
+        .continue:hover {
+            background-color: #248a28 !important;
+            color: #fff;
+        }
+
+    .cancel {
+        color: #9E9E9E;
+        text-decoration: underline;
+    }
+</style>
+<div class="modal fade" id="subscribeAlertModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content subscription-modal">
+            <div class="text-right cross ms-auto pe-4 py-3" data-bs-dismiss="modal" aria-label="Close"> <i class="fa fa-times"></i> </div>
+            <div class="card-body text-center mb-2">
+                <img src="~/images/subscription-business-model.png" height="200" width="200">
+                <h4 class="mt-1">Subscribe Now!</h4>
+                <p>Subscribe now to access all your favorite courses and take your learning to the next level!</p>
+                <a class="btn btn-out btn-square text-white continue mb-3" href="/Membership/Index">SUBSCRIBE</a><br>
+                <div class="cancel-modal">
+                    <a class="cancel" href="#" data-bs-dismiss="modal" aria-label="Close">No thanks!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

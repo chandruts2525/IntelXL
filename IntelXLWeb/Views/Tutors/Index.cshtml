@@ -1,0 +1,1030 @@
+﻿@{
+    ViewData["Title"] = "Tutors";
+}
+
+<link href="~/lib/select2/css/select2.min.css" rel="stylesheet" />
+<!-- Include ion-rangeslider CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css" />
+
+<link href="~/css/custom.css" rel="stylesheet" />
+@section Styles{
+    <style>
+        /*.....Calendar styles.....*/
+        .fc .fc-cell-shaded, .fc .fc-day-disabled {
+            background: #ebe8e84d;
+        }
+
+        .fc .fc-highlight {
+            background: #98d98e;
+        }
+
+        @@media (max-width: 575.98px) {
+            .fc-view-harness.fc-view-harness-active {
+                height: 630px !important;
+            }
+        }
+
+        .time-selection {
+            min-width: 150px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            background-color: #fff;
+            cursor: pointer;
+            outline: 0;
+        }
+
+        .fc-event-time::after {
+            content: "" !important;
+        }
+
+        .price-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 0 10px;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        p {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .range-slider {
+            width: 100%;
+            position: relative;
+            margin: 2px 0 15px 0;
+        }
+
+        .range-fill {
+            height: 6px;
+            background-color: #36b37e;
+            position: absolute;
+            z-index: 1;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+            position: absolute;
+            left: 0;
+        }
+
+            input[type="range"]::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                height: 15px;
+                width: 15px;
+                border-radius: 50%;
+                background: #36b37e;
+                cursor: pointer;
+                margin-top: -5px;
+                position: relative;
+                z-index: 1;
+            }
+
+            input[type="range"]::-webkit-slider-runnable-track {
+                width: 100%;
+                height: 5px;
+                background: #e8e8e8;
+                border-radius: 3px;
+                border: none;
+            }
+
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: absolute;
+            z-index: 9;
+            top: 0;
+            right: 0;
+            background-color: #fff;
+            overflow-x: hidden;
+            transition: 0.5s;
+        }
+
+            .sidenav .close-sidenav a {
+                padding: 8px 8px 8px 32px;
+                text-decoration: none;
+                color: #818181;
+                display: block;
+                transition: 0.3s;
+            }
+
+        .clear-filter a {
+            text-decoration: underline;
+        }
+
+        .sidenav.close-sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+        .sidenav .closebtn {
+            font-size: 36px;
+        }
+
+        .filter-ico {
+            display: none;
+        }
+
+        @@media screen and (max-width: 700px) {
+            .filter-ico {
+                display: block;
+            }
+
+            .hidable-content {
+                display: none;
+            }
+
+            .course-select {
+                width: 85%;
+            }
+        }
+
+        @@media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+
+                .sidenav a {
+                    font-size: 18px;
+                }
+        }
+
+        .tutor-option-select, .sidenav-hdr {
+            border: none;
+            border-radius: 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .sort-item input {
+            width: 30px;
+            height: 30px;
+        }
+
+        .sidenav-item {
+            border-bottom: 1px solid #ddd;
+        }
+
+        .ix-sort-checkbox:checked {
+            background-color: #36b37e;
+            border-color: #36b37e;
+        }
+
+        .sidenav-item .ix-drp-icon {
+            border: none;
+            border-radius: 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .filter-btn {
+            background-color: #36b37e;
+            border: 1px solid #000;
+            color: #fff;
+            width: 100%;
+        }
+
+        .sidenav-item .ix-drp-icon {
+            background-image: none;
+        }
+
+        .sidenav-item .price-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .time-selection {
+            cursor: pointer;
+            border: 1px solid #ced4da;
+            padding: 10px;
+        }
+        /* Time selecetion css*/
+        .time-selection-left {
+            border-radius: 10px 0 0 10px;
+            border-right: 0;
+        }
+
+        .time-selection-right {
+            border-radius: 0 10px 10px 0;
+        }
+
+        .time-selection.active {
+            background-color: #198754;
+            color: #fff;
+        }
+        .calendar {
+            padding: 8px;
+            background: #ffffff;
+            border-radius: 4px;
+            font-size: 18px;
+            border: 1px solid #333333;
+            box-shadow: 0px 20px 40px rgba(59,60,56,0.05);
+        }
+
+        .ui-datepicker {
+            background: #ffffff;
+            border-radius: 15px;
+        }
+
+        .ui-datepicker-header {
+            height: 50px;
+            line-height: 50px;
+            color: #ffffff;
+            background: #198754;
+            margin-bottom: 10px;
+        }
+
+        .ui-datepicker-prev,
+        .ui-datepicker-next {
+            width: 20px;
+            height: 20px;
+            text-indent: 9999px;
+            border-radius: 100%;
+            cursor: pointer;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+
+        .ui-datepicker-prev {
+            float: left;
+            margin-left: 12px;
+        }
+
+            .ui-datepicker-prev:after {
+                transform: rotate(45deg);
+                margin: -43px 0px 0px 8px;
+            }
+
+        .ui-datepicker-next {
+            float: right;
+            margin-right: 12px;
+        }
+
+            .ui-datepicker-next:after {
+                transform: rotate(-135deg);
+                margin: -43px 0px 0px 6px;
+            }
+
+            .ui-datepicker-prev:after,
+            .ui-datepicker-next:after {
+                content: '';
+                position: absolute;
+                display: block;
+                width: 8px;
+                height: 8px;
+                border-left: 2px solid #ffffff;
+                border-bottom: 2px solid #ffffff;
+            }
+
+            .ui-datepicker-prev:hover,
+            .ui-datepicker-next:hover,
+            .ui-datepicker-prev:hover:after,
+            .ui-datepicker-next:hover:after {
+                border-color: #333333;
+            }
+
+        .ui-datepicker-title {
+            text-align: center;
+            font-size: 25px;
+        }
+
+        .ui-datepicker-calendar {
+            width: 100%;
+            text-align: center;
+        }
+
+            .ui-datepicker-calendar thead tr th span {
+                display: block;
+                width: 40px;
+                color: #198754;
+                margin-bottom: 5px;
+                font-size: 18px;
+            }
+
+        .ui-state-default {
+            display: block;
+            text-decoration: none;
+            color: #333333;
+            line-height: 40px;
+            font-size: 16px;
+        }
+
+        .ui-state-highlight {
+            color: #ffffff;
+            background-color: #198754;
+            border-radius: 50px;
+        }
+
+        .ui-state-active {
+            color: #ffffff;
+            background-color: #198754;
+            border-radius: 50px;
+        }
+
+        .ui-datepicker-unselectable .ui-state-default {
+            color: #b9b6b6;
+            /* border: 2px solid transparent;*/
+        }
+
+        .ui-state-default:hover {
+            color: #ffffff;
+            background: #198754;
+            border-radius: 50px;
+            transition: all 0.25s cubic-bezier(0.7, -0.12, 0.2, 1.12);
+        }
+
+        .ix-tutor-anime {
+            border: 1px solid #c5c5c5;
+            border-radius: 5px;
+        }
+    </style>
+}
+<div class="container ix-filters-wrap py-5">
+    @* <div id="mySidenav" class="sidenav">
+        <div class="sidenav-hdr d-flex justify-content-between align-items-center px-5">
+            <div class="clear-filter"><a href="#">Clear all</a></div>
+            <div><h4>Filters</h4></div>
+            <div class="close-sidenav"><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></div>
+        </div>
+        <div class="price-range sidenav-item px-4 pb-4 my-3">
+            <div class="ix-pricerange ix-pricerange-sidenav px-2" style="border:none;">
+                <p class=" m-0 px-2" for="fees">Price per lesson</p>
+                <div class="price-content">
+                    <div>
+                        <p class="m-0 min-value" id="min-value">₹50</p>
+                    </div>
+                    <span>-</span>
+                    <div>
+                        <p class="m-0 max-value" id="max-value">₹500</p>
+                    </div>
+                </div>
+                <div class="px-2">
+                    <div class="range-slider mt-3 pt-3">
+                        <div class="range-fill"></div>
+                        <input type="range" class="min-price" value="0" min="0" max="500" step="10" />
+                        <input type="range" class="max-price" value="500" min="0" max="500" step="10" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sidenav-item px-4 pb-4 mt-3">
+            <div class="ix-country" style="border:none;">
+                <label class="form-label m-0 px-2" for="birthCountry">Country of birth</label>
+                <select id="Country" class="border-bottom form-select select2-search--inline" multiple>
+                    <option>India</option>
+                    <option>America</option>
+                    <option>Canada</option>
+                    <option>Australia</option>
+                    <option>United Kingdom</option>
+                    <option>Germany</option>
+                </select>
+            </div>
+
+        </div>
+        <div class="sidenav-item px-4 pb-4 mt-3">
+            <p class="m-0 pt-2 px-2" for="time">I'm available</p>
+            <div class="  form-control ix-drp-icon d-flex" data-bs-toggle="collapse" data-bs-target="#collapseExample">
+                <div style="max-width: 90%;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                    <span class="ix-anytime">Any Time</span>
+                    <span class="ix-time-div"></span>
+                    <span class="ix-day-div"></span>
+                </div>
+                <span><button class="btn p-0 ix-time-clear position-absolute z-2" type="button" style="display:none;color:#36b37e;"><i class="fa-solid fa-circle-xmark"></i></button></span>
+            </div>
+            <div class="p-4">
+                <div class="h6">Times</div>
+                <div class="mb-2">
+                    <p class="mb-2">Daytime</p>
+                    <div class="d-flex  px-5 justify-content-between">
+                        <div class="btn px-5 ix-time-select">
+                            <span class="d-flex justify-content-center"><i class="fa-solid fa-sun"></i></span>
+                            <span class="ix-time">09-12</span>
+                        </div>
+                        <div class="btn px-5 mx-2 ix-time-select">
+                            <span class="d-flex justify-content-center"><i class="fa-regular fa-sun"></i></span>
+                            <span class="ix-time">12-15</span>
+                        </div>
+                        <div class="btn px-5 ix-time-select">
+                            <span class="d-flex justify-content-center"><i class="fa-solid fa-sun"></i></span>
+                            <span class="ix-time">15-18</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <p class="mb-2">Evening and night </p>
+                    <div class="d-flex justify-content-between  px-5">
+                        <div class="btn  px-5 ix-time-select">
+                            <span class="d-flex justify-content-center"><i class="fa-solid fa-moon"></i></span>
+                            <span class="ix-time">18-21</span>
+                        </div>
+                        <div class="btn  px-5 mx-2 ix-time-select">
+                            <span class="d-flex justify-content-center"><i class="fa-solid fa-cloud-moon"></i></span>
+                            <span class="ix-time">21-24</span>
+                        </div>
+                        <div class="btn  px-5 ix-time-select">
+                            <span class="d-flex justify-content-center"><i class="fa-solid fa-moon"></i></span>
+                            <span class="ix-time">00-03</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <p class="mb-2">Morning </p>
+                    <div class="d-flex justify-content-between  px-5">
+                        <div class="btn  px-5 ix-time-select">
+                            <span class="d-flex justify-content-center"><i class="fa-regular fa-moon"></i></span>
+                            <span class="ix-time">03-06</span>
+                        </div>
+                        <div class="btn mx-2  px-5 ix-time-select">
+                            <span class="d-flex justify-content-center"><i class="fa-solid fa-sun"></i></span>
+                            <span class="ix-time">06-09</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <p class="mb-2">Day</p>
+                    <div class="d-flex flex-row justify-content-between flex-wrap px-5" style="gap: 8px;">
+                        <div>
+                            <button type="button" class="btn px-3 ix-day-btn "><span>Sun</span></button>
+                        </div>
+                        <div>
+                            <button type="button" class="btn px-3 ix-day-btn"><span>Mon</span></button>
+                        </div><div>
+                            <button type="button" class="btn px-3 ix-day-btn"><span>Tue</span></button>
+                        </div>
+                        <div>
+                            <button type="button" class="btn px-3 ix-day-btn"><span>Wed</span></button>
+                        </div>
+                        <div>
+                            <button type="button" class="btn px-3 ix-day-btn"><span>Thu</span></button>
+                        </div>
+                        <div>
+                            <button type="button" class="btn px-3 ix-day-btn"><span>Fri</span></button>
+                        </div>
+                        <div>
+                            <button type="button" class="btn px-3 ix-day-btn"><span>Sat</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="sidenav-item px-4 pb-4 mt-3">
+            <div class="ix-course" style="border:none;">
+                <label class="form-label m-0 px-2" for="course">Course</label>
+                <select class="tutor-option-select form-select" id="course">
+                    <option value="">School</option>
+                    <option value="">TNPSC</option>
+                    <option value="">NEET</option>
+                </select>
+            </div>
+        </div>
+        <div class="sidenav-item px-4 pb-4 mt-3">
+            <div class="ix-class" style="border:none;">
+                <label class="form-label m-0 px-2" for="grade">Grade</label>
+                <select class="tutor-option-select form-select" id="grade">
+                    <option value="">LKG</option>
+                    <option value="">UKG</option>
+                    <option value="">Class I</option>
+                    <option value="">Class II</option>
+                    <option value="0">Class III</option>
+                    <option value="1">Class IV</option>
+                    <option value="2">Class V</option>
+                    <option value="3">Class VI</option>
+                    <option value="4">Class VII</option>
+                    <option value="5">Class VIII</option>
+                    <option value="6">Class IX</option>
+                    <option value="7">Class X</option>
+                    <option value="8">Class XI</option>
+                    <option value="9">Class XII</option>
+                </select>
+            </div>
+        </div>
+        <div class="sidenav-item px-4 pb-4 mt-3">
+            <div class="ix-subject" style="border:none;">
+                <label class="form-label m-0 px-2" for="subject">Subject</label>
+                <select class="tutor-option-select form-select" id="subject">
+                    <option value="">Maths</option>
+                    <option value="">English</option>
+                </select>
+            </div>
+        </div>
+        <div class="sidenav-item px-4 pb-4 mt-3">
+            <p class="m-0 pt-2 px-2">Sort by</p>
+            <div>
+                <div class="sort-item d-flex pt-3 mt-2 justify-content-between">
+                    <label class="form-check-label" for="popularity">Popularity</label>
+                    <input type="checkbox" class="form-check-input ix-sort-checkbox" name="sortItem" id="popularity" />
+                </div>
+                <div class="sort-item d-flex pt-3 mt-2 justify-content-between">
+                    <label class="form-check-label" for="highestFirst">Price:Hignest first</label>
+                    <input type="checkbox" class="form-check-input ix-sort-checkbox" name="sortItem" id="highestFirst" />
+                </div>
+                <div class="sort-item d-flex pt-3 mt-2 justify-content-between">
+                    <label class="form-check-label" for="lowesrFirst">Price:Lowest first</label>
+                    <input type="checkbox" class="form-check-input ix-sort-checkbox" name="sortItem" id="lowesrFirst" />
+                </div>
+                <div class="sort-item d-flex pt-3 mt-2 justify-content-between">
+                    <label class="form-check-label" for="bestRating">Best Rating</label>
+                    <input type="checkbox" class="form-check-input ix-sort-checkbox" name="sortItem" id="bestRating" />
+                </div>
+            </div>
+        </div>
+        <div class="sidenav-footer px-5 my-4">
+            <button class="btn d-flex filter-btn justify-content-center">Apply Filters</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-10 col-sm-6 col-md-4 col-lg-3 mb-2 course-select">
+            <div class="ix-course-filter">
+                <label class="form-label m-0 px-2" for="language">I want to learn</label>
+                <input class="border-0 form-control" id="language" type="text" placeholder="English" value="English" multiple />
+                <div class="ix-autosuggest" id="autosuggest"></div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 hidable-content col-lg-3 mb-2 position-relative">
+            <div class="ix-pricerange px-2">
+                <label class="form-label m-0 px-2" for="fees">Price per lesson</label>
+                <div class="price-content">
+                    <div class="d-flex">
+                        <label class="me-2">Min</label>
+                        <p class="m-0 min-value" id="min-value">₹50</p>
+                    </div>
+                    <div class="d-flex">
+                        <label class="me-2">Max</label>
+                        <p class="m-0 max-value" id="max-value">₹500</p>
+                    </div>
+                </div>
+                <div class="range-slider">
+                    <div class="range-fill"></div>
+                    <input type="range" class="min-price" value="0" min="0" max="500" step="10" />
+                    <input type="range" class="max-price" value="500" min="0" max="500" step="10" />
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-2 hidable-content">
+            <div class="ix-country">
+                <label class="form-label m-0 px-2" for="birthCountry">Country of birth</label>
+                <select id="birthCountry" class="border-0 form-select select2-search--inline" multiple>
+                    <option>India</option>
+                    <option>America</option>
+                    <option>Canada</option>
+                    <option>Australia</option>
+                    <option>United Kingdom</option>
+                    <option>Germany</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-2 position-relative availability-filter hidable-content">
+            <div class="ix-availability w-100">
+                <label class="form-label m-0 px-2" for="time">I'm available</label>
+                <div class="border-0  form-control ix-drp-icon d-flex">
+                    <div style="max-width: 90%;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                        <span class="ix-anytime">Any Time</span>
+                        <span class="ix-time-div"></span>
+                        <span class="ix-day-div"></span>
+                    </div>
+                    <span><button class="btn p-0 ix-time-clear position-absolute z-2" type="button" style="display:none"><i class="fa-solid fa-circle-xmark"></i></button></span>
+                </div>
+            </div>
+            <div class="position-absolute ix-time-pop" style="border:1px solid #c3c3c3; border-radius:5px; width:100%; display:none; z-index:2;background:#fff;top:100%">
+
+                <div class="p-4">
+                    <div class="h6">Times</div>
+                    <div class="mb-2">
+                        <p class="mb-2">Daytime</p>
+                        <div class="d-flex">
+                            <div class="btn ix-time-select">
+                                <span class="d-flex justify-content-center"><i class="fa-solid fa-sun"></i></span>
+                                <span class="ix-time">09-12</span>
+                            </div>
+                            <div class="btn mx-2 ix-time-select">
+                                <span class="d-flex justify-content-center"><i class="fa-regular fa-sun"></i></span>
+                                <span class="ix-time">12-15</span>
+                            </div>
+                            <div class="btn ix-time-select">
+                                <span class="d-flex justify-content-center"><i class="fa-solid fa-sun"></i></span>
+                                <span class="ix-time">15-18</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="mb-2">Evening and night </p>
+                        <div class="d-flex">
+                            <div class="btn ix-time-select">
+                                <span class="d-flex justify-content-center"><i class="fa-solid fa-moon"></i></span>
+                                <span class="ix-time">18-21</span>
+                            </div>
+                            <div class="btn  mx-2 ix-time-select">
+                                <span class="d-flex justify-content-center"><i class="fa-solid fa-cloud-moon"></i></span>
+                                <span class="ix-time">21-24</span>
+                            </div>
+                            <div class="btn ix-time-select">
+                                <span class="d-flex justify-content-center"><i class="fa-solid fa-moon"></i></span>
+                                <span class="ix-time">00-03</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="mb-2">Morning </p>
+                        <div class="d-flex">
+                            <div class="btn ix-time-select">
+                                <span class="d-flex justify-content-center"><i class="fa-regular fa-moon"></i></span>
+                                <span class="ix-time">03-06</span>
+                            </div>
+                            <div class="btn mx-2 ix-time-select">
+                                <span class="d-flex justify-content-center"><i class="fa-solid fa-sun"></i></span>
+                                <span class="ix-time">06-09</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="mb-2">Day</p>
+                        <div class="d-flex flex-row flex-wrap" style="gap: 8px;">
+                            <div>
+                                <button type="button" class="btn ix-day-btn "><span>Sun</span></button>
+                            </div>
+                            <div>
+                                <button type="button" class="btn ix-day-btn"><span>Mon</span></button>
+                            </div><div>
+                                <button type="button" class="btn ix-day-btn"><span>Tue</span></button>
+                            </div>
+                            <div>
+                                <button type="button" class="btn ix-day-btn"><span>Wed</span></button>
+                            </div>
+                            <div>
+                                <button type="button" class="btn ix-day-btn"><span>Thu</span></button>
+                            </div>
+                            <div>
+                                <button type="button" class="btn ix-day-btn"><span>Fri</span></button>
+                            </div>
+                            <div>
+                                <button type="button" class="btn ix-day-btn"><span>Sat</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-2 hidable-content">
+            <div class="ix-course">
+                <label class="form-label m-0 px-2" for="course">Course</label>
+                <select class="border-0 form-select" id="course">
+                    <option value="">School</option>
+                    <option value="">TNPSC</option>
+                    <option value="">NEET</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-2 hidable-content">
+            <div class="ix-class">
+                <label class="form-label m-0 px-2" for="grade">Grade</label>
+                <select class="border-0 form-select" id="grade">
+                    <option value="">LKG</option>
+                    <option value="">UKG</option>
+                    <option value="">Class I</option>
+                    <option value="">Class II</option>
+                    <option value="0">Class III</option>
+                    <option value="1">Class IV</option>
+                    <option value="2">Class V</option>
+                    <option value="3">Class VI</option>
+                    <option value="4">Class VII</option>
+                    <option value="5">Class VIII</option>
+                    <option value="6">Class IX</option>
+                    <option value="7">Class X</option>
+                    <option value="8">Class XI</option>
+                    <option value="9">Class XII</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-2 hidable-content">
+            <div class="ix-subject">
+                <label class="form-label m-0 px-2" for="subject">Subject</label>
+                <select class="border-0 form-select" id="subject">
+                    <option value="">Maths</option>
+                    <option value="">English</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-2 hidable-content">
+            <div class="ix-sortby">
+                <label class="form-label m-0 px-2" for="sortby">Sort By</label>
+                <select class="border-0 form-select" id="sortby">
+                    <option>Popularity</option>
+                    <option>Price: highest first</option>
+                    <option>Price: lowest first</option>
+                    <option>Number of reviews</option>
+                    <option>Best rating</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="filter-ico ms-auto" style="font-size:30px;cursor:pointer;width:fit-content;" onclick="openNav()"><i class="fa-solid fa-bars-staggered"></i></div>
+    </div> *@
+
+
+</div>
+<div class="container" style="max-width:1024px;">
+     <div class="container ix-tutors-list">
+    <div class="row p-4 mb-3 ix-tutor-anime">
+        <div class="col-md-3">
+            <div>
+                <div class="animated-background" alt="Profile Picture" style="width:150px;height:150px;border-radius: 5px;"></div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="profile-details">
+                <div><p class="animated-background mt-2" style="max-width:80px;height:22px;border-radius: 5px;"></p></div>
+                <div class="ix-bio animated-background mb-2" style="max-width:130px;height:21px;border-radius: 5px;"></div>
+                <div class="ix-bio animated-background mb-2" style="max-width:300px;height:22px;border-radius: 5px;"></div>
+                <div class="ix-bio animated-background mb-2" style="max-width:130px;height:21px;border-radius: 5px;"></div>
+                <p class="animated-background mb-2" style="max-width:200px;height:21px;border-radius: 5px;"></p>
+            </div>
+        </div>
+        <div class="col-md-4 ix-tutor">
+            <div class="row mb-5">
+            </div>
+
+            <div class="d-flex justify-content-center align-items-center  animated-background mb-3" style="max-width:300px;height:40px;border-radius: 5px;"></div>
+            <div class="d-flex justify-content-center align-items-center  animated-background mb-3" style="max-width:300px;height:40px;border-radius: 5px;"></div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="modal fade" id="TimeSelectionModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Choose your slot</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="p-2 d-flex justify-content-center">
+                    @*  <label class="time-selection" style="background-color:#cdcaca">*@
+
+                    <label class="time-selection time-selection-left active">
+                        <input type="radio" name="required-time" class="20min d-none required-time" value="20" checked>20 Min
+                    </label>
+                    @* <label class="time-selection">*@
+                    <label class="time-selection time-selection-right">
+                        <input type="radio" name="required-time" class="50min d-none required-time" value="50">50 Min
+                    </label>
+                </div>
+                @* Time selection Calender Here*@
+                @*<div id="WeeklyCalender"></div>*@
+                <div class="">
+                    <label class="form-label">Select your preferred date</label>
+                    <input placeholder="mm/dd/yyyy" type="text" name="checkIn" id="date" value="" class="date-select form-control" />
+
+                    @*  <label class="form-label">Select your prefered date</label>
+                    <input class="form-control date-select" type="date" id="date" name="birthday">*@
+                </div>
+
+                <div>
+                    <label class="form-label">Select your prefered time</label>
+                    <select class="form-select form-control time-select">
+                        <option selected disabled>Select here</option>
+                    </select>
+                </div>
+                <div class="d-flex justify-content-between align-items-center" style="margin-top: 10px;">
+                    <div><span>The calendar is in your time zone</span></div>
+                    <div class="confirm-time">
+                        <div class="d-flex align-items-center">
+                            @*  <div style="height: 10px; width: 10px; background-color: #3788d8;"></div>
+                            <div class="mx-2">Available slots</div>*@
+                            <button type="button" class="btn btn-success border border-1">Confirm time</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        let selectedUserId = 0;
+        let tutorId;
+        var events = [];
+        let time_array = [];
+        let timeConfigId;
+        $.ajax({
+            url: '/Tutors/GetAllTutors',
+            type: 'GET',
+            success: function (response) {
+                $(".ix-tutors-list").html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error("Error: " + error);
+            }
+        });
+
+        function getDayOfWeek(day) {
+            // Map days to the corresponding day of the week (Sunday is 0, Monday is 1, etc.)
+            var dayMap = {
+                Sunday: 0,
+                Monday: 1,
+                Tuesday: 2,
+                Wednesday: 3,
+                Thursday: 4,
+                Friday: 5,
+                Saturday: 6
+            };
+
+            return /*[*/dayMap[day]/*]*/;
+        }
+        function getTutorAvailability(id) {
+            events = [];
+            $.ajax({
+                url: '/Tutors/GetTutorAvailability',
+                type: 'GET',
+                data: { tutorId: id },
+                success: function (response) {
+                    //console.log(response)
+                    $.each(response, function (i, v) {
+                        var newObj = {
+                            id: v.tutorTimingId,
+                            title: '',
+                            daysOfWeek: getDayOfWeek(v.day.dayName),
+                            startTime: v.fromTime.timing,
+                            endTime: v.toTime.timing,
+                        };
+                        events.push(newObj);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error: " + error);
+                }
+            });
+        }
+
+        $(document).on('click', '.ix-bookBtn', function () {
+            var clickedClassName = event.target.className;
+            tutorId = $(this).closest(".ix-tutor").find("#hdnTutorId").val();
+            if ($(event.target).hasClass("auth_book")) {
+                $("#TimeSelectionModal").modal("show");
+                $("#chatModal").modal("hide");
+                getTutorAvailability(tutorId)
+                //window.location.href = "/Tutors/CreateSchedule/" + tutorId;
+            } else {
+                $("#LoginModal").modal("show");
+                $(".error-msg").text("Login to continue");
+                CurrentPath = "/Tutors/Index";
+            }
+        });
+        $(document).ready(function () {
+            $(".ix-time-select").on('click', function () {
+                let currentText = $(this).find('.ix-time').text();
+                if ($(this).hasClass("ix-time-select-border")) {
+                    $("#" + currentText).remove();
+                    $(this).removeClass("ix-time-select-border");
+                }
+                else {
+                    $(this).addClass("ix-time-select-border");
+                    $(".ix-anytime").hide();
+                    $(".ix-time-div").append(`<span id="${currentText}">${currentText}</span>`);
+                    $(".ix-time-clear").show();
+                } if (!$(".ix-time-div").text() && !$(".ix-day-div").text()) {
+                    $(".ix-anytime").show();
+                    $(".ix-time-clear").hide();
+                }
+            });
+            $(".ix-time-clear").on('click', function () {
+                $(this).hide();
+                $(".ix-anytime").show();
+                $(".ix-time-div").html("");
+                $(".ix-day-div").html("");
+                $(".ix-time-select").removeClass("ix-time-select-border");
+                $(".ix-day-btn").removeClass("ix-day-select-border");
+            });
+            $(".ix-day-btn").on('click', function () {
+                let selectedDay = $(this).find('span').text();
+                if ($(this).hasClass("ix-day-select-border")) {
+                    $("#" + selectedDay).remove();
+                    $(this).removeClass("ix-day-select-border");
+                }
+                else {
+                    $(this).addClass("ix-day-select-border");
+                    $(".ix-anytime").hide();
+                    //$(".ix-day-div").append("<span>" + selectedDay + "</span>");
+                    $(".ix-day-div").append(`<span id="${selectedDay}">${selectedDay}</span>`);
+                    $(".ix-time-clear").show();
+                }
+                if (!$(".ix-time-div").text() && !$(".ix-day-div").text()) {
+                    $(".ix-anytime").show();
+                    $(".ix-time-clear").hide();
+                }
+            });
+            $("#TimeSelectionModal").on("shown.bs.modal", function () {
+                //handleRenderFullcalendar();
+                $(".date-select").val("");
+                $('.time-select').empty().append($('<option selected disabled>Select here</option>'));
+            });
+            $(".time-selection").on('click', function () {
+                $(".time-selection").css("background-color", "");
+                $(this).find('input').prop('checked', true);
+                $(this).css("background-color", "#198754");
+                $('.time-selection').removeClass('active');
+                $(this).addClass('active');
+                $('input[type=radio]', this).prop('checked', true);
+            });
+
+        });
+
+        $(document).on('click', '.ix-sendmsg', function () {
+            selectedUserId = $(this).closest(".ix-tutor").find("#hdnTutorId").val();
+            let name = $(this).closest(".ix-tutor").find("#hdnTutorName").val();
+            $(".chat-conversation").html("");
+            $("#hdnData").val(selectedUserId);
+            if ($(event.target).hasClass("auth_book")) {
+                $(".wrapper .chat-header h3").text(name);
+                $("#chatModal").modal({
+                    backdrop: false
+                }).modal("show");
+                //$("#chatModal").modal("show");
+                $('.chat-inbox').css('display', 'none');
+                $('.chat-conversation').css('display', 'block');
+                $('.chat-form').css('display', 'block');
+                if ($(".chat-conversation").is(':visible')) {
+                    $('.btn-back').css('display', 'block');
+                } else {
+                    $('.btn-back').css('display', 'none');
+                }
+                getMessages(selectedUserId);
+            } else {
+                $("#LoginModal").modal("show");
+                $(".error-msg").text("Login to continue");
+                CurrentPath = "/Tutors/Index";
+            }
+        });
+        $(document).on('click', '.heartIcon', function () {
+            $(this).toggleClass('clicked');
+
+        });
+        function validateRange(currentEle) {
+            let minParagraph = currentEle.find(".min-value");
+            let maxParagraph = currentEle.find(".max-value");
+            const rangeFill = currentEle.find(".range-fill");
+            const minInput = currentEle.find(".min-price");
+            const maxInput = currentEle.find(".max-price");
+            let minPrice = parseInt(minInput.val()) || 0;
+            let maxPrice = parseInt(maxInput.val()) || 0;
+
+            if (minPrice > maxPrice) {
+                // Swap values if needed
+                let tempValue = maxPrice;
+                maxPrice = minPrice;
+                minPrice = tempValue;
+            }
+
+            const minValue = 0;
+            const maxValue = 500;
+            const minPercentage = ((minPrice - minValue) / (maxValue - minValue)) * 100;
+            const maxPercentage = ((maxPrice - minValue) / (maxValue - minValue)) * 100;
+            rangeFill.css({
+                left: minPercentage + "%",
+                width: maxPercentage - minPercentage + "%"
+            });
+
+            minParagraph.text("₹" + minPrice);
+            maxParagraph.text("₹" + maxPrice);
+        }
+        $(document).ready(function () {
+            // Initial call to validateRange
+            $(".ix-pricerange").each(function (e) {
+                validateRange($(this));
+            });
+
+            // Add an event listener to each input element using jQuery
+            $(".min-price, .max-price").on("input", function () {
+                validateRange($(this).closest(".ix-pricerange"));
+            });
+
+        });
+
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "100%";
+        }
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+    </script>
+    <!-- Include ion-rangeslider JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
+    <script src="~/lib/select2/js/select2.full.min.js"></script>
+    <script src="~/js/tutor.js"></script>
+    <!-- Include Calendar -->
+    <script src="~/lib/fullcalendar-6.1.10/dist/index.global.js"></script>
+    <script src="~/js/calendarFunctions.js"></script>
+}

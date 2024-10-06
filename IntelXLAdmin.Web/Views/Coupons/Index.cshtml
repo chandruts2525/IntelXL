@@ -1,0 +1,327 @@
+﻿@model IEnumerable<IntelXLDataAccess.Models.CouponMaster>
+
+@{
+    ViewData["Title"] = "Coupon";
+}
+@section Styles{
+    <style>
+        .paymt-hdr {
+            color: #029978dd;
+        }
+
+        th {
+            color: #029978dd;
+        }
+
+        td {
+            border-bottom: 1px solid #02e5e5;
+        }
+
+        .btn-info:focus, .btn:focus {
+            box-shadow: none;
+        }
+
+        .hdninput {
+            display: none;
+        }
+
+        .loader {
+            width: 50px;
+            padding: 8px;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background: #25b09b;
+            --_m: conic-gradient(#0000 10%,#000), linear-gradient(#000 0 0) content-box;
+            -webkit-mask: var(--_m);
+            mask: var(--_m);
+            -webkit-mask-composite: source-out;
+            mask-composite: subtract;
+            animation: l3 1s infinite linear;
+        }
+
+        @@keyframes l3 {
+            to {
+                transform: rotate(1turn)
+            }
+        }
+    </style>
+}
+
+<div class="container ">
+    <div class="my-3 me-auto pt-3">
+        <a href="#" onclick="history.go(-1);" style="color: #207bff; text-decoration: none;"><i class="fa-solid fa-arrow-left-long me-2"></i>Back</a>
+    </div>
+    <div class="d-flex justify-content-between">
+        <div><h1 class="paymt-hdr">All Coupons @*<img src="~/images/payment-icon.png" width="50" />*@</h1></div>
+        <div> <button class="btn ms-auto btn-warning" data-bs-toggle="modal" data-bs-target="#addCoupon"><i class="fa-solid fa-plus"></i> Add new Coupon</button></div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <span>Name</span>
+                </th>
+                <th>
+                    <span>Code</span>
+                </th>
+                <th>
+                    <span>Start date</span>
+                </th>
+                <th>
+                    <span>End Date</span>
+                </th>
+                <th>
+                    <span>Status</span>
+                </th>
+                <th>
+                    <span>Offer (%)</span>
+                </th>
+                <th><span>Activate/Deactivate</span></th>
+                <th><span>Action</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model?.Any() == true)
+            {
+                @foreach (var item in Model)
+                {
+
+                    <tr>              
+                        <td>
+                            <span class="span">@item.Name</span>
+                            </td>
+                        <td>
+                            <span class="span">@item.CouponCode</span>
+                        </td>
+                        <td>
+                            <span class="span">@item.StartDate.ToLocalTime().ToString("d")</span>
+                        </td>
+                        <td>
+                            <span class="span">@item.EndDate.ToLocalTime().ToString("d")</span>
+                        </td>
+                        @if (@item.Status)
+                        {
+                            <td>
+                                <span class="status">Active</span>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <span class="status">Inactive</span>
+                            </td>
+                        }
+                        <td>
+                            <span class="span">@item.OfferPercentage</span>
+                        </td>
+                        <td>
+                            <label class="switch">
+                                <input type="checkbox" @(item.Status ? "checked" : "") value="@item.Id" />
+                            </label>
+                        </td>
+                        <td>
+                            <div class="btn btn-sm text-black btn-outline-info edit-btn" data-value="@item.Id">Edit</div>
+                        </td>
+                    </tr>
+                }
+
+            }
+            else
+            {
+                <tr>
+                    <td class="d-flex justify-content-center">No data Found</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="modal" id="addCoupon" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addCouponLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
+        <div class="modal-content">
+
+            <div class="modal-body p-0 d-flex">
+                @* <div class="img-div" style="width: 45%;">
+                <img src="~/images/subscription.png" style="width: 100%; height: 100%; border-radius: 0.3rem;" alt="Image Description" />
+                </div>*@
+                <div class="" style="width: 100%;">
+                    <div class="modal-header border-0 text-white" style="background-color:var(--themecolor)">
+                        <h3 class="coupon-hdr">New Coupon</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="p-4">
+                        <form id="addCouponForm" method="post" asp-controller="Coupons" asp-action="AddCoupon">
+                            <div class="mb-2">
+                                <label for="Name" class="form-label modal-label">Coupon Name<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control modal-input" maxlength="20" placeholder="Coupon Name" name="Name" value="" required>
+                            </div>
+                            <div class="mb-2">
+                                <label for="CouponCode" class="form-label modal-label">Coupon Code<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control modal-input" maxlength="15" placeholder="Coupon Code" name="CouponCode" oninput="this.value = this.value.toUpperCase();" required>
+                            </div>
+                            <div class="mb-2">
+                                <label for="OfferPercentage" class="form-label modal-label">Offer Percentage(%)<span class="text-danger">*</span></label>
+                                <input type="number" class="form-control modal-input" maxlength="15" placeholder="Coupon Code" name="OfferPercentage" required>
+                            </div>
+                            <div class="mb-2 d-flex align-items-center">
+                                <div class="col-6 pe-1">
+                                    <label for="StartDate" class="form-label modal-label">Start Date<span class="text-danger">*</span></label>
+                                    <input type="date" class="form-control modal-input" placeholder="Start Date" name="StartDate" required>
+                                </div>
+                                <div class="col-6 pe-1">
+                                    <label for="EndDate" class="form-label modal-label">End Date<span class="text-danger">*</span></label>
+                                    <input type="date" class="form-control modal-input" placeholder="End Date" name="EndDate" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer border-0 justify-content-between">
+                                <div class="error-info text-danger py-1"></div>
+                                <button type="submit" class="btn px-4 btn-sm btnAdd btn-outline-primary"> <i class="fa-solid fa-circle-plus pe-2"></i>Add</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Edit Model*@
+<div class="modal" id="editCoupon" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editCouponLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
+        <div class="modal-content">
+
+            <div class="modal-body p-0 d-flex">
+                @* <div class="img-div" style="width: 45%;">
+                <img src="~/images/subscription.png" style="width: 100%; height: 100%; border-radius: 0.3rem;" alt="Image Description" />
+                </div>*@
+                <div class="" style="width: 100%;">
+                    <div class="modal-header border-0 text-white" style="background-color:var(--themecolor)">
+                        <h3 class="coupon-hdr">Edit Coupon</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="p-4 form-div">
+                        <div class="d-flex justify-content-center"> <div class="loader"></div></div>                       
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $(".switch").on("click", function () {
+                let checkBox = $(this).find("input[type='checkbox']");
+                let status = false;
+                let text = "Inactive";
+                let v = checkBox.val();
+                if (checkBox.prop("checked")) {
+                    status = true;
+                    text = "Active";
+                }
+                let d = $(this).closest("tr").find(".status")
+                $.ajax({
+                    type: "PUT",
+                    url: "/Coupons/UpdateCouponStatus",
+                    data: { id: v, status: status },
+                    success: function (data) {
+                        showtoast("success", "Coupon status updated successfully!");
+                        d.text(text);
+                        //window.location.reload();
+                    },
+                    error: function (error) {
+                        showtoast("error", "Something went wrong. Please try again");
+                    }
+                });
+            });
+            $(".edit-btn").on("click", function () {
+                $("#editCoupon").modal("show");
+                let id=$(this).data("value");
+                $.ajax({
+                    url: "/Coupons/Edit",
+                    type: "Get",
+                    data: { id: id },                   
+                    success: function (response) {
+                        if(response.id!=0){
+                            $(".form-div").html(getContent(response))
+                        }
+                        else{
+                            showtoast("error", "Something went wrong. Please try again");
+                        }                        
+                    },
+                    error: function (error) {
+                        showtoast("error", "Something went wrong. Please try again");
+                    }
+                });
+               
+
+            });
+
+            
+            $(document).on('click', '.btnsave', function () {
+                let form = $("#edit_form");
+                let formData = new FormData(form[0]);                
+                $.ajax({
+                    url: "/Coupons/UpdateCoupon",
+                    type: "Put",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        if(data){
+                            showtoast("success", "Updated successfully!");
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 5000);
+                        }
+                        else{
+                            showtoast("error", "Something went wrong. Please try again");
+                        }
+                    },
+                    error: function (error) {
+                        showtoast("error", "Something went wrong. Please try again");
+                    }
+                });
+
+            });
+
+        });
+        function getContent(data) {     
+            let html = `
+                <form id="edit_form" method="post" action="/Coupons/UpdateCoupon">
+                            <input type="hidden" name="Id" value="${data.coupon.id}">
+                            <input type="hidden" name="Status" value="${data.coupon.status}">
+                    <div class="mb-2">
+                        <label for="Name" class="form-label modal-label">Coupon Name<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control modal-input" maxlength="20" placeholder="Coupon Name" name="Name" value="${data.coupon.name}" required>
+                    </div>
+                    <div class="mb-2">
+                        <label for="CouponCode" class="form-label modal-label">Coupon Code<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control modal-input" maxlength="15" placeholder="Coupon Code" name="CouponCode" oninput="this.value = this.value.toUpperCase();" required value="${data.coupon.couponCode}">
+                    </div>
+                    <div class="mb-2">
+                        <label for="OfferPercentage" class="form-label modal-label">Offer Percentage(%)<span class="text-danger">*</span></label>
+                                <input type="number" class="form-control modal-input" maxlength="15" placeholder="Offer Percentage" name="OfferPercentage" required value="${data.coupon.offerPercentage}">
+                    </div>
+                    <div class="mb-2 d-flex align-items-center">
+                        <div class="col-6 pe-1">
+                            <label for="StartDate" class="form-label modal-label">Start Date<span class="text-danger">*</span></label>
+                                            <input type="date" class="form-control modal-input" name="StartDate" required value="${data.startDate}">
+                         </div>
+                        <div class="col-6 pe-1">
+                            <label for="EndDate" class="form-label modal-label">End Date<span class="text-danger">*</span></label>
+                            <input type="date" class="form-control modal-input" placeholder="End Date" name="EndDate" required value="${data.endDate}">
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0 justify-content-between">
+                        <div class="error-info text-danger py-1"></div>
+                        <button type="button" class="btn px-4 btn-sm btnsave btn-outline-primary">Save</button>
+                    </div>
+                </form>`;
+            return html;
+        }
+    </script>
+}

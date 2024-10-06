@@ -1,0 +1,625 @@
+﻿
+@{
+    ViewData["Title"] = "Join";
+}
+<style>
+    #payment_form_error_msg{
+        margin-top:20px;
+        color:#ff0000;
+        text-align:center;
+        font-size:1rem;
+        font-weight:500
+    }
+    #coupon_error_msg{
+        color:#ff0000;
+        text-align:center;
+        font-size:1rem;
+        font-weight:500
+    }
+    .discount_img{
+        height:30px;
+        width:30px;
+    }
+   .discount_para{
+       padding:10px;
+       font-size:14px;
+       color:#8a8a8a;
+   }
+   .payment_title{
+       background-color:#1eb7bd;
+   }
+   .payment_label{
+       color:#fff;
+   }
+   .terms_Container{
+       font-size:13px;
+       color:#8f8f8f;
+   }
+.terms_option{
+    color: #1010cc;
+    cursor:pointer;
+    
+}
+.terms_option:hover{
+     color: #52B701;
+    text-decoration:underline;
+}
+.policy_option{
+  color: #1010cc;
+    cursor:pointer;
+}
+.policy_option:hover{
+     color: #52B701;
+    text-decoration:underline;
+}
+.spinner-border{
+    width:1rem;
+    height:1rem;
+}
+</style>
+<div class=" subscription-page">
+    <div class=" container pt-3 pb-2 p-5">
+        <h1 class="text-center pb-3">Choose your package</h1>
+        <h6 class="text-center des-text pb-3">Welcome to IntelXL! We're excited to have you on board. Select the 
+            subscription plan that best fits your needs and unlock a world of exclusive benefits.</h6>
+        <div class="Join-Container  py-5 px-3">
+        @* <div class="d-flex justify-content-center pb-4 ">
+            <div class="subscription-flow-form-group payment-plan-field subscription-flow-form-section">
+                <div class="content plan-group">
+                    <label class="subscription-flow-radio-button-field subscription-flow-button-like subscription-flow-body-plaintext active" tabindex="0">
+                        <input name="paymentPlan" type="radio" class="input paymentPlan" value="month" checked="">Monthly
+                    </label>
+                    <label class="subscription-flow-radio-button-field subscription-flow-button-like subscription-flow-body-plaintext with-saving-banner">
+                        <input name="paymentPlan" type="radio" class="input paymentPlan" value="year">Yearly (save 15%)
+                    </label>
+                </div>
+            </div>
+
+        </div> *@
+        <div class="mb-2 d-flex align-items-center">
+            <div class="col-6 px-1">
+                <label for="CourseId" class="form-label modal-label">Course</label>
+                <select id="course-selection" class="form-control modal-input form-select bg-white" name="CourseId" asp-items="ViewBag.Courses">
+                    <option selected disabled value="">Select here...</option>
+                </select>
+            </div>
+            <div class="col-6 px-1">
+                <label for="ClassId" class="form-label modal-label">Class</label>
+                    <select id="class-selection" class="form-control modal-input form-select bg-white" name="ClassId" disabled>
+                    <option selected disabled value="">Select here...</option>
+                </select>
+            </div>
+        </div>
+            @*<div class="col-6 px-1">
+                <label for="ClassId" class="form-label modal-label">Currency </label>
+                <select id="course-selection" class="form-control modal-input form-select bg-white" name="ClassId">
+                    <option selected disabled value="">Select here...</option>
+                    <option value="">Doller</option>
+                    <option value="">INR</option>
+                    <option value="">Euro</option>
+                    <option value="">Dinar</option>
+                </select>
+            </div>*@                                                                 
+        </div>
+        <div class="package product-package-fieldset">
+            <div class="p-3 loading" style="display:none;">
+                <div class="row d-flex justify-content-center">
+                    @for (var i = 0; i < 3; i++)
+                    {
+                        <div class="col-md-4">
+                            <div class="card package-selection-card">
+                                <div class="card-body" style="border: 1px solid #c7c7cf; border-radius: 5px;">
+                                    <div class="animated-background card-title p-3 text-center" style="border-radius: 5px; height: 56px; width: 100%;"></div>
+                                    <div class="p-2 d-flex" style="height: 24vh;flex-direction:column;">
+                                        <div class="animated-background my-2" style="height: 24px; width: 11.5vw; border-radius: 5px; width: 100%;"></div>
+                                        <div class="animated-background my-2" style="height: 24px; width: 11.5vw; border-radius: 5px; width: 100%;"></div>
+                                        <div class="animated-background my-2" style="height: 24px; width: 11.5vw; border-radius: 5px; width: 100%;"></div>
+                                        <div class="animated-background my-2" style="height: 24px; width: 11.5vw; border-radius: 5px; width: 100%;"></div>
+                                    </div>
+                                    <div class="d-flex row justify-content-center">
+                                        <div class="animated-background col-12 col-md-6 col-lg-2 mb-2" style="height: 35px; width:130px; border-radius: 5px;margin-left: 50%;margin-right: 50%;"></div>
+                                        <div class="animated-background col-12 col-md-6 col-lg-2" style="height: 32px; width:157px; border-radius: 5px;margin-left: 30%;margin-right: 30%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="sub-content"></div>
+        </div>
+
+        <div class="Join-Container my-3">
+          <form id="paymentForm">
+                     <div class="mt-3">
+                        <div id="coupon_error_msg" class="text-center" ></div>
+                        <h4  id="coupon_success_msg" class="ms-2 mb-0 text-center" style="color:#0f4d20"></h4>
+                        <div id="coupon_success_msgs" class="text-center discount_para"></div>
+                     </div>
+            <div class="d-flex align-items-center justify-content-center px-3 pt-2">
+      
+                <div class=" col-4 mb-2 px-1">
+                    <input type="text" class="form-control" id="pay_coupon" name="coupon" placeholder="Enter coupon code">
+                </div>
+                <div class=" col-2 mb-2 px-1">
+                    <input type="button" class="btn btn-success" value="Apply Coupon" onclick="applyCoupon()"/>
+                </div>          
+            </div>
+
+            <div class="d-flex align-items-center px-3">
+            
+                <div class=" col-6 mb-2 px-1">
+                    <label for="exampleInputEmail1" class="form-label">First Name <span class="text-danger fw-bold">*</span></label>
+                    <input type="text" class="form-control" id="pay_firstName" name="firstName" value="" placeholder="Enter your name">
+                </div>
+                <div class=" col-6 mb-2 px-1">
+                    <label for="exampleInputEmail1" class="form-label">Last Name <span class="text-danger fw-bold">*</span></label>
+                    <input type="text" class="form-control" id="pay_lastName" name="lastName" value="" placeholder="Enter your name">
+                </div>
+          
+            </div>
+      
+            <div class="d-flex align-items-center px-3">
+              
+                <div class="col-6 mb-2 px-1">
+                    <label for="exampleInputEmail1" class="form-label">Mobile Number <span class="text-danger fw-bold">*</span></label>
+                    <input type="number" class="form-control" id="pay_mobile" name="mobile" value="" placeholder="Enter mobile number">
+                </div>
+
+                <div class=" col-6 mb-2 px-1">
+                    <label for="exampleInputEmail1" class="form-label">Email Address <span class="text-danger fw-bold">*</span></label>
+                    <input type="email" class="form-control" id="pay_email" name="email" value="" placeholder="Enter your email">
+                </div>
+            </div>   
+            <input type="hidden" name="coupon" id="coupon_val" value=""/>
+          </form>
+           <div style="display: flex; justify-content: center;">
+                <div id="payment_form_error_msg"></div>
+            </div>
+      <div class="d-grid gap-2 col-6 mx-auto my-4">
+          
+          <button class="btn pay-button join-btn" type="button" onclick="createOrderId()">
+              <div class="spinner-border join-loader text-light" style="display:none;" role="status">
+                    <span class="visually-hidden">Loading...</span>
+              </div>Join Now</button>
+      </div>
+
+      <div class="p-3">
+          <p class="terms_Container">By accessing and using our services, you agree to abide by our <span><a href="/Membership/Terms"  class="terms_option">Terms of Service</a></span> and <span><a class="policy_option"  href="/Membership/Policy">Privacy Policy</a></span>. 
+              These documents outline the guidelines governing your interaction with our platform
+              and detail how we handle your personal information to ensure a secure and transparent user 
+              experience.</p>
+      </div>
+  </div>
+
+        @*<div class="subscription-creation-form-submit-button my-3 text-center" style="display:none;">
+            <div class="secure-submit-button my-3">
+                <button type="button" class="subscription-flow-submit-button subscription-flow-primary-button btn px-5 " style="background-color:#ecff00;" onclick="createOrderId()">Subscribe</button>
+            </div>
+        </div>*@
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="paymentConfirmModal" tabindex="-1" aria-labelledby="paymentConfirmModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header payment_title">
+                <h5 class="modal-title text-center payment_label" id="cnfm_payment_Label">Payment</h5>
+                <button type="button"  class="btn-close"  data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-between my-2">
+                    <div class="">Name :</div>
+                    <div class="cnfm_name"></div>
+                </div>
+                <div class="d-flex justify-content-between my-2">
+                    <div class="">Mobile :</div>
+                    <div class="cnfm_mobile"></div>
+                </div>
+                <div class="d-flex justify-content-between my-2">
+                    <div class="">Email :</div>
+                    <div class="cnfm_email"></div>
+                </div>
+                <div class="d-flex justify-content-between my-2">
+                    <div class="">Course name :</div>
+                    <div class="fw-bold cnfm_course"></div>
+                </div>
+                <div class="d-flex justify-content-between my-2">
+                    <div class="">Actual Amount :</div>
+                    <div class="fw-bold cnfm_actual_amount"></div>
+                </div>
+                <div class="discountDiv">
+                    <div class="d-flex justify-content-between my-2">
+                        <div class="cnfm_discount_label"></div>
+                        <div class="cnfm_discount"></div>
+                    </div>
+                </div>
+                <div class="gstDiv">
+                    <div class="d-flex justify-content-between my-2">
+                        <div class="">CGST (9%) :</div>
+                        <div class="cnfm_cgst"></div>
+                    </div>
+                    <div class="d-flex justify-content-between my-2">
+                        <div class="">SGST (9%) :</div>
+                        <div class="cnfm_sgst"></div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between my-2">
+                    <div class="">Final Amount :</div>
+                    <div class="fs-4 fw-bold cnfm_final_amount"></div>
+                </div>
+                <div class="d-flex justify-content-between my-2">
+                    <div class="">Description :</div>
+                    <div class="fw-bold cnfm_description"></div>
+                </div>
+               
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn cancel-btn px-4" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn pay-button px-4" id="rzp-button1">Proceed Payment</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="subscriptionConfirm" tabindex="-1" aria-labelledby="subscriptionConfirm" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header payment_title">
+                <h5 class="modal-title text-center payment_label" id="cnfm_payment_Label">Already Subscriped</h5>
+                <button type="button"  class="btn-close"  data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">                
+               <div class="h4">You have this subscription already!</div>
+               <div>Are Sure want to extent your subscription?</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn cancel-btn px-4" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn px-4" id="continue_pay">Continue</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        //Remove after mobile subscription
+        var isSignedIn = `@Html.Raw(ViewBag.IsSignedIn)`;
+
+        var subs_duration = 0;
+        var final_amount = 0;
+        var first_name= '';
+        var last_name= '';
+        var actual_amount = 0;
+        var coupon_id=0;
+        var options = {
+            "name": "IntelXL",
+            // "description": "",
+            "order_id": "",
+            "image": "@Url.Content("~/images/intelxl-5.jpg")",
+            "prefill": {
+                "name": "",
+                "email": "",
+                "contact": "",
+            },
+            "theme": {
+                "color": "#52b700"
+            }
+        }
+            
+        function optionsHandler(){
+            // Boolean whether to show image inside a white frame. (default: true)
+            options.theme.image_padding = false;
+            options.handler = function (response) {
+                 
+                $('#cnfm_payment_Label').text('Subscribing...')
+                $('.payment_label').css('color', '#000');
+                    $('.payment_title').css('background-color', '#ffea00');
+                VerifyAndSavePayment(
+                    response.razorpay_payment_id, 
+                    response.razorpay_order_id, 
+                    response.razorpay_signature
+                )
+            };
+            options.modal = {
+                ondismiss: function () {
+                    // console.log("This code runs when the popup is closed");
+                    $('#paymentConfirmModal').modal('hide');
+                },
+                // Boolean indicating whether pressing escape key
+                // should close the checkout form. (default: true)
+                escape: true,
+                // Boolean indicating whether clicking translucent blank
+                // space outside checkout form should close the form. (default: false)
+                backdropclose: false
+            };
+            var rzp = new Razorpay(options);
+            rzp.on('payment.failed', function (response){
+                // console.log('Payment faild : ', response)
+
+                $('#cnfm_payment_Label').css('color', '#fff')
+                $('.payment_title').css('background-color', '#ff0000');
+                $('#cnfm_payment_Label').text('Payment failed')
+
+                // console.log(response.error.code);
+                // console.log(response.error.description);
+                // console.log(response.error.source);
+                // console.log(response.error.step);
+                // console.log(response.error.reason);
+                // console.log(response.error.metadata.order_id);
+                // console.log(response.error.metadata.payment_id);
+            }); 
+            document.getElementById('rzp-button1').onclick = function (e) {
+                // console.log('Options : ', options)
+                rzp.open();
+                e.preventDefault();
+            }
+        }
+
+        function createOrderId() {
+            //Remove after subscription in app
+            if(isSignedIn=="True"){
+                $("#LoginModal").modal("show");
+                $(".error-msg").text("To continue you must login");
+                CurrentPath = "/Membership/Join";
+                return false;
+            }
+            let subs_id = $('.SubscriptionId:checked').val();
+                    
+            $('input[name="subscriptionId"]').val(subs_id);
+
+            // console.log('Subscription id : ', subs_id)
+
+            var formData = $('#paymentForm').serializeArray();
+            // console.log("Form data: ", formData);
+
+            let error_msg = paymentFormValidation(formData);
+            // console.log('Payment form error : ', error_msg)
+
+            $('#payment_form_error_msg').text(error_msg)
+            if(error_msg)
+                return false;
+
+            // console.log('Selected class : ', $('#class-selection').find('option:selected').text());
+            $('.join-btn').prop('disabled', true);
+           $('.join-loader').show();
+            formData.push({name: 'courseName', value: $('#class-selection').find('option:selected').text()})
+            formData.push({name: 'subscriptionId', value: subs_id})
+            // console.log("Form data after course name: ", formData);
+                
+            $.ajax({
+                url: '/Payment/CreateOrderId',
+                type: 'POST',
+                data: formData,
+                success: function(res) {
+                    $('.join-loader ').hide();
+                    // console.log("Order Id created : ", res);
+                    if(res){
+                        options.order_id = res.orderId;
+                        options.prefill.name = res.firstName + ' ' + res.lastName;
+                        options.prefill.contact = res.profileContact;
+                        options.prefill.email = res.profileEmail;
+                        options.description = res.description;
+
+                        $('.cnfm_name').text(res.firstName + ' ' + res.lastName);
+                        $('.cnfm_mobile').text(res.profileContact);
+                        $('.cnfm_email').text(res.profileEmail);
+                        $('.cnfm_course').text(res.description);
+                        $('.cnfm_actual_amount').text(res.actualAmount.toFixed(2));
+                        $('.discountDiv, .gstDiv').hide()
+
+                        let discountedAmount = (res.actualAmount * res.discount / 100).toFixed(2)
+
+                        if(res.discount){
+                            $('.cnfm_discount_label').text(`Discount (${res.discount}%) :`);
+                            $('.cnfm_discount').text(`- ${discountedAmount}`)
+                            $('.discountDiv').show()
+                        }
+                        if(res.gst){
+                            let gst = ((res.actualAmount - discountedAmount) * (res.gst/2) / 100).toFixed(2)
+                            $('.cnfm_cgst').text(`+ ${gst}`);
+                            $('.cnfm_sgst').text(`+ ${gst}`);
+                            $('.gstDiv').show()
+                        }
+                        $('.cnfm_final_amount').text(res.finalAmount.toFixed(2));
+                        $('.cnfm_description').text(`Subscription for ${res.duration} ${res.duration > 1 ? 'months' : 'month'}`);
+
+                        subs_duration = res.duration;
+                        final_amount = res.finalAmount.toFixed(2);
+                        first_name = res.firstName;
+                        last_name = res.lastName;
+                        actual_amount=res.actualAmount.toFixed(2);
+                        coupon_id=res.couponId
+                        optionsHandler();
+
+                        $('#cnfm_payment_Label').css('color', '#fff')
+                        $('#cnfm_payment_Label').text('Confirm Payment')
+                        if(res.isSubscriptionExists){
+                            $('#subscriptionConfirm').modal('show');
+                            $('#subscriptionConfirm').on('click', '#continue_pay', function() {
+                                $('#subscriptionConfirm').modal('hide');
+                               $('#paymentConfirmModal').modal('show');
+                            });
+                        }
+                        else{
+                            $('#paymentConfirmModal').modal('show');
+                        }
+                    }
+                    else{
+                        // console.log('Something went wrong while create order id')
+                        $('#payment_form_error_msg').text('Something went wrong, Please try again')
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // console.log("Error : ", error);
+                    $('#payment_form_error_msg').text('Something went wrong, Please try again')
+                    $('.join-loader ').hide();
+                    $('.join-btn').prop('disabled', false);
+                }
+            });
+        }
+
+        function paymentFormValidation(formData){
+            let error = '';
+
+            let subscriptionId = $('.SubscriptionId:checked').val()
+            if(!subscriptionId)
+                return 'Please choose a subscription plan'
+
+            // console.log("Form data as param: ", formData);
+
+            $.each(formData, (index, item) => {
+
+                let value = item.value.trim()
+                // console.log('Value : ', value)
+                switch(item.name){
+                    case 'firstName':
+                        if(!value){
+                            error = '* fields are required';
+                            return false;
+                        }
+                        break;
+                    case 'lastName':
+                        if(!value){
+                            error = '* fields are required';
+                            return false;
+                        }
+                        break;
+
+                    case 'mobile':
+                        if(!value){
+                            error = '* fields are required';
+                            return false;
+                        }
+                        if(value.length != 10){
+                            error = 'Invalid mobile number';
+                            return false;
+                        }
+                        break;
+
+                    case 'email':
+                        if(!value){
+                            error = '* fields are required';
+                            return false;
+                        }
+
+                        let emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+
+                        if (!emailRegex.test(value)) {
+                            error = 'Invalid email';
+                            return false;
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+                        
+            });
+
+            return error;
+        }
+
+        function verifyAndSavePayment(razorPaymentId, orderId, signature){
+            $.ajax({
+                url: '/Payment/verifyAndSavePayment',
+                type:'POST',
+                data: {
+                    razorPaymentId, 
+                    orderId, 
+                    signature,
+                    firstName: first_name,
+                    lastName: last_name,
+                    contact: options.prefill.contact,
+                    email: options.prefill.email,
+                    SubscriptionId: $('.SubscriptionId:checked').val(),
+                    finalAmount: final_amount,
+                    actualAmount:actual_amount,
+                    subscriptionDuration: subs_duration,
+                    couponId:coupon_id
+                },
+                success: function(res){
+                    // console.log('Verify payment response : ', res);
+                    if (res) {
+                        $('#cnfm_payment_Label').css('color', '#fff')
+                        $('.payment_title').css('background-color', '#52b700');
+                        $('#cnfm_payment_Label').text('Subscription Success')
+
+                        // setTimeout(() => {
+                            window.location.href = '/'
+                        // }, 1000)
+                    }
+                    else {
+                            $('#cnfm_payment_Label').css('color', '#fff')
+                            $('.payment_title').css('background-color', '#ff0000');
+                            $('#cnfm_payment_Label').text('Subscription failed')
+                    }
+                     
+                },
+                error: function(xhr, status, error){
+                        $('#cnfm_payment_Label').css('color', '#fff')
+                        $('.payment_title').css('background-color', '#ff0000');
+                    $('#cnfm_payment_Label').text('Subscription failed')
+                    // console.log("Error : ", error)
+
+                }
+            })
+        }
+
+        function applyCoupon(){
+            let code = $('#pay_coupon').val().trim();
+            if (!code) {
+                $('#coupon_success_msg').text('')
+                $('#coupon_error_msg').text('Enter a coupon code')
+                $('#coupon_val').val('')
+                return false;
+            }
+                
+            $.ajax({
+                url: '/Payment/GetCouponByCode?code=' +  code,
+                type: 'GET',
+                success: function(res){
+                    // console.log('Res : coupon', res)
+                    if (res) {
+                        // console.log("Coupon details : ", res)
+                        $('#coupon_error_msg').text('')
+                        $('#coupon_success_msg').text(`Discount - ${res.offerPercentage}%`)
+                        $('#coupon_success_msgs').text(`(Enjoy a Generous ${res.offerPercentage}% Discount on Select 
+                        Items! 🎉 Don't miss out on this incredible opportunity)`)
+                        $('#coupon_val').val(res.couponCode)
+                    }
+                    else{
+                        console.log('Invalid coupon code')
+                        $('#coupon_success_msg').text('')
+                        $('#coupon_error_msg').text('Invalid coupon code')
+                        $('#coupon_val').val('')
+                    }
+                },
+                error: function() {
+                    console.log('Something went wrong while fetch coupon by code')
+                    $('#coupon_success_msg').text('')
+                    $('#coupon_error_msg').text('Something went wrong, please try again')
+                    $('#coupon_val').val('')
+                }
+            })
+        }
+        $(document).ready(function(){
+            $('#paymentConfirmModal, #subscriptionConfirm').on('hidden.bs.modal', function () {
+                $('.join-loader').hide();
+                $('.join-btn').prop('disabled', false);
+            });
+        });
+
+        //remove after Mobile application subscription
+       $(document).ready(function(){
+            if(isSignedIn=="True"){               
+                CurrentPath = "/Membership/Join";               
+            }
+       });
+    </Script>
+    <script src="~/js/subscription.js"></script>
+}

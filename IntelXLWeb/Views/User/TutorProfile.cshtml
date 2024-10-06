@@ -1,0 +1,1564 @@
+﻿@model IntelXLDataAccess.Models.AppUser;
+@{
+    Layout = "_LayoutTutor";
+    ViewData["Title"] = "Tutor Profile";
+    var index = 0;
+}
+@section Styles{
+    <link href="~/css/custom.css" rel="stylesheet" />
+    <style>
+
+        .list-container {
+            background-color: #daeeff5c;
+            padding: 42px;
+        }
+
+        .add-subscription {
+            color: #52b700;
+        }
+
+
+
+        .panel {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .profile-nav, .profile-info {
+            margin-top: 30px;
+        }
+
+            .profile-nav .user-heading {
+                /*background-color: #efefef;
+                border-bottom: 2px solid #5ab24f;*/
+                color: #fff;
+                border-radius: 5px;
+                -webkit-border-radius: 4px 4px 0 0;
+                padding: 30px;
+                text-align: center;
+            }
+
+                .profile-nav .user-heading.round a {
+                    border-radius: 50%;
+                    -webkit-border-radius: 50%;
+                    border: 3px solid #198754;
+                    display: inline-block;
+                }
+
+                .profile-nav .user-heading a img {
+                    width: 80px;
+                    height: 80px;
+                    border-radius: 50%;
+                    -webkit-border-radius: 50%;
+                }
+
+                .profile-nav .user-heading h1 {
+                    font-size: 22px;
+                    margin-bottom: 5px;
+                }
+
+                .profile-nav .user-heading p {
+                    font-size: 12px;
+                }
+
+            .profile-nav ul {
+                margin-top: 1px;
+            }
+
+                .profile-nav ul > li {
+                    border-bottom: 1px solid #ebeae6;
+                    margin-top: 0;
+                    line-height: 50px;
+                }
+
+                    .profile-nav ul > li:last-child {
+                        border-bottom: none;
+                    }
+
+                    .profile-nav ul > li > a {
+                        border-radius: 0;
+                        -webkit-border-radius: 0;
+                        color: #000;
+                        padding-left: 5px;
+                        text-decoration: none;
+                    }
+
+                    .profile-nav ul > li:hover, .profile-nav ul > li:focus, .profile-nav ul li.active {
+                        background: #4dd73c52 !important;
+                        border-left: 5px solid #19873b;
+                        color: #000 !important;
+                        border-radius: 0 5px 5px 0;
+                    }
+
+                    .profile-nav ul > li:last-child > a:last-child {
+                        border-radius: 0 0 4px 4px;
+                        -webkit-border-radius: 0 0 4px 4px;
+                    }
+
+                    .profile-nav ul > li > a > i {
+                        font-size: 16px;
+                        padding-right: 10px;
+                        color: #000;
+                    }
+
+        .r-activity {
+            margin: 6px 0 0;
+            font-size: 12px;
+        }
+
+        .profile-info .panel-footer {
+            background-color: #f8f7f5;
+            border-top: 1px solid #e7ebee;
+        }
+
+            .profile-info .panel-footer ul li a {
+                color: #7a7a7a;
+            }
+
+        .bio-graph-heading {
+            background: linear-gradient(90deg, #198754 0%, #4dd73ca8 100%);
+           /* background-color: #2acd3c40;
+            border-bottom: 1px solid #5ab24f;*/
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px 5px 0 0;
+            -webkit-border-radius: 5px 5px 0 0;
+            font-size: 16px;
+            font-weight: 300;
+        }
+
+        .bio-graph-info {
+            color: #000;
+        }
+
+            .bio-graph-info h1 {
+                font-size: 22px;
+                font-weight: 500;
+                margin: 0 0 20px;
+            }
+
+        .bio-row {
+            width: 100%;
+            float: left;
+            margin-bottom: 10px;
+            padding: 0 15px;
+        }
+
+        .label-span, .profile-sub {
+            width: 150px;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+
+
+        .nav-stacked, .bio-detail {
+            flex-direction: column;
+        }
+
+        .profile-container {
+            min-height: calc(100vh - 130.39px);
+            background-color: #dee2e63d;
+        }
+
+        .ix-detailbtn {
+            border: 1.5px solid #03a776;
+        }
+
+            .ix-detailbtn:hover {
+                background-color: #03a776;
+                color: #fff;
+            }
+
+        .ix-account-action {
+            background-color: #2acd3c40;
+        }
+
+        @@media screen and (max-width: 426px) {
+            .bio-row {
+                padding: 0px;
+            }
+
+            .label-span {
+                width: 100px;
+            }
+
+            .profile-sub {
+                width: 150px;
+            }
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .modal.modal-static .modal-dialog {
+            -webkit-transform: none !important;
+            transform: none !important;
+        }
+        /*Activation form styles*/
+        .tab {
+            display: none;
+        }
+
+        #prevBtn {
+            background-color: #bbbbbb;
+            margin-right: 10px;
+        }
+
+        #nextBtn {
+            background-color: #04AA6D;
+        }
+
+        #nextBtn, #prevBtn {
+            color: #ffffff;
+            border: none;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        .btn:focus {
+            box-shadow: none;
+        }
+
+        .form-control:focus, .form-control.is-invalid:focus, .form-select:focus {
+            box-shadow: none;
+        }
+
+        .toast-top-center {
+            top: 10% !important;
+        }
+
+        .select2-container {
+            z-index: 1056;
+            width: 100% !important;
+        }
+
+        .select2-search__field {
+            width: 100% !important;
+        }
+
+        .form-check-input:focus {
+            box-shadow: none;
+        }
+
+        .ix-slots > *:not(:first-child) {
+            margin-top: 8px;
+        }
+
+        .disabled-time {
+            display: none;
+        }
+
+        .modal-dialog-scrollable .modal-content {
+            max-height: 800px;
+            height:100%;
+        }
+
+        .tutor-content {
+            min-height: 700px;
+        }
+
+        .info, .row-type {
+            margin-left: 7%;
+            margin-right: 10%;
+        }
+
+        .form-label {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+        }
+
+        .time-select {
+            max-width: 250px;
+        }
+
+        .tutor-select {
+            border: 1.5px solid #63d19e;
+        }
+
+        .time-select1 {
+            margin-left: 48px;
+        }
+
+        .time-select2 {
+            margin-left: 28px;
+        }
+
+        .tab-header {
+            color: #63d19e;
+        }
+
+        .tutor-input, .select-year, .time-grp {
+            width: 450px;
+        }
+
+        .day-select {
+            max-width: 450px;
+        }
+        .tutor-input {
+            border-radius: 0px;
+            border: none;
+            border-bottom: 1.5px solid #63d19e;
+        }
+
+        @@media (max-width: 576px) {
+            .tutor-content {
+                max-height: 100%;
+            }
+
+            .modal-dialog-scrollable .modal-content {
+                max-height: 100%;
+            }
+
+            .modal-dialog-scrollable .modal-content {
+                max-height: 100%;
+            }
+        }
+
+        @@media (max-width: 550px) {
+
+            .info, .select-wrap {
+                display: flex;
+                flex-direction: column;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .row-type {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .form-label {
+                width: auto;
+                display: flex;
+                align-items: center;
+                justify-content: start;
+            }
+
+            .tab {
+                padding: 1.5rem;
+            }
+
+            .time-select1, .time-select2 {
+                margin-left: 8px;
+            }
+
+            .tutor-input, .select-year {
+                width: auto;
+                min-width: 325px;
+            }
+        }
+
+
+
+        .drop-container {
+            position: relative;
+            display: flex;
+            gap: 10px;
+            flex-direction: column;
+            width: 70%;
+            justify-content: center;
+            align-items: center;
+            height: 150px;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px dashed #63d19e;
+            color: #63d19e;
+            cursor: pointer;
+            transition: background .2s ease-in-out, border .2s ease-in-out;
+        }
+
+            .drop-container input {
+                opacity: 0;
+                position: absolute;
+            }
+            .drop-container:hover {
+                background: #eee;
+                border-color: #00d170;
+            }
+
+                .drop-container:hover .drop-title {
+                    color: #00d170;
+                }
+
+        .drop-title {
+            color: #63d19e;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            transition: color .2s ease-in-out;
+        }
+
+        input#file-upload-button {
+            color: #00d170;
+        }
+        /* Responsive adjustments */
+        @@media only screen and (max-width: 600px) {
+            .drop-container {
+                width: 80%;
+            }
+        }
+
+
+
+        input {
+            font-size: 12px;
+        }
+
+        .ix-day-checkbox:checked {
+            background-color: #63d19e;
+            border-color: #63d19e;
+        }
+
+        .disabled-time {
+            display: none;
+        }
+
+        .Video-src {
+            min-width: 350px;
+        }
+
+        .multi-steps > li.is-active ~ li:before,
+        .multi-steps > li.is-active:before {
+            content: "✓";
+            font-family: inherit;
+            font-weight: 700;
+        }
+
+        .multi-steps > li.is-active ~ li:after,
+        .multi-steps > li.is-active:after {
+            background-color: #ededed;
+        }
+
+        .multi-steps {
+            display: table;
+            table-layout: fixed;
+            width: 100%;
+        }
+
+            .multi-steps > li {
+                counter-increment: stepNum;
+                text-align: center;
+                display: table-cell;
+                position: relative;
+                color: #63d19e;
+                z-index: 1;
+            }
+
+                .multi-steps > li:before {
+                    content: "";
+                    content: "✓;";
+                    content: "𐀃";
+                    content: "𐀄";
+                    content: "✓";
+                    display: block;
+                    margin: 0 auto 4px;
+                    background-color: #fff;
+                    width: 30px;
+                    height: 30px;
+                    line-height: 28px;
+                    text-align: center;
+                    font-weight: bold;
+                    border-width: 2px;
+                    border-style: solid;
+                    border-color: #63d19e;
+                    border-radius: 50%;
+                    position: relative;
+                    z-index: -1;
+                }
+
+                .multi-steps > li:after {
+                    content: "";
+                    height: 2px;
+                    width: 100%;
+                    background-color: #63d19e;
+                    position: absolute;
+                    top: 16px;
+                    left: 50%;
+                    z-index: -2;
+                }
+
+                .multi-steps > li:last-child:after {
+                    display: none;
+                }
+
+                .multi-steps > li.is-completed:before {
+                    content: "✓";
+                    display: block;
+                    margin: 0 auto 4px;
+                    background-color: #63d19e;
+                    color: #fff;
+                    width: 30px;
+                    height: 30px;
+                    line-height: 28px;
+                    text-align: center;
+                    font-weight: bold;
+                    border-width: 2px;
+                    border-style: solid;
+                    border-color: #63d19e;
+                    border-radius: 50%;
+                    position: relative;
+                    z-index: -1;
+                }
+
+                .multi-steps > li.is-completed:after {
+                    content: counter(stepNum);
+                    color: #63d19e;
+                    display: block;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    z-index: 0;
+                }
+
+                /* Update styles for the active step */
+                .multi-steps > li.is-active:before {
+                    background-color: #fff;
+                    border-color: #63d19e;
+                    content: counter(stepNum);
+                    color: #63d19e;
+                }
+
+                .multi-steps > li.is-active ~ li {
+                    color: #808080;
+                }
+
+                    .multi-steps > li.is-active ~ li:before {
+                        background-color: #ededed;
+                        border-color: #ededed;
+                        content: counter(stepNum);
+                        color: #808080;
+                    }
+
+        .wrapper-file-section {
+            display: flex;
+            justify-content: center;
+        }
+            .wrapper-file-section .selected-files h5 {
+                margin-top: 10px;
+            }
+
+            .wrapper-file-section .file-list {
+                overflow-y: auto;
+                list-style-type: none;
+                max-width: 450px;
+                padding: 0 10px 10px 0;
+                margin: 0;
+                transition: 0.3s all ease-in-out;
+            }
+
+                .wrapper-file-section .file-list .item {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    border: 1px solid #cacaca;
+                    border-radius: 5px;
+                    padding: 10px;
+                    font-size: 14px;
+                }
+
+                    .wrapper-file-section .file-list .item :not(:last-child) {
+                        margin-bottom: 5px;
+                    }
+
+
+        .remove-file {
+            cursor: pointer;
+            font-size: 25px;
+        }
+
+        .select-label {
+            opacity: .65;
+            transform: scale(.85) translateY(-0.5rem) translateX(0.15rem);
+        }
+
+        .yr-slelect {
+            opacity: .65;
+            transform: scale(.85) translateY(-3rem) translateX(0.15rem);
+        }
+
+        .add-time {
+            font-size: small;
+            color: #03995c;
+        }
+
+            .add-time:hover {
+                color: #04874a;
+            }
+
+        .detail-txt {
+            font-size: small;
+        }
+
+        .time-hdr {
+            color: #03995c;
+        }
+
+        .chat-btn {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50px;
+            color: #fff;
+            font-size: 22px;
+            cursor: pointer;
+            border: none
+        }
+
+            .chat-btn .close {
+                display: none;
+            }
+
+            .chat-btn i {
+                transition: all 0.9s ease;
+            }
+
+            .chat-btn i {
+                display: block;
+                pointer-events: auto;
+            }
+
+            .chat-btn i {
+                font-size: 22px;
+                color: #fff !important;
+            }
+    </style>
+    <link href="~/css/style.css" rel="stylesheet" />
+}
+
+<div class="container pt-1 pb-5 px-3 profile-container">
+    <div class="row">
+        <div class="profile-nav col-md-3">
+            <div class="panel">
+                <div class="user-heading text-black round">
+                    @if (!string.IsNullOrEmpty(Model.TutorDetails?.ProfileUrl))
+                    {
+                        <a href="#">
+                            <img src="@Model.TutorDetails?.ProfileUrl" alt="">
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="#">
+                            <img src="~/images/user.png" alt="">
+                        </a>
+                    }
+                    <h1>@Model.FirstName</h1>
+                    <p>@Model.EmailId</p>
+                </div>
+
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active" role="button"><a href="#value"> <i class="fa fa-user"></i> My Account</a></li>
+                    <li id="edit-tutor-profile" role="button"><a href="#tutor-edit-acnt"> <i class="fa fa-edit"></i> Edit profile</a></li>
+                    @*<li role="button"><a href="#"> <i class="fa-solid fa-gears"></i> Settings</a></li>*@
+                </ul>
+            </div>
+        </div>
+        <div class="profile-info col-md-9">
+            <div id="value">
+                @if (Model.TutorDetails == null)
+                {
+                    <div class="ix-account-action mb-2 p-2">
+                        <div class="warning-img px-2 text-black">
+                            <img src="~/images/warning.png" class="me-1" width="20" />Start creating your profile and
+                            <a class="ix-tutoraccount-form" href="#" data-bs-toggle="modal" data-bs-target="#ix-activationModal">Get verified.</a>
+                        </div>
+
+                    </div>
+                }
+                <div class="panel">
+                    <div class="bio-graph-heading">
+                        <h6 class="m-0">Your profile</h6>
+                    </div>
+                    <div class="panel-body p-3 bio-graph-info">
+                        <div class="d-flex justify-content-between">
+                            @*<h1 class="m-0">Info</h1>*@
+                            @* <div class="edit-btn btn text-black" id="edit-profile"><a href="#edit-acnt"><i class="fa fa-edit"></i> Edit profile</a></div>*@
+                        </div>
+                        <div class="bio-detail d-flex">
+                            <div class="bio-row">
+                                <p><span class="label-span">First Name </span>: @Model.FirstName</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span class="label-span">Last Name </span>: @Model.LastName</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span class="label-span">Email </span>: @Model.EmailId</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span class="label-span">Phone </span>: @Model.TutorDetails?.PhoneNumber</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span class="label-span">Short info </span>: @Model.TutorDetails?.ShortBio</p>
+                            </div>
+                            <div class="text-center text-info info-coll-btn py-1" role="button">
+                                <h6>More info <i class="fa-solid fa-caret-down ms-2"></i></h6>
+                            </div>
+                            <div class="collapse tutor-moreinfo" id="tutor-info">
+                                <div class="bio-row">
+                                    <p><span class="label-span">Language Speak </span>: @Model.TutorDetails?.LanguagesSpeak</p>
+                                </div>
+                                <div class="bio-row">
+                                    @* <p><span class="label-span">Qualification </span>: @Model.TutorDetails?.EducationQualification</p>*@
+                                </div>
+                                <div class="bio-row">
+                                    <p><span class="label-span">Timing </span>: Any time @*@Model.TutorDetails?.PreferedTiming*@</p>
+                                </div>
+                                <div class="bio-row">
+                                    <p><span class="label-span">Price </span>: @Model.TutorDetails?.Pricing</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel mt-4 ">
+                    <div class="bio-graph-heading">
+                        <h6 class="m-0">Your Students </h6>
+                    </div>
+                    <div class="panel-body p-3 bio-graph-info">
+                        @if (Model.StudentTutorScheduleAppUsers != null && Model.StudentTutorScheduleAppUsers.Count > 0)
+                        {
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">S.No</th>
+                                        <th class="text-center">Student Email</th>
+                                        <th class="text-center">Scheduled Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="ix-studentsList">
+
+                                    @foreach (var item in Model.StudentTutorScheduleAppUsers)
+                                    {
+                                        index++;
+                                        if (item.AppUser != null)
+                                        {
+                                            <tr>
+                                                <td class="text-center">@index</td>
+                                                <td class="text-center">@item.AppUser.EmailId</td>
+                                                <td class="text-center">@item.ScheduledDate.Day/@item.ScheduledDate.Month/@item.ScheduledDate.Year</td>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="3" class="text-center">No active students</td>
+                                            </tr>
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="text-muted d-flex justify-content-center">No active students</div>
+                        }
+                    </div>
+
+
+                </div>
+            </div>
+            <div id="tutor-edit-acnt" style="display:none;">
+                <div class="panel">
+                    <div class="bio-graph-heading">
+                        <h6 class="m-0">Edit profile</h6>
+                    </div>
+                    <form class="ix-tutor-edit-form">
+                        <div class="panel-body p-3 bio-graph-info">
+                            <div class="d-flex"> <h1>Info</h1><a class="ms-auto ix-change-pwd" href="#"><i class="fa-solid fa-key"></i> Change password</a></div>
+                            <div class="bio-detail d-flex">
+
+                                <div class="bio-row">
+                                    <div class="d-flex align-items-center"><span class="label-span">First Name </span>:<input type="text" class="editable-input form-control w-50 ms-1" value="@Model.FirstName" name="FirstName" /> @*<span id="firstNameSpan">@Model.FirstName</span>*@</div>
+                                </div>
+                                <div class="bio-row">
+                                    <div class="d-flex align-items-center"><span class="label-span">Last Name </span>: <input type="text" class="editable-input form-control w-50 ms-1" value="@Model.LastName" name="LastName" /></div>
+                                </div>
+                                <div class="bio-row">
+                                    <div class="d-flex align-items-center"><span class="label-span">Email </span>: <input id="email" type="text" class="editable-input form-control w-50 ms-1" value="@Model.EmailId" name="EmailId" disabled /><span class="text-danger ms-1 email-error" style="display:none">Enter valid email</span></div>
+                                </div>
+                                @* <div class="bio-row">
+                                <div class="d-flex align-items-center"><span class="label-span">Phone </span>:<input type="text" class="editable-input form-control w-50 ms-1" value="@Model.TutorDetails?.PhoneNumber" name="PhoneNumber" /></div>
+                                </div>
+                                <div class="bio-row">
+                                <div class="d-flex align-items-center"><span class="label-span">Short info </span>:<input type="text" class="editable-input form-control w-50 ms-1" value="@Model.TutorDetails?.ShortBio" name="ShortBio" /></div>
+                                </div>
+                                <div class="bio-row">
+                                <div class="d-flex align-items-center"><span class="label-span">Language Speak </span>: <input type="text" class="editable-input form-control w-50 ms-1" value="@Model.TutorDetails?.LanguagesSpeak" name="LanguageSpeak" /></div>
+                                </div>*@
+                                @*<div class="bio-row">
+                                <div class="d-flex align-items-center"><span class="label-span">Qualification </span>: <input type="text" class="editable-input form-control w-50 ms-1" value="@Model.TutorDetails?.EducationQualification" name="EducationQualification" /></div>
+                                </div>
+                                <div class="bio-row">
+                                <div class="d-flex align-items-center"><span class="label-span">Timing </span>: <input type="text" class="editable-input form-control w-50 ms-1" value="@Model.TutorDetails?.PreferedTiming" name="PreferedTiming" /></div>
+                                </div>*@
+                                @* <div class="bio-row">
+                                <div class="d-flex align-items-center"><span class="label-span">Price </span>: <input type="text" class="editable-input form-control w-50 ms-1" value="@Model.TutorDetails?.Pricing" name="Pricing" /></div>
+                                </div>*@
+                            </div>
+                            <div class="modal-footer p-0 border-0 ">
+                                <button type="button" class="btn btn-success ms-auto profile-save" disabled>Save</button>
+                            </div>
+                        </div>
+                        <input type="hidden" class="hdnId" value="@Model.AppUserId" name="AppUserId" />
+                        <input type="hidden" value="@Model.AppRoleId" name="AppRoleId" />
+                        <input type="hidden" value="@Model.Password" name="Password" />
+                    </form>
+
+                </div>
+            </div>
+            <div id="ix-pwd-edit" style="margin-top:30px; display:none">
+                <div class="panel">
+                    <div class="bio-graph-heading">
+                        <h6 class="m-0">Change password</h6>
+                    </div>
+                    <div class="panel-body p-3 bio-graph-info">
+                        <div class="bio-detail d-flex">
+                            <form id="changePasswordForm" action="change_password.php" method="post">
+                                <div class="bio-detail d-flex">
+
+                                    <div class="bio-row">
+                                        <div class="d-flex align-items-center"><span class="label-span">Current Password</span>:<input type="password" class="form-control w-50 ms-1 pwd-input currentPwd" value="" /> </div>
+                                    </div>
+                                    <div class="bio-row">
+                                        <div class="d-flex align-items-center"><span class="label-span">New Password</span>:<input type="password" class="form-control w-50 ms-1 pwd-input newPwd" value="" /></div>
+                                    </div>
+                                    <div class="bio-row">
+                                        <div class="d-flex align-items-center"><span class="label-span">Confirm New Password</span>:<input type="password" class="form-control w-50 ms-1 pwd-input confirm_pwd" value="" /></div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer p-0 border-0 ">
+                                    <div class="ms-5 mt-0 text-danger pwd_error"></div>
+                                    <button type="button" class="btn btn-success ms-auto update-btn" disabled>Update</button>
+                                </div>
+                            </form>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal" id="ix-activationModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg modal-fullscreen-sm-down">
+        <div class="modal-content tutor-content">
+            <div class="modal-header border-bottom-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="ix-multipageform">
+                    <div class="container-fluid">
+                        <ul class="list-unstyled multi-steps">
+                            <li class="step is-active"></li>
+                            <li class="step"></li>
+                            <li class="step"></li>
+                            <li class="step"></li>
+                            <li class="step"></li>
+
+                        </ul>
+                    </div>
+                    <h2 class="text-center tab-header">Personal Details</h2>
+                    <!-- Personal Details Tab -->
+                    <div class="tab pt-4">
+                        <div class="d-flex justify-content-center">
+                            <div class="form-floating pb-4">
+                                <input type="number" class="form-control tutor-input input-validation" id="phone" placeholder="Phone number..." name="PhoneNumber">
+                                <label for="phone">Phone Number:</label>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="mt-3 form-floating pb-4">
+                                <input class="form-control tutor-input input-validation" id="bio" placeholder="Short bio..." name="ShortBio" />
+                                <label for="bio">Short Bio:</label>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="mt-3 form-floating  pb-4">
+                                <input type="text" class="form-control tutor-input input-validation" id="languages" placeholder="Languages known..." name="LanguagesSpeak">
+                                <label for="languages">Languages Speak:</label>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="mt-3 form-floating pb-4">
+                                <label for="course" class="select-label">Course taught:</label>
+                                <select class="form-select tutor-input input-validation" id="course" name="CourseId">
+                                    <option value="1">School</option>
+                                    <option value="2">TNPSC</option>
+                                    <option value="3">NEET</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="mt-3 form-floating pb-4">
+                                <label for="class" class="select-label">Grade taught:</label>
+                                <select class="form-select tutor-input input-validation" id="class" name="ClassId">
+                                    <option value="1">LKG</option>
+                                    <option value="UKG">UKG</option>
+                                    <option value="Class I">Class I</option>
+                                    <option value="Class II">Class II</option>
+                                    <option value="Class III">Class III</option>
+                                    <option value="Class IV">Class IV</option>
+                                    <option value="Class V">Class V</option>
+                                    <option value="Class VI">Class VI</option>
+                                    <option value="Class VII">Class VII</option>
+                                    <option value="Class VIII">Class VIII</option>
+                                    <option value="Class IX">Class IX</option>
+                                    <option value="Class X">Class X</option>
+                                    <option value="Class XI">Class XI</option>
+                                    <option value="Class XII">Class XII</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="mt-3 form-floating  pb-4">
+                                <label for="subject" class="select-label">Subject taught:</label>
+                                <select id="subject" class="form-select tutor-input input-validation" name="SubjectId">
+                                    <option value="1">Maths</option>
+                                    <option value="">English</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab ps-4">
+                        <div class="text-danger py-2 d-flex justify-content-center img-error" style="visibility: hidden;">
+                            Upload profile photo and intro video
+                        </div>
+                        <div class="form-group">
+                            <label for="profileImage">Profile Image:</label>
+                            <input type="hidden" id="profileUrl" name="ProfileUrl" value="" class="input-validation"/>
+                            <input class="form-control input-validation" id="hdnVideoURL" name="VideoUrl" type="hidden" value="" />
+                            <div class="d-flex file-choose justify-content-center">
+                                <label for="images" class="drop-container" id="dropcontainer">
+                                    <span class="drop-title">Drop files here</span>
+                                    or
+                                    <input class="file-input" accept=".jpg,.jpeg,.png" type="file" id="images">
+                                    <h4><i class="fas upload-icon fa-cloud-arrow-up"></i></h4>
+                                </label>
+                            </div>
+                            <div class="wrapper-file-section info">
+                                <div class="selected-files" style="display: none;">
+                                    <h5>Selected Files</h5>
+                                    <ul class="list-group file-list"></ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-3 form-group">
+                            <label for="introVideo">Intro Video:</label>
+                            <div class="d-flex justify-content-center">
+                                <label for="videos" class="drop-container" id="dropcontainer">
+                                    <span class="drop-title">Drop files here</span>
+                                    or
+                                    <input type="file" id="videos" accept="video/*" onchange="displayVideo(event)">
+                                    <h4><i class="fa-solid upload-icon fa-cloud-arrow-up"></i></h4>
+                                </label>
+                            </div>
+                            <div class="d-flex py-2 justify-content-center"><span class="text-center">(Or)</span></div>
+                            <div class="d-flex justify-content-center">
+                                <div class="form-floating ms-0">
+                                    <input class="form-control tutor-input" id="videoURL" placeholder="https://www.youtube.com" type="url" />
+                                    <label for="videoURL">Video Url:</label>
+                                </div>
+                            </div>
+
+                            <div class="VideoRecorder py-4 d-flex justify-content-center bbDNDz">
+                                <div id="videoContainer">
+                                    <video src="" controls class="Video-src" width="350" height="250"></video>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="tab">
+                        <div class="parant-certificate">
+                            <div class="text-danger py-2 d-flex justify-content-center certificate-error" style="visibility: hidden;">
+                                Upload Certificate
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <div class="form-floating pb-4">
+                                    <input type="text" class="ms-3 form-control tutor-input input-validation" id="educationQualification" placeholder="Education Qualification..." name="educationQualification">
+                                    <label for="educationQualification">Education Qualification:</label>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <div class="form-floating pb-4">
+                                    <input type="text" class="ms-3 form-control tutor-input input-validation" id="certificatename" placeholder="certificatename..." name="CertificateName">
+                                    <label for="certificatename">Certificate Name:</label>
+                                </div>
+                            </div>
+                           @* <div class="d-flex justify-content-center">
+                                <div class="form-floating pb-4">
+                                    <input type="text" class="ms-3 form-control tutor-input" id="qualification" placeholder="Qualification...">
+                                    <label for="qualification">Qualification:</label>
+                                </div>
+                            </div>*@
+                            <div class="d-flex justify-content-center">
+                                <div class="form-floating pb-4 ">
+                                    <label class="select-label" for="subject">Subject:</label>
+                                    <select id="subjects" class="form-select ms-3 tutor-input input-validation" name="subjects">
+                                        <option selected disabled>Select here</option>
+                                        <option value="Maths">Maths</option>
+                                        <option value="English">English</option>
+                                    </select>
+                                </div>
+                            </div>
+                           
+                            <div class="d-flex justify-content-center">
+                                <div class="mt-3 form-floating pb-4">
+                                    <input class="form-control ms-3 tutor-input input-validation" id="certificatedescription" placeholder="certificate description..." />
+                                    <label for="certificatedescription">Description:</label>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <div class="form-floating pb-4">
+                                    <input type="text" class="ms-3 form-control tutor-input input-validation" id="issuedby" placeholder="issuedby...">
+                                    <label for="issuedby">Issued By:</label>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <div class="form-floating mt-4 pb-4 ">
+                                    <label class=" yr-slelect" for="yearofstudy">Year of study:</label>
+                                    <div class="d-flex ms-3 justify-content-between select-year" id="yearofstudy">
+                                        <select id="startyear" class="form-select form-control tutor-select input-validation">
+                                            <option value="2010">2010</option>
+                                            <option value="2011">2011</option>
+                                            <option value="2012">2012</option>
+                                            <option value="2013">2013</option>
+                                            <option value="2014">2014</option>
+                                            <option value="2015">2015</option>
+                                            <option value="2016">2016</option>
+                                            <option value="2017">2017</option>
+                                            <option value="2018">2018</option>
+                                            <option value="2019">2019</option>
+                                            <option value="2020">2020</option>
+                                            <option value="2021">2021</option>
+                                            <option value="2022">2022</option>
+                                            <option value="2023">2023</option>
+                                            <option value="2024">2024</option>
+                                        </select>
+
+                                        <select id="endyear" class="form-select ms-2 form-control tutor-select input-validation">
+                                            <option value="2010">2010</option>
+                                            <option value="2011">2011</option>
+                                            <option value="2012">2012</option>
+                                            <option value="2013">2013</option>
+                                            <option value="2014">2014</option>
+                                            <option value="2015">2015</option>
+                                            <option value="2016">2016</option>
+                                            <option value="2017">2017</option>
+                                            <option value="2018">2018</option>
+                                            <option value="2019">2019</option>
+                                            <option value="2020">2020</option>
+                                            <option value="2021">2021</option>
+                                            <option value="2022">2022</option>
+                                            <option value="2023">2023</option>
+                                            <option value="present">present</option>                                           
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-3 form-group pb-4 info">
+                                <label class=" form-label pb-3" for="certification">Upload your certificate</label>
+                                <div class="d-flex file-choose justify-content-center">
+                                    <label for="certificate" class="drop-container" id="dropcontainer">
+                                        <span class="drop-title">Drop certificates here</span>
+                                        or
+                                        <input class="file-input" accept=" .pdf" type="file" id="certificate">
+
+                                        <h4><i class="fa-solid upload-icon fa-cloud-arrow-up"></i></h4>
+                                    </label>
+                                </div>
+                                <div class="wrapper-file-section info">
+                                    <div class="selected-files" style="display: none;">
+                                        <h5>Selected Files</h5>
+                                        <ul class="list-group file-list"></ul>
+                                    </div>
+                                </div>
+                                <input type="hidden" class="input-validation" id="certificateUrl" value="">
+                            </div>
+                        </div>
+                        <div class="child-certificate"></div>
+                      @*<div class="pt-5 info"><a class="text-decoration-underline add-certificate text-dark" href="#">Add another certificate</a></div>*@
+                    </div>
+                    <div class="tab p-4">
+                        <div class="d-flex flex-column justify-content-center">
+                            <div class="d-flex justify-content-center">
+                                <div class="time-grp">
+                                    <div class="h6 time-hdr text-start">Set your timezone</div>
+                                    <p class="detail-txt">A correct timezone is essential to coordinate lessons with international students</p>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                @{
+                                    var timeZones = TimeZoneInfo.GetSystemTimeZones();
+                                }
+                                <div class="form-floating">
+                                    <label class="select-label" for="timezone-offset">Choose your timezone:</label>
+                                    <select class="form-select span5 tutor-select" id="timezone-offset">
+                                        @foreach (var timeZone in timeZones)
+                                        {
+                                            <option value="@timeZone.BaseUtcOffset">@timeZone.DisplayName</option>
+                                        }                                      
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="form-group time-grp mt-3">
+                                <div class="h6 text-start time-hdr">Set your availability:</div>
+                                <p class="detail-txt">Availability shows your potential working hours. Students can book lessons at these times.</p>
+                                <div class="form-check day-checkbox">
+                                    <input type="checkbox" class="form-check-input ix-day-checkbox" id="MondayCheckbox" checked data-component="monday">
+                                    @* <label class="form-check-label" for="mondayCheckbox">Monday</label>*@
+                                </div>
+                                <div class="ix-monday">
+                                    <div class="ix-slots day-select">
+                                        <div class="row">
+                                            <div class="form-group select-wrap col-6">
+                                                <label class="form-label">From:</label>
+                                                <select class="form-select form-control time-select tutor-select start-time"></select>
+                                            </div>
+
+                                            <div class="form-group select-wrap col-6">
+                                                <label class="form-label">To:</label>
+                                                <select class="form-select form-control time-select tutor-select end-time">
+                                                    @*@Html.Raw(endTimeOptions)*@
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @* <div class="additional-slots"></div>*@
+                                    <div class=" mt-3"><a class="text-decoration-underline add-time add-moreslot" href="#" data-link="monday">Add another time slot</a></div>
+                                </div>
+
+                                <div class="form-check mt-3 day-checkbox">
+                                    <input type="checkbox" class="form-check-input ix-day-checkbox" id="TuesdayCheckbox" checked data-component="tuesday">
+                                    @*<label class="form-check-label" for="tuesdayCheckbox">Tuesday</label>*@
+                                </div>
+                                <div class="ix-tuesday">
+                                    <div class="ix-slots day-select">
+                                        <div class="row">
+                                            <div class="form-group select-wrap col-6">
+                                                <label class="form-label">From:</label>
+                                                <select class="form-select form-control time-select tutor-select start-time">
+                                                    @*@Html.Raw(startTimeOptions)*@
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group select-wrap col-6">
+                                                <label class="form-label">To:</label>
+                                                <select class="form-select form-control time-select tutor-select end-time">
+                                                    @*@Html.Raw(endTimeOptions)*@
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>  @*<div class="additional-slots"></div>*@
+                                    <div class="mt-3"><a class="text-decoration-underline add-time add-moreslot" href="#" data-link="tuesday">Add another time slot</a></div>
+                                </div>
+
+
+                                <div class="form-check mt-3 day-checkbox">
+                                    <input type="checkbox" class="form-check-input ix-day-checkbox" id="WednesdayCheckbox" checked data-component="wednesday">
+                                    @* <label class="form-check-label" for="wednesdayCheckbox">Wednesday</label>*@
+                                </div>
+                                <div class="ix-wednesday">
+                                    <div class="ix-slots day-select">
+                                        <div class="row">
+                                            <div class="form-group select-wrap col-6">
+                                                <label class="form-label">From:</label>
+                                                <select class="form-select form-control time-select tutor-select start-time">
+                                                    @*@Html.Raw(startTimeOptions)*@
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group select-wrap col-6">
+                                                <label class="form-label">To:</label>
+                                                <select class="form-select form-control time-select tutor-select end-time">
+                                                    @*@Html.Raw(endTimeOptions)*@
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>  @*<div class="additional-slots"></div>*@
+                                    <div class="mt-3">
+                                        <a class="text-decoration-underline add-time add-moreslot" href="#" data-link="wednesday">Add another time slot</a>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-check mt-3 day-checkbox">
+                                    <input type="checkbox" class="form-check-input ix-day-checkbox" id="ThursdayCheckbox" checked data-component="thursday">
+                                    @*<label class="form-check-label" for="thursdayCheckbox">Thursday</label>*@
+                                </div>
+                                <div class="ix-thursday">
+                                    <div class="ix-slots day-select">
+                                        <div class="row ">
+                                            <div class="form-group select-wrap col-6">
+                                                <label class="form-label">From:</label>
+                                                <select class="form-select form-control time-select tutor-select start-time">
+                                                    @*@Html.Raw(startTimeOptions)*@
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group select-wrap col-6">
+                                                <label class="form-label">To:</label>
+                                                <select class="form-select form-control time-select tutor-select end-time">
+                                                    @*@Html.Raw(endTimeOptions)*@
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @* <div class="additional-slots"></div>*@
+                                    <div class="mt-3">
+                                        <a class="text-decoration-underline add-time add-moreslot" href="#" data-link="thursday">Add another time slot</a>
+                                    </div>
+                                </div>
+
+                                <div class="form-check  mt-3 day-checkbox">
+                                    <input type="checkbox" class="form-check-input ix-day-checkbox" id="FridayCheckbox" checked data-component="friday">
+                                    @*<label class="form-check-label" for="fridayCheckbox">Friday</label>*@
+                                </div>
+                                <div class="ix-friday">
+                                    <div class="ix-slots day-select">
+                                        <div class="row">
+                                            <div class="form-group select-wrap col-6">
+                                                <label class="form-label">From:</label>
+                                                <select class="form-select form-control time-select tutor-select start-time">
+                                                    @*@Html.Raw(startTimeOptions)*@
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group select-wrap col-6">
+                                                <label class="form-label">To:</label>
+                                                <select class="form-select form-control time-select tutor-select end-time">
+                                                    @*@Html.Raw(endTimeOptions)*@
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>  @*<div class="additional-slots"></div>*@
+                                    <div class="mt-3">
+                                        <a class="text-decoration-underline add-time add-moreslot" href="#" data-link="friday">Add another time slot</a>
+                                    </div>
+                                </div>
+                                <div class="form-check mt-3 day-checkbox">
+                                    <input type="checkbox" class="form-check-input ix-day-checkbox" id="SaturdayCheckbox" checked data-component="saturday">
+                                    @*<label class="form-check-label" for="saturdayCheckbox">Saturday</label>*@
+                                </div>
+                                <div class="ix-saturday">
+                                    <div class="ix-slots day-select">
+                                        <div class="row">
+                                            <div class="form-group select-wrap col-6">
+                                                <label class="form-label">From:</label>
+                                                <select class="form-select form-control time-select tutor-select start-time">
+                                                    @*@Html.Raw(startTimeOptions)*@
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group select-wrap col-6">
+                                                <label class="form-label">To:</label>
+                                                <select class="form-select form-control time-select tutor-select end-time">
+                                                    @*@Html.Raw(endTimeOptions)*@
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>  @*<div class="additional-slots"></div>*@
+                                    <div class="mt-3">
+                                        <a class="text-decoration-underline add-time add-moreslot" href="#" data-link="saturday">Add another time slot</a>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-check mt-3 day-checkbox">
+                                    <input type="checkbox" class="form-check-input ix-day-checkbox" id="SundayCheckbox" checked data-component="sunday">
+                                    @*<label class="form-check-label" for="sundayCheckbox">Sunday</label>*@
+                                </div>
+                                <div class="ix-sunday">
+                                    <div class="ix-slots day-select">
+                                        <div class="row">
+                                            <div class="form-group select-wrap col-6">
+                                                <label class="form-label">From:</label>
+                                                <select class="form-select form-control time-select tutor-select start-time">
+                                                    @* @Html.Raw(startTimeOptions)*@
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group select-wrap col-6">
+                                                <label class="form-label">To:</label>
+                                                <select class="form-select form-control time-select tutor-select end-time">
+                                                    @*@Html.Raw(endTimeOptions)*@
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*<div class="additional-slots"></div>*@
+                                    <div class="mt-3">
+                                        <a class="text-decoration-underline add-time add-moreslot" href="#" data-link="sunday">Add another time slot</a>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab pt-4">
+                        <div class="d-flex justify-content-center">
+                            <div class="form-floating d-flex pb-4">
+                                <input type="number" class="form-control tutor-input input-validation" id="pricing" placeholder="Your pricing..." name="Pricing">
+                                <label for="pricing">Pricing:</label>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="hdnTutorId" value="@Model.AppUserId" name="tutorId" />
+                </form>
+            </div>
+            <div class="modal-footer border-top-0">
+                <div class="text-success upload-progress" style="display:none">Upload in progress....Please wait!</div>
+                <div class="mt-2" style="overflow:auto;">                    
+                    <div style="float:right;">
+                        <button type="button" class="btn btn-sm px-4" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                        <button type="button" class="btn btn-sm px-4" id="nextBtn" onclick="nextPrev(1)">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/js/tutor_detail.js"></script>
+    <script>
+        //let tutorId = Html.Raw(Model.TutorId);
+        let currentTab = 0;
+        $(document).ready(function () {
+            $(".editable-input").on("input", function (event) {
+                $(".profile-save").prop("disabled", false);
+            });
+            $(".pwd-input").on("input", function (event) {
+                $(".update-btn").prop("disabled", false);
+            });
+            //Edit tutor profile
+            $(".profile-save").on("click", function (event) {
+                let isValid = true;
+                $(".editable-input").removeClass("is-invalid");
+                $(".email-error").hide();
+                $(".editable-input").each(function () {
+                    if ($(this).val().trim() === "") {
+                        $(this).addClass("is-invalid");
+                        isValid = false;
+                    }
+                });
+                if (isValid) {
+                    var form = $('.ix-tutor-edit-form');
+                    form.find('#email').prop('disabled', false);
+                    var formData = new FormData(form[0]);
+                    form.find('#email').prop('disabled', true);
+                    formData.forEach((value, key) => {
+                        console.log(key, value);
+                    });
+                    $.ajax({
+                        url: '/User/UpdateUser',
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            if (response) {
+                                showtoast("success", "Profile updated successfully...");
+                            }
+                            else {
+                                showtoast("error", "Something went wrong try again later");
+                            }
+                        }, error: function (error) {
+                            console.log(error);
+                        }
+                    });
+                }
+            });
+
+            $(".ix-change-pwd").on('click', function () {
+                $("#ix-pwd-edit").fadeIn(500);
+            });
+            //Change password
+            $(document).on('click', '.update-btn', function () {
+                let isValid = true;
+                let id = $(".hdnId").val();
+                let c = $(".currentPwd").val();
+                let n = $(".newPwd").val();
+                let confirmPwd = $(".confirm_pwd").val();
+                $(".pwd-input").removeClass("is-invalid");
+                $(".pwd_error").text("");
+                $(".pwd-input").each(function () {
+                    if ($(this).val().trim() === "") {
+                        $(this).addClass("is-invalid");
+                        isValid = false;
+                    }
+                });
+                if (isValid) {
+                    if (!isPasswordValid(c) || !isPasswordValid(n)) {
+                        $(".pwd_error").text("Password must have at least one uppercase letter, one lowercase letter, one symbol, and one number.");
+                        isValid = false;
+                    }
+                    else if (n !== confirmPwd) {
+                        $(".pwd_error").text("New password and confirm password must match");
+                        isValid = false;
+                    }
+                }
+                if (isValid) {
+                    $.ajax({
+                        url: '/User/ChangePassword',
+                        type: 'POST',
+                        data: {
+                            userId: id,
+                            currentPwd: c,
+                            newPwd: n
+                        },
+                        success: function (response) {
+                            if (response.result) {
+                                $(".pwd-input").val("");
+                                showtoast("success", "Password changed successfully...");
+                            } else {
+                                showtoast("error", response.message);
+                            }
+                        },
+                        error: function (error) {
+                            showtoast("error", "Something went wrong, try again later");
+                            console.log(error);
+                        }
+                    });
+
+                }
+            });
+
+            // Handle click on "My Account" list item
+            $('li:has(a[href="#value"])').click(function () {
+                $('#value').show();
+                $('#tutor-edit-acnt').hide();
+                $(this).addClass('active').siblings().removeClass('active');
+            });
+
+            // Handle click on "Edit profile" list item
+            $('li:has(a[href="#tutor-edit-acnt"])').click(function () {
+                $('#value').hide();
+                $('#tutor-edit-acnt').show();
+                $(this).addClass('active').siblings().removeClass('active');
+            });
+            //More-info click
+            $(".info-coll-btn").click(function () {
+                let currentDiv = $(this).next(".tutor-moreinfo")
+                currentDiv.slideToggle();
+            });
+        });
+        function isPasswordValid(password) {
+            var regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@@#$%^&*_-]).{8,20}$/;
+            return regex.test(password);
+        }
+        $(document).ready(function () {
+            // Attach the keyup event handler to the videoURL input field
+            $('#videoURL').on('keyup', function () {
+                loadVideo();
+            });
+
+            function loadVideo() {
+                // Get the input value
+                var videoUrl = $('#videoURL').val();
+
+                // Extract the YouTube video ID
+                var videoId = getYouTubeVideoId(videoUrl);
+                $("#hdnVideoURL").val(`https://www.youtube.com/embed/${videoId}`)
+                if (videoId) {
+                    // Display the YouTube video using the embed code
+                    $(".Video-src").hide();
+                    $('#videoContainer').html(`
+                                                                <iframe width="350" height="250" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
+                                                            `);
+                } else {
+                    // Display an error message or handle invalid URL
+                    $('#videoContainer').html('<video src="" controls class="Video-src"></video>');
+                }
+            }
+
+            function getYouTubeVideoId(url) {
+                // Regular expression to extract the video ID from a YouTube URL
+                var regExp = /^.*(?:youtu.be\/|v\/|e\/|u\/\w+\/|embed\/|v=)([^#\&\?]*).*/;
+                var match = url.match(regExp);
+
+                return (match && match[1].length === 11) ? match[1] : null;
+            }
+        });
+        function displayVideo(e) {
+            const fileInput = e.target.files[0];
+            if (fileInput) {
+                $("#nextBtn").prop("disabled",true);
+                $(".upload-progress").show();
+                uploadToBlob(fileInput, function (response) {
+                    if (response) {                      
+                        $("#hdnVideoURL").val(response)
+                        showtoast("success", "Video uploaded successfully");
+                    } else {
+                        showtoast("error", "Something went wrong, try again!");
+                    }
+                    $("#nextBtn").prop("disabled", false);
+                    $(".upload-progress").hide();
+                });
+            }
+            var input = document.getElementById('videos');
+            var videoContainer = document.getElementById('videoContainer');
+            var video = videoContainer.querySelector('.Video-src');
+            var file = input.files[0];
+            var objectURL = URL.createObjectURL(file);
+            video.src = objectURL;
+        }
+        $(document).ready(function () {
+            // Listen for file input change on all elements with the class 'file-input'
+            $('.file-input').on('change', function (e) {                
+                var files = e.target.files;
+                var fileList = $(this).closest('.file-choose').next('.wrapper-file-section').find('.file-list');
+
+                // Clear previous list
+                fileList.empty();
+                // Display selected files
+                for (var i = 0; i < files.length; i++) {
+                    fileList.append('<li class="list-group-item d-flex justify-content-between align-items-center">' + files[i].name +
+                        '<span class="float-end text-danger remove-file" data-index="' + i + '">&times;</span></li>');
+                }
+
+                // Show the selected files container
+                $(this).closest('.d-flex').next('.wrapper-file-section').find('.selected-files').show();
+            });
+            $(".chat-close").on('click', function () {
+                $(".wrapper").css('display', 'none');
+            });
+        });
+        // Remove file when clicking on the remove icon
+        $(document).on('click', '.remove-file', function () {
+            var index = $(this).data('index');
+            var input = $(this).closest('li');
+            input.remove();
+            $('.file-input').val('');
+            if ($('.file-list').children().length === 0) {
+                $('.selected-files').hide();
+            }
+        });
+        //function for add more certificate
+        $(document).on('click', '.add-certificate', function () {
+            var certificateClonedDiv = $('.parant-certificate').clone();
+            $(certificateClonedDiv).find('input').val('');
+            $('.child-certificate').append(certificateClonedDiv);
+        })
+
+    </script>
+}

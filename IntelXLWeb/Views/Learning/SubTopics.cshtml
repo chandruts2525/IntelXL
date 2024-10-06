@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Subject";
+}
+<link href="~/css/style.css" rel="stylesheet" />
+
+<partial name="_SubTopicsLoading"/>
+
+@section Scripts{
+
+    <script>
+        let courseId = @Html.Raw(ViewBag.Data[0]);
+        let subject = '@ViewBag.Data[1]';
+        let topic = '@ViewBag.Data[2]';
+
+
+        $.ajax({
+            type: "GET",
+            url: "/learning/getsubtopics?courseId=" + courseId + '&subjectName=' + encodeURIComponent(subject) + '&topicName=' + encodeURIComponent(topic),
+            success: function (data) {
+                $('main').html(data);
+            },
+            error: function (xhr, status, error) {
+                console.error("Request failed: " + status + ", " + error);
+            }
+        });
+
+        $(document).on('click', '.subject-navigator', function (event) {
+            event.preventDefault();
+
+            var subject = $(this).data("name");
+
+            window.location.href = '/Learning/Index?courseId=' + courseId + '&subject=' + subject;
+        });
+
+        $(document).on('click', '.class_click', function () {
+
+            var classId = $(this).next("input").val();
+
+            window.location.href = '/Learning/SubTopicsByClass?courseId=' + courseId + '&classId=' + classId + '&subName=' + subject;
+        });
+    </script>
+}

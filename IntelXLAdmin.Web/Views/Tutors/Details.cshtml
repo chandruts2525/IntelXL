@@ -1,0 +1,317 @@
+﻿@model IntelXLDataAccess.Models.AppUser
+
+@{
+    ViewData["Title"] = "GetDetails";
+}
+<style>
+    .emp-profile {
+        padding: 3%;
+        padding-top:inherit;
+        margin-top: 3%;
+        margin-bottom: 3%;
+        border-radius: 0.5rem;
+        background: #fff;
+    }
+
+    .profile-img {
+        text-align: center;
+    }
+
+        .profile-img img {
+            width: 50%;
+            height: 100%;
+        }
+
+        .profile-img .file {
+            position: relative;
+            overflow: hidden;
+            margin-top: -20%;
+            width: 70%;
+            border: none;
+            border-radius: 0;
+            font-size: 15px;
+            background: #212529b8;
+        }
+
+            .profile-img .file input {
+                position: absolute;
+                opacity: 0;
+                right: 0;
+                top: 0;
+            }
+
+    .profile-head h5 {
+        color: #333;
+    }
+
+    .profile-head h6 {
+        color: #0062cc;
+    }
+
+    #myTab {
+        margin-bottom: 1rem;
+    }
+
+    .proile-rating {
+        font-size: 12px;
+        color: #818182;
+        margin-top: 5%;
+    }
+
+        .proile-rating span {
+            color: #495057;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+    .profile-head .nav-tabs {
+        margin-bottom: 5%;
+    }
+
+        .profile-head .nav-tabs .nav-link {
+            font-weight: 600;
+            border: none;
+        }
+
+            .profile-head .nav-tabs .nav-link.active {
+                border: none;
+                border-bottom: 2px solid #0062cc;
+            }
+
+    .profile-work {
+        padding: 14%;
+        margin-top: -15%;
+    }
+
+        .profile-work p {
+            font-size: 12px;
+            color: #818182;
+            font-weight: 600;
+            margin-top: 10%;
+        }
+
+        .profile-work a {
+            text-decoration: none;
+            color: #495057;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .profile-work ul {
+            list-style: none;
+        }
+
+    .profile-tab label, .bio-label {
+        font-weight: 600;
+    }
+
+    .profile-tab p {
+        font-weight: 600;
+        color: #0062cc;
+    }
+</style>
+
+<div class="container emp-profile">
+    <div class="my-3 me-auto pt-3">
+            <a href="#" onclick="history.go(-1);" style="color: #207bff; text-decoration: none;"><i class="fa-solid fa-arrow-left-long me-2"></i>Back to List</a>
+        </div>
+    <input type="hidden" class="hdnId" value="@Model.AppUserId">
+        @if (Model.TutorDetails != null)
+    {
+        var item = Model.TutorDetails;
+   
+    <div class="d-flex p-3 justify-content-center">
+        <div class="col-md-3">
+            <div class="profile-img">
+                    @if (string.IsNullOrEmpty(Model.TutorDetails?.ProfileUrl))
+                    {
+                        <img src="~/images/user.png" alt=""  class="img-fluid">
+                    }
+                    else
+                    {
+                        <img src="@item.ProfileUrl" alt="profile Picture" class="img-fluid">
+                    }
+            </div> 
+            @*<div class="profile-img">
+                <img src="@item.ProfileUrl" alt="" class="img-fluid">
+            </div>*@
+        </div>
+        <div class="col-md-6">
+            <div class="profile-head">
+               <div class="d-flex justify-content-between">
+                        <h5>@Model.FirstName @Model.LastName</h5>
+                        <div class="col-md-2 ix-tutor-verified">
+                            <div class=" d-flex text-success align-items-center  ix-tutor-verification" role="button">
+                                <i class="fa-solid pe-2 fa-check"></i> Verify
+                            </div>
+                        </div>
+               </div>
+                <h6>Web Developer and Designer</h6>
+                    
+                        <div class="col">
+                            <p>@item.ShortBio</p>
+                        </div>
+                <p class="profile-rating">RANKINGS: <span>8/10</span></p>
+            </div>
+        </div>
+        
+    </div>
+    <div class="d-flex justify-content-center">
+        <div class="col-md-8">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">More info</a>
+                </li>
+            </ul>
+            <div class="tab-content profile-tab" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                   @* <div class="row">
+                        <div class="col-md-6">
+                            <label>Tutor Id</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Kshiti123</p>
+                        </div>
+                    </div>*@
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Name</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>@Model.FirstName @Model.LastName</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Email</label>
+                        </div>
+                        <div class="col-md-6">
+                                <p>@Model.EmailId</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Phone</label>
+                        </div>
+                        <div class="col-md-6">
+                                <p>@Model.TutorDetails.PhoneNumber</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                       @* <div class="col-md-6">
+                            <label>Education Qualification</label>
+                        </div>
+                        <div class="col-md-6">
+                                <p>@item.EducationQualification</p>
+                        </div>*@
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Languages Speak</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>@Model.TutorDetails.LanguagesSpeak</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Pricing</label>
+                        </div>
+                        <div class="col-md-6">
+                                <p><i class="fa-solid fa-indian-rupee-sign"></i> @Model.TutorDetails.Pricing /lessions</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Total Projects</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>230</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>English Level</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Expert</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Availability</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Any Time</p>
+                        </div>
+                    </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="video">Video</label>
+                            </div>
+                            <div class="col-md-6">
+                                @if (string.IsNullOrEmpty(Model.TutorDetails?.VideoUrl))
+                                {
+                                    <p>No videos available</p>
+                                }
+                                else
+                                {
+                                    <iframe width="350" height="215" src="@item.VideoUrl" alt="https://www.youtube.com/embed/jvkhigi3pmU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+                                }
+                            </div>
+
+                        </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+    else
+    {
+        <div class="text-muted d-flex justify-content-center">Tutor has not updated the details</div>
+    }
+   
+
+</div>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $(".ix-tutor-verification").on("click",function(){
+               
+                let id = $(".hdnId").val();
+                $.ajax({
+                    type:"POST",
+                    url: "/Tutors/Verify",
+                    data:{tutorId:id},                   
+                    success:function(response){
+                        if (response.result){
+                            showtoast("success", "Tutor Verified successfully");
+                            $(".ix-tutor-verified").html('<div class=" d-flex text-success align-items-center "><i class="fa-regular pe-2 fa-circle-check"></i> Verified</div>');
+                        }
+                        else{
+                            showtoast("error", response.message)
+                        }
+                    },
+                    error:function(error){
+                        showtoast("error", "Failed to make request");
+                    }
+                })
+            });
+        });
+        $(document).ready(function () {
+            $('#myTab a').click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+            });
+        });
+    </script>
+}

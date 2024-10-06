@@ -1,0 +1,697 @@
+﻿@model IntelXLDataAccess.Models.AppUser;
+@{
+    ViewData["Title"] = "TeachersTrial";
+}
+
+<style>
+    .container-form.blue-form {
+        padding: 30px 20px;
+        min-height: 100vh;
+        background-color: #dae5e8;
+        display: flex;
+        justify-content: center;
+    }
+
+    .box-shadow-container {
+        border-radius: 10px;
+        box-shadow: 0 2px 10px 0 rgba(0,0,0,.18);
+        display: inline-block;
+        text-align: left;
+        -moz-box-shadow: 0 2px 10px 0 rgba(0,0,0,.18);
+        -webkit-box-shadow: 0 2px 10px 0 rgba(0,0,0,.18);
+        border-radius: 10px;
+        overflow: hidden;
+        max-width: 860px;
+        background-color: #fff;
+    }
+
+    .fm-request-trial .sec-form-hdr {
+        padding-bottom: 40px;
+        padding-top: 43px;
+        padding-left: 20px;
+        padding-right: 20px;
+        justify-content:center;
+        background: linear-gradient(90deg,#4c6fa2 0,#4b8db4 50%,#04749e 100%);
+    }
+
+        .fm-request-trial .sec-form-hdr h1 {
+            margin-bottom: 22px;
+            display: flex;
+            justify-content: center;
+            color:white;
+        }
+
+    .icon-trial-offers {
+        height: 50px;
+        padding: 0;
+        padding-bottom: 3px;
+        width: 48px;
+    }
+
+    .txt-trial-offer {
+        padding: 0;
+        color:white;
+    }
+
+    .form-control:focus {
+        box-shadow: none;
+    }
+    .blue-form .sec-contact-info-fields {
+        padding-top: 30px;
+    }
+
+    .blue-form .sec-form {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+    .blue-form .sec-form-bd {
+        padding-bottom: 0;
+        padding-top: 20px;
+    }
+
+    .sec-form.sec-form-ftr {
+        color: #fff;
+        background: linear-gradient(90deg,#4c6fa2 0,#4b8db4 50%,#04749e 100%);
+        font-size: 14px;
+        padding: 15px;
+    }
+
+        .sec-form.sec-form-ftr p {
+            margin-bottom: 0;
+        }
+
+    .info-cta-btn {
+        border-radius: 5px;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        display: inline-block;
+        font-family: Verdana,sans-serif;
+        min-width: 140px;
+        padding: 0 15px;
+        text-align: center;
+        text-decoration: none;
+        transition: .2s all ease-in-out;
+        box-sizing: border-box;
+        background-color: #52b700;
+    }
+
+    .info-cta-33-15 {
+        font-size: 15px;
+        height: 33px;
+        line-height: 33px;
+    }
+
+    .listing-contact-info p :nth-child(1) {
+        text-align: end;
+    }
+
+    .listing-contact-info .col-sm-6 {
+        text-align: start;
+    }
+
+    @@media (max-width : 576px) {
+        .listing-contact-info .col-sm-6 {
+            text-align: center;
+            color: blue;
+        }
+    }
+
+    .information {
+        color: #8a8a8a;
+    }
+
+    .info {
+        margin-left: 10%;
+        margin-right: 20%;
+    }
+
+    .info-check {
+        margin-left: 10%;
+        margin-right: 20%;
+        display: flex;
+    }
+
+    .name-info {
+        color: #262626;
+        font-size: 20px;
+    }
+
+    .name-inputs input {
+        border-radius: 6px;
+    }
+
+    .btn-get-trial:hover {
+        box-shadow: 1px 1px 10px #5c5c5c;
+        transform: scale(0.9);
+    }
+
+
+   .form-label {
+        width: 90px;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+    }
+
+    .check-lable {
+        width: 90px;
+        display: flex;
+        justify-content: end;
+    }
+
+    .col-0 {
+        width: 90px;
+        display: flex;
+        justify-content: end;
+    }
+
+    .comment-box {
+        width: 100%;
+    }
+
+    @@media (max-width: 550px) {
+        .frm-title {
+            font-size: 30px; 
+        }
+        .info {
+            display: flex;
+            flex-direction: column;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .form-label {
+            width: auto;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+        }
+
+        .col-0 {
+            width: 81px;
+            display: flex;
+            justify-content: end;
+        }
+
+        .info-check {
+            margin: auto;
+            height: auto;
+            display: block;
+        }
+
+        .wrapper-action-btn {
+            padding-left: 12px;
+        }
+
+        .check-lable {
+            width: 81px;
+            display: block;
+        }
+    }
+
+</style>
+
+<div class="container-form blue-form">
+    <div class="">
+        <form id="trial_confirmation" name="trial_confirmation" class="fm-request-trial box-shadow-container m-0">
+
+            @*<input type="hidden" name="hiddenSelectedEdition" value="" id="prevSelectedEdition">
+            <input type="hidden" name="confName" value="" id="trial_confirmation_confName">*@
+
+            <section class="sec-form sec-form-hdr responsive-content">
+
+                <h1 class="frm-title mb-5">
+                    Start your 30-day IntelXL trial <span class="txt-br"> </span>
+                </h1>
+
+                <p class="txt-fill-out-form">
+                    <span class="no-wrap"></span>
+                </p>
+
+                <div class="box-free-trial-offers justify-content-center row d-sm-flex d-none">
+                    <div class="item-trial-offer loved-by-millions col-4">
+                        <div class="row d-flex ">
+                            <img class="icon-trial-offers icon-loved-by-millions col-3" src="~/images/form-icon-1.png" />
+                            <div class="txt-trial-offer ps-2 col-9">Loved by more than 14 million students</div>
+                        </div>
+                    </div>
+                    <div class="item-trial-offer align-to-standards col-4">
+                        <div class="row d-flex ">
+                            <img class="icon-trial-offers icon-align-to-standards col-3" src="~/images/form-icon-2.png" />
+                            <div class="txt-trial-offer ps-2 col-9">Comprehensive curriculum aligned to your standards</div>
+                        </div>
+                    </div>
+                    <div class="item-trial-offer boost-achievement col-4">
+                        <div class="row d-flex ">
+                            <img class="icon-trial-offers icon-align-to-standards col-3" src="~/images/form-icon-3.png" />
+                            <div class="txt-trial-offer ps-2 col-lg-9">Proven by research to boost student achievement</div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+          
+            <section class="p-4">
+                <div class="information">
+                    <div class=" d-flex justify-content-start">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fa-regular fa-circle-user mx-2"></i>
+                            <div class="display-4 name-info">Your information</div>
+                        </div>
+
+                    </div>
+                    <div>
+                        <div class="input input-sm mb-3 name-inputs">
+                            <div class="d-flex info">
+                                <label for="id-country" class="label-country col-1 form-label mx-2">Name</label>
+                                <input type="text" class="form-control" asp-for="FirstName">
+                            </div>
+                            <div class="d-flex info my-3">
+                                <label for="id-country" class="label-country col-1 form-label mx-2">Email</label>
+                                <input type="email" class="form-control " asp-for="EmailId">
+                            </div>
+                            <div class="d-flex info my-3">
+                                <label for="Password" class="label-country col-1 form-label mx-2">Password</label>
+                                <input type="password" class="form-control " asp-for="Password">
+                            </div> 
+                            <div class="d-flex info my-3">
+                                <label for="id-country" class="label-country col-1 form-label mx-2">Confirm Password</label>
+                                <input type="password" class="form-control">
+                            </div>
+                            <div class="d-flex info my-3">
+                                <label for="id-position" class="label-positin col-1 mx-2 form-label">
+                                    Position
+                                </label>
+                                <select name="AppRoleId" id="id-position" class="select-position form-control form-select" asp-for="AppRoleId">
+                                    <option value="1">Student</option>                                   
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="information">
+                    <div class=" d-flex justify-content-start">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fa-solid fa-school mx-2"></i>
+                            <div class="display-4 name-info">Your school</div>
+                        </div>
+
+
+                    </div>
+
+                    <div>
+                        <div class="input input-sm mb-3 name-inputs">
+                            <div class="d-flex info">
+                                <label for="id-country" class="label-country col-1 mx-2 form-label">Country</label>
+                                <select name="country" id="id-country" class="select-country form-control form-select">
+                                    <option value="US">United States</option>
+                                    <option value="AF">Afghanistan</option>
+                                    <option value="AL">Albania</option>
+                                    <option value="DZ">Algeria</option>
+                                    <option value="AS">American Samoa</option>
+                                    <option value="AD">Andorra</option>
+                                    <option value="AO">Angola</option>
+                                    <option value="AI">Anguilla</option>
+                                    <option value="AQ">Antarctica</option>
+                                    <option value="AG">Antigua and Barbuda</option>
+                                    <option value="AR">Argentina</option>
+                                    <option value="AM">Armenia</option>
+                                    <option value="AW">Aruba</option>
+                                    <option value="AU">Australia</option>
+                                    <option value="AT">Austria</option>
+                                    <option value="AZ">Azerbaijan</option>
+                                    <option value="BS">Bahamas</option>
+                                    <option value="BH">Bahrain</option>
+                                    <option value="BD">Bangladesh</option>
+                                    <option value="BB">Barbados</option>
+                                    <option value="BY">Belarus</option>
+                                    <option value="BE">Belgium</option>
+                                    <option value="BZ">Belize</option>
+                                    <option value="BJ">Benin</option>
+                                    <option value="BM">Bermuda</option>
+                                    <option value="BT">Bhutan</option>
+                                    <option value="BO">Bolivia</option>
+                                    <option value="BQ">Bonaire, Sint Eustatius and Saba</option>
+                                    <option value="BA">Bosnia and Herzegovina</option>
+                                    <option value="BW">Botswana</option>
+                                    <option value="BV">Bouvet Island</option>
+                                    <option value="BR">Brazil</option>
+                                    <option value="IO">British Indian Ocean Territory</option>
+                                    <option value="BN">Brunei</option>
+                                    <option value="BG">Bulgaria</option>
+                                    <option value="BF">Burkina Faso</option>
+                                    <option value="BI">Burundi</option>
+                                    <option value="KH">Cambodia</option>
+                                    <option value="CM">Cameroon</option>
+                                    <option value="CA">Canada</option>
+                                    <option value="CV">Cape Verde</option>
+                                    <option value="KY">Cayman Islands</option>
+                                    <option value="CF">Central African Republic</option>
+                                    <option value="TD">Chad</option>
+                                    <option value="CL">Chile</option>
+                                    <option value="CN">China</option>
+                                    <option value="HK">China (Hong Kong S.A.R.)</option>
+                                    <option value="MO">China (Macau S.A.R.)</option>
+                                    <option value="CX">Christmas Island</option>
+                                    <option value="CC">Cocos (Keeling) Islands</option>
+                                    <option value="CO">Colombia</option>
+                                    <option value="KM">Comoros</option>
+                                    <option value="CD">Congo, Democratic Republic of the</option>
+                                    <option value="CG">Congo, Republic of the</option>
+                                    <option value="CK">Cook Islands</option>
+                                    <option value="CR">Costa Rica</option>
+                                    <option value="CI">Cote d'Ivoire</option>
+                                    <option value="HR">Croatia</option>
+                                    <option value="CU">Cuba</option>
+                                    <option value="CW">Curaçao</option>
+                                    <option value="CY">Cyprus</option>
+                                    <option value="CZ">Czech Republic</option>
+                                    <option value="DK">Denmark</option>
+                                    <option value="DJ">Djibouti</option>
+                                    <option value="DM">Dominica</option>
+                                    <option value="DO">Dominican Republic</option>
+                                    <option value="TP">East Timor</option>
+                                    <option value="EC">Ecuador</option>
+                                    <option value="EG">Egypt</option>
+                                    <option value="SV">El Salvador</option>
+                                    <option value="GQ">Equatorial Guinea</option>
+                                    <option value="ER">Eritrea</option>
+                                    <option value="EE">Estonia</option>
+                                    <option value="SZ">Eswatini</option>
+                                    <option value="ET">Ethiopia</option>
+                                    <option value="FK">Falkland Islands</option>
+                                    <option value="FO">Faroe Islands</option>
+                                    <option value="FJ">Fiji Islands</option>
+                                    <option value="FI">Finland</option>
+                                    <option value="FR">France</option>
+                                    <option value="GF">French Guiana</option>
+                                    <option value="PF">French Polynesia</option>
+                                    <option value="TF">French Southern Territories</option>
+                                    <option value="GA">Gabon</option>
+                                    <option value="GM">Gambia, The</option>
+                                    <option value="GE">Georgia</option>
+                                    <option value="DE">Germany</option>
+                                    <option value="GH">Ghana</option>
+                                    <option value="GI">Gibraltar</option>
+                                    <option value="GR">Greece</option>
+                                    <option value="GL">Greenland</option>
+                                    <option value="GD">Grenada</option>
+                                    <option value="GP">Guadeloupe</option>
+                                    <option value="GU">Guam</option>
+                                    <option value="GT">Guatemala</option>
+                                    <option value="GN">Guinea</option>
+                                    <option value="GW">Guinea-Bissau</option>
+                                    <option value="GY">Guyana</option>
+                                    <option value="HT">Haiti</option>
+                                    <option value="HM">Heard and McDonald Islands</option>
+                                    <option value="HN">Honduras</option>
+                                    <option value="HU">Hungary</option>
+                                    <option value="IS">Iceland</option>
+                                    <option value="IN">India</option>
+                                    <option value="ID">Indonesia</option>
+                                    <option value="IR">Iran</option>
+                                    <option value="IQ">Iraq</option>
+                                    <option value="IE">Ireland</option>
+                                    <option value="IL">Israel</option>
+                                    <option value="IT">Italy</option>
+                                    <option value="JM">Jamaica</option>
+                                    <option value="JP">Japan</option>
+                                    <option value="JO">Jordan</option>
+                                    <option value="KZ">Kazakhstan</option>
+                                    <option value="KE">Kenya</option>
+                                    <option value="KI">Kiribati</option>
+                                    <option value="KP">Korea, North</option>
+                                    <option value="KR">Korea, South</option>
+                                    <option value="XK">Kosovo</option>
+                                    <option value="KW">Kuwait</option>
+                                    <option value="KG">Kyrgyzstan</option>
+                                    <option value="LA">Laos</option>
+                                    <option value="LV">Latvia</option>
+                                    <option value="LB">Lebanon</option>
+                                    <option value="LS">Lesotho</option>
+                                    <option value="LR">Liberia</option>
+                                    <option value="LY">Libya</option>
+                                    <option value="LI">Liechtenstein</option>
+                                    <option value="LT">Lithuania</option>
+                                    <option value="LU">Luxembourg</option>
+                                    <option value="MK">Macedonia</option>
+                                    <option value="MG">Madagascar</option>
+                                    <option value="MW">Malawi</option>
+                                    <option value="MY">Malaysia</option>
+                                    <option value="MV">Maldives</option>
+                                    <option value="ML">Mali</option>
+                                    <option value="MT">Malta</option>
+                                    <option value="MH">Marshall Islands</option>
+                                    <option value="MQ">Martinique</option>
+                                    <option value="MR">Mauritania</option>
+                                    <option value="MU">Mauritius</option>
+                                    <option value="YT">Mayotte</option>
+                                    <option value="MX">Mexico</option>
+                                    <option value="FM">Micronesia</option>
+                                    <option value="MD">Moldova</option>
+                                    <option value="MC">Monaco</option>
+                                    <option value="MN">Mongolia</option>
+                                    <option value="ME">Montenegro</option>
+                                    <option value="MS">Montserrat</option>
+                                    <option value="MA">Morocco</option>
+                                    <option value="MZ">Mozambique</option>
+                                    <option value="MM">Myanmar</option>
+                                    <option value="NA">Namibia</option>
+                                    <option value="NR">Nauru</option>
+                                    <option value="NP">Nepal</option>
+                                    <option value="NL">Netherlands</option>
+                                    <option value="AN">Netherlands Antilles</option>
+                                    <option value="NC">New Caledonia</option>
+                                    <option value="NZ">New Zealand</option>
+                                    <option value="NI">Nicaragua</option>
+                                    <option value="NE">Niger</option>
+                                    <option value="NG">Nigeria</option>
+                                    <option value="NU">Niue</option>
+                                    <option value="NF">Norfolk Island</option>
+                                    <option value="MP">Northern Mariana Islands</option>
+                                    <option value="NO">Norway</option>
+                                    <option value="OM">Oman</option>
+                                    <option value="PK">Pakistan</option>
+                                    <option value="PW">Palau</option>
+                                    <option value="PS">Palestinian Territories</option>
+                                    <option value="PA">Panama</option>
+                                    <option value="PG">Papua New Guinea</option>
+                                    <option value="PY">Paraguay</option>
+                                    <option value="PE">Peru</option>
+                                    <option value="PH">Philippines</option>
+                                    <option value="PN">Pitcairn Island</option>
+                                    <option value="PL">Poland</option>
+                                    <option value="PT">Portugal</option>
+                                    <option value="PR">Puerto Rico</option>
+                                    <option value="QA">Qatar</option>
+                                    <option value="RE">Reunion</option>
+                                    <option value="RO">Romania</option>
+                                    <option value="RU">Russia</option>
+                                    <option value="RW">Rwanda</option>
+                                    <option value="BL">Saint Barthelemy</option>
+                                    <option value="SH">Saint Helena</option>
+                                    <option value="KN">Saint Kitts and Nevis</option>
+                                    <option value="LC">Saint Lucia</option>
+                                    <option value="PM">Saint Pierre and Miquelon</option>
+                                    <option value="VC">Saint Vincent and the Grenadines</option>
+                                    <option value="WS">Samoa</option>
+                                    <option value="SM">San Marino</option>
+                                    <option value="ST">Sao Tome and Principe</option>
+                                    <option value="SA">Saudi Arabia</option>
+                                    <option value="SN">Senegal</option>
+                                    <option value="RS">Serbia</option>
+                                    <option value="SC">Seychelles</option>
+                                    <option value="SL">Sierra Leone</option>
+                                    <option value="SG">Singapore</option>
+                                    <option value="SX">Sint Maarten</option>
+                                    <option value="SK">Slovakia</option>
+                                    <option value="SI">Slovenia</option>
+                                    <option value="SB">Solomon Islands</option>
+                                    <option value="SO">Somalia</option>
+                                    <option value="ZA">South Africa</option>
+                                    <option value="GS">South Georgia and the South Sandwich Islands</option>
+                                    <option value="SS">South Sudan</option>
+                                    <option value="ES">Spain</option>
+                                    <option value="LK">Sri Lanka</option>
+                                    <option value="SD">Sudan</option>
+                                    <option value="SR">Suriname</option>
+                                    <option value="SJ">Svalbard and Jan Mayen Islands</option>
+                                    <option value="SE">Sweden</option>
+                                    <option value="CH">Switzerland</option>
+                                    <option value="SY">Syria</option>
+                                    <option value="TW">Taiwan</option>
+                                    <option value="TJ">Tajikistan</option>
+                                    <option value="TZ">Tanzania</option>
+                                    <option value="TH">Thailand</option>
+                                    <option value="TG">Togo</option>
+                                    <option value="TK">Tokelau</option>
+                                    <option value="TO">Tonga</option>
+                                    <option value="TT">Trinidad and Tobago</option>
+                                    <option value="TN">Tunisia</option>
+                                    <option value="TR">Turkey</option>
+                                    <option value="TM">Turkmenistan</option>
+                                    <option value="TC">Turks and Caicos Islands</option>
+                                    <option value="TV">Tuvalu</option>
+                                    <option value="UG">Uganda</option>
+                                    <option value="UA">Ukraine</option>
+                                    <option value="AE">United Arab Emirates</option>
+                                    <option value="UK">United Kingdom</option>
+                                    <option value="UM">United States Minor Outlying Islands</option>
+                                    <option value="UY">Uruguay</option>
+                                    <option value="UZ">Uzbekistan</option>
+                                    <option value="VU">Vanuatu</option>
+                                    <option value="VA">Vatican City</option>
+                                    <option value="VE">Venezuela</option>
+                                    <option value="VN">Vietnam</option>
+                                    <option value="VG">Virgin Islands (British)</option>
+                                    <option value="VI">Virgin Islands (U.S.)</option>
+                                    <option value="WF">Wallis and Futuna Islands</option>
+                                    <option value="EH">Western Sahara</option>
+                                    <option value="YE">Yemen</option>
+                                    <option value="ZM">Zambia</option>
+                                    <option value="ZW">Zimbabwe</option>
+                                </select>
+                            </div>
+                            <div class="d-flex info my-3">
+                                <label for="id-country" class="label-country col-1 form-label mx-2">Zip</label>
+                                <input type="number" class="form-control ">
+                            </div>
+                            <div class="d-flex info my-3">
+                                <label for="id-country" class="label-country col-1 form-label mx-2">School</label>
+                                <input type="text" class="form-control ">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="information">
+                    <div class=" d-flex justify-content-start">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fa-regular fa-circle-user mx-2"></i>
+                            <div class="display-4 name-info">Your IXL trial</div>
+                        </div>
+
+                    </div>
+                    <div>
+                        <div class="input input-sm mb-3 name-inputs">
+                           @* <div class="d-flex info">
+                                <label for="id-country" class="label-country col-1 form-label mx-2">Username</label>
+                                <input type="text" class="form-control my-2">
+                            </div>*@
+                            <div class="box-input box-checkboxes">
+                                
+                                <div class="info-check course_select">
+                                    <div class="col-2 check-lable form-label mx-2">
+                                        <p class="box-input hdr-label hdr-label-subjects">
+                                           Select a course
+                                        </p>
+                                    </div>                                   
+                                </div>
+                                <div class="box-err-msg"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="information">
+                   @* <div class="input input-sm mb-3  name-inputs">
+                        <div class="d-flex info">
+                            <label for="id-comments" class="label-comments col-0 form-label">
+                                Comments
+                            </label>
+                            <div class="comment-box">
+                                <textarea name="comments" cols="45" rows="5" id="id-comments" class="in-comments form-control mx-2" placeholder="Comments"></textarea>
+                                <div class="wrapper-action-btn ps-2 mt-2">
+                                    By accepting this classroom trial, you agree to abide by IXL's terms of service.
+                                    This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply.
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>*@
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <button class="info-cta-btn info-cta-33-15 info-cta-green btn-get-trial my-3 px-5" name="requestTrial" type="button" value="true">Request free trial</button>
+                </div>
+
+            </section>
+          
+            <section class="sec-form sec-form-bd responsive-content">
+                
+            </section>
+            <section class="sec-form sec-form-ftr responsive-content">
+                <p class="text-center fw-bold fs-6">Have questions? Contact us!</p>
+                <div class="listing-contact-info d-flex justify-content-center">
+
+                    <p class="">
+                        Phone: (855) 255-8800
+                    </p>
+
+                    <p class="">
+                        E-mail: orders@IntelXL.com
+                    </p>
+                </div>
+            </section>
+        </form>
+
+    </div>
+</div>
+@section Scripts{
+    <script>
+        //Ajax to load DropDown
+        $.ajax({
+            url: "/Membership/GetCourses",
+            type: "Get",
+            success: function (result) {
+                let radioContainer = $(".course_select");
+                let radioDiv = $('<div class="col ps-3"></div>'); 
+                $.each(result, function (index, value) {
+                    let radioBtn = '';
+                    radioBtn += '<div class="box-checkbox box-ui form-check">';
+                    radioBtn += '<input class= "form-check-input" name="CourseId" type="radio" value="' + value.courseId + '">';
+                    radioBtn += '<label class="label-radiobox">' + value.courseName + '';
+                    radioBtn += '</label>';
+                    radioBtn += '</div>';
+                    radioDiv.append(radioBtn);                   
+                });                
+                radioContainer.append(radioDiv);
+            },
+            error: function (xhr, status, error) {
+                console.error("Error: " + error);
+            }
+        });
+
+        //$(document).ready(function () {
+        //    $(".btn-get-trial").on('click', function () {
+        //        let form = $('#trial_confirmation');
+        //        let formData = new FormData(form[0]);
+
+        //        $.ajax({
+        //            type: "POST",
+        //            url: "/User/Register",
+        //            data: formData,
+        //            processData: false,  
+        //            contentType: false,  
+        //            success: function (response) {
+        //                if(response){
+        //                    alert("Registration Successsful");
+        //                    form.trigger('reset');
+        //                }
+        //                else
+        //                {
+        //                    alert("Registration failed");
+        //                }
+        //            },
+        //            error: function (xhr, status, error) {
+        //                console.log("Error: " + error);
+        //            }
+        //        });
+        //    });
+        //});
+    </script>
+}

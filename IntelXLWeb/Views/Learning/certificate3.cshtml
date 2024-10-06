@@ -1,0 +1,196 @@
+﻿<style>
+    .certificate-banner {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 500px;
+        justify-content: center;
+    }
+
+    .certificate-content {
+        padding-bottom: inherit;
+        box-sizing: border-box;
+        margin: 0 auto;
+        max-width: 1040px;
+        min-width: 320px;
+        width: 100%;
+    }
+
+    
+
+    .banner-image {
+        height: 400px;
+        position: absolute;
+        width: 100%;
+    }
+
+    .medal img {
+        width: 100px;
+        height: 80px;
+    }
+
+    .superb-text {
+        padding-top: 15px;
+        font-size: 5vw;
+        font-style: italic;
+        color: #10708f;
+        font-weight: 1000;
+        font-family: auto;
+    }
+
+    .certificate-text {
+        padding: 1vw;
+    }
+
+    .certificate-para {
+        font-size: 1.5vw;
+        color: #10708f;
+    }
+
+    .certificate-result {
+        position: absolute;
+        top:58%;
+    }
+
+    h6 {
+        font-size: 1rem;
+        color: #10708f;
+    }
+
+    .result-container {
+        width: 50vw;
+        min-width: 450px;
+        border-radius: 8px;
+        color: #378524;
+    }
+
+    .certificate-icon{
+        height:60px;
+        width:60px;
+    }
+
+        .certificate-icon img{
+            height: 60px;
+            width: 60px;
+        }
+
+    .explore-more {
+     
+        top: 60%;
+    }
+
+    .explore-text {
+        font-size: 30px;
+        color: #707070;
+    }
+
+    .choose-explore, .learn-explore {
+        border-radius: 5px;
+        background-color: #b3deff;
+    }
+
+    .recommend-btn {
+        color: #fff;
+        background-image: linear-gradient(to right, #068a04, #09cf06);
+    }
+
+        .recommend-btn:hover {
+            color: #fff;
+            background-image: linear-gradient(to right, #09cf06, #068a04);
+        }
+        .result-container {
+    flex-direction: column;
+  }
+  
+  .time-spent,
+  .smart-score,
+  .qus-correct {
+    margin: 10px 0;
+  }
+
+
+  /* Media query for larger screens */
+  @@media (min-width: 768px) {
+    .result-container {
+      flex-direction: row;
+      justify-content: center;
+    }
+
+    .time-spent,
+    .smart-score,
+    .qus-correct {
+      margin: 0 15px;
+    }
+  }
+</style>
+<section class="certificate-banner p-0" style="background-image: url('/images/certificate-banner-5.png');">
+    <div class="certificate-content text-center">
+        <h4 class="superb-text d-flex justify-content-center">
+            Spectacular
+        </h4>
+        <div class="certificate-para">You have mastered the skill and earned a gold medal.</div>
+        <div class="medal"><img src="~/images/Medal_icon.png" /></div>
+        <div class=""><h6>Win more prizes!</h6></div>
+        <a><div class="btn prac-btn" type="button"><h6>Keep Practicing >></h6></div></a>
+      
+    </div>
+    <div class="container-fluid certificate-result">
+        <div class="container result-container d-flex justify-content-center p-3">
+            <div class="time-spent text-center mx-5">
+                <div class="certificate-icon"><img src="~/images/timer.png" /></div>
+                <div><b>Time spent</b></div>
+                <div>
+                    <span>@ViewBag.Time</span>
+                </div>
+            </div>
+            <div class="smart-score text-center mx-2.5 px-5">
+                <div class="certificate-icon"><img src="~/images/bulb.png" /></div>
+                <div><b>Smart score</b></div>
+                <div>@ViewBag.Score</div>
+            </div>
+            <div class="qus-correct text-center mx-5">
+                <div class="certificate-icon"><img src="~/images/check.png" /></div>
+                <div><b>Questions correct</b></div>
+                <div>@ViewBag.Result</div>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="certificate-body">
+        
+        <div class="container-fluid explore-more">
+           
+            <div class="d-flex justify-content-center">
+                <div class="text-center">
+                    <div class="explore-text my-">Explore more skills to practice</div>
+                    <div class="d-flex my-3">
+                        <div class="choose-explore d-flex p-2 mx-2 px-5">
+
+                            <div><i class="fa-regular fa-gem"></i></div>
+                            <a href="/Learning/Math"> <div class="mx-2"> Choose the number that you hear - up to 3</div></a>
+
+                        </div>
+                        <div class="learn-explore d-flex p-2 mx-2 px-5">
+
+                            <div><i class="fa-regular fa-gem"></i></div>
+                            <a href="/Learning/Math"><div class="mx-2"> Learn to count 3</div></a>
+
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center my-3">
+                        <div class="choose-explore d-flex p-2 mx-2 px-5">
+
+                            <div><i class="fa-regular fa-gem"></i></div>
+                            <a href="/Learning/Math"><div class="mx-2">Identify number - up to 5</div></a>
+
+                        </div>
+                    </div>
+                    <a><div class="btn px-4 my-5 recommend-btn" type="button">Go to recommendations</div></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

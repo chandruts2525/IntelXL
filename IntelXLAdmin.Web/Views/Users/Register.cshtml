@@ -1,0 +1,125 @@
+﻿@model IntelXLDataAccess.Models.AppUser;
+@{
+    ViewData["Title"] = "Register";
+}
+
+<style>
+    .reg-form:focus, .reg-form.is-invalid:focus, .select-position:focus, .select-position.is-invalid:focus {
+        box-shadow: none;
+    }
+
+    .info {
+        margin-left: 10%;
+        margin-right: 20%;
+    }
+
+    .info-check {
+        margin-left: 28%;
+        margin-right: 20%;
+        display: flex;
+    }
+
+    .name-inputs input {
+        border-radius: 6px;
+    }
+
+    .btn-register:hover {
+        box-shadow: 1px 1px 10px #5c5c5c;
+        transform: scale(0.9);
+    }
+
+
+    .form-label {
+        width: 90px;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+    }
+
+    .fm-register {
+        padding-top: 42px;
+    }
+
+    @@media (max-width: 550px) {
+
+        .info {
+            display: flex;
+            flex-direction: column;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .form-label {
+            width: auto;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+        }
+
+        .info-check {
+            margin: auto;
+            height: auto;
+            display: block;
+        }
+    }
+
+    @@media (max-width: 376px) {
+        .fm-register{
+            padding-top:0px;
+        }
+    }   
+</style>
+<div class="container-fluid register-bg p-0">
+    <div class="register-box m-2 p-3">
+        <h2 class="text-center">Register</h2>
+        <div class="register">
+            <div class="">
+                <form id="registrationform" class="fm-register box-shadow-container m-0">
+                    <div class="input input-sm name-inputs">
+                        <div class="d-flex info">
+                            <label for="id-country" class="label-country col-1 form-label mx-2">First Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control reg-form" id="first-name" asp-for="FirstName">
+
+                        </div>
+                        <div class="d-flex mt-3 info">
+                            <label for="id-country" class="label-country col-1 form-label mx-2">Last Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control reg-form" id="last-name" asp-for="LastName">
+
+                        </div>
+                        <div class="d-flex info mt-3">
+                            <label for="id-country" class="label-country col-1 form-label mx-2">Email <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control reg-form" id="email" asp-for="EmailId">
+                        </div>
+                        <div class="d-flex info mt-3">
+                            <label for="Password" class="label-country col-1 form-label mx-2">Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control reg-form" id="password" asp-for="Password">
+                        </div>
+
+                        <div class="d-flex info mt-3">
+                            <label for="id-country" class="label-country text-nowrap col-1 form-label mx-2">Confirm Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control reg-form" id="confirm-password">
+                        </div>
+                        <div class="d-flex info-check p-2">
+                            <input type="checkbox" id="show-password"> <span class="ps-2"> Show password</span>
+                        </div>
+                        <div class="d-flex info my-2">
+                            <label for="id-position" class="label-positin col-1 mx-2 form-label">
+                                Role<span class="text-danger align-top">*</span>
+                            </label>
+                            <select id="id-position" class="select-position form-control form-select" asp-items="ViewBag.Roles">
+                                <option selected disabled value="">Choose...</option>
+                            </select>
+                        </div>
+
+                        <div class="error-info text-danger py-1"></div>
+
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button id="register-button" type="button" class="btn my-3 px-5 sub-btn">Register</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

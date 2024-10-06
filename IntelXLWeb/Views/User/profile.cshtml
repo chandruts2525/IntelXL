@@ -1,0 +1,551 @@
+﻿@using System.Globalization;
+@using IntelXLDataAccess.Models;
+@model IntelXLDataAccess.Models.AppUser;
+@{
+    ViewData["Title"] = "Profile";
+    string createdDate = "";
+    string endDate = "";
+    int remainingDays = 0;
+    if (Model.UserSubscriptions.Any())
+    {
+        var data = Model.UserSubscriptions.FirstOrDefault(u => u.Status == true);
+        if (data != null)
+        {
+            createdDate = data.CreatedDttm.Day + " " + data.CreatedDttm.ToString("MMMM", CultureInfo.CurrentCulture) + " " + data.CreatedDttm.Year;
+            endDate = data.ExpireDttm.Day + " " + data.ExpireDttm.ToString("MMMM", CultureInfo.CurrentCulture) + " " + data.ExpireDttm.Year;
+            DateTime today = DateTime.Now;
+            TimeSpan remainingTime = data.ExpireDttm - today;
+            remainingDays = (int)remainingTime.TotalDays;
+            remainingDays = (remainingDays < 0) ? 0 : remainingDays;
+        }
+    }
+}
+<link href="~/lib/toastr.js/toastr.min.css" rel="stylesheet" />
+<style>
+
+    .list-container {
+        background-color: #daeeff5c;
+        padding: 42px;
+    }
+
+    .add-subscription {
+        color: #52b700;
+    }
+
+
+
+    .panel {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .profile-nav, .profile-info {
+        margin-top: 30px;
+    }
+
+        .profile-nav .user-heading {
+            /*background: linear-gradient(176deg, #32d11e 0%, #3cd773 100%);*/
+            /*background-color: #efefef;
+                border-bottom: 2px solid #5ab24f;*/
+            color: #fff;
+            border-radius: 5px;
+            -webkit-border-radius: 4px 4px 0 0;
+            padding: 30px;
+            text-align: center;
+        }
+
+            .profile-nav .user-heading.round a {
+                border-radius: 50%;
+                -webkit-border-radius: 50%;
+                border: 2px solid #198754;
+                display: inline-block;
+            }
+
+            .profile-nav .user-heading a img {
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                -webkit-border-radius: 50%;
+            }
+
+            .profile-nav .user-heading h1 {
+                font-size: 22px;
+                margin-bottom: 5px;
+            }
+
+            .profile-nav .user-heading p {
+                font-size: 12px;
+            }
+
+        .profile-nav ul {
+            margin-top: 1px;
+        }
+
+            .profile-nav ul > li {
+                border-bottom: 1px solid #ebeae6;
+                margin-top: 0;
+                line-height: 50px;
+            }
+
+                .profile-nav ul > li:last-child {
+                    border-bottom: none;
+                }
+
+                .profile-nav ul > li > a {
+                    border-radius: 0;
+                    -webkit-border-radius: 0;
+                    color: #000;
+                    padding-left: 5px;
+                }
+
+                .profile-nav ul > li:hover, .profile-nav ul > li:focus, .profile-nav ul li.active {
+                    background: #4dd73c52 !important;
+                    border-left: 5px solid #19873b;
+                    color: #000 !important;
+                    border-radius: 0 5px 5px 0;
+                }
+
+                .profile-nav ul > li:last-child > a:last-child {
+                    border-radius: 0 0 4px 4px;
+                    -webkit-border-radius: 0 0 4px 4px;
+                }
+
+                .profile-nav ul > li > a > i {
+                    font-size: 16px;
+                    padding-right: 10px;
+                    color: #000;
+                }
+
+    .r-activity {
+        margin: 6px 0 0;
+        font-size: 12px;
+    }
+
+    .profile-info .panel-footer {
+        background-color: #f8f7f5;
+        border-top: 1px solid #e7ebee;
+    }
+
+        .profile-info .panel-footer ul li a {
+            color: #7a7a7a;
+        }
+
+    .bio-graph-heading {
+        background: linear-gradient(90deg, #198754 0%, #4dd73ca8 100%);
+        /* background-color: #2acd3c40;
+            border-bottom: 1px solid #5ab24f;*/
+        color: #fff;
+        text-align: center;
+        padding: 10px;
+        border-radius: 5px 5px 0 0;
+        -webkit-border-radius: 5px 5px 0 0;
+        font-size: 16px;
+        font-weight: 300;
+    }
+
+    .bio-graph-info {
+        color: #000;
+    }
+
+        .bio-graph-info h1 {
+            font-size: 22px;
+            font-weight: 500;
+            margin: 0 0 20px;
+        }
+
+    .bio-row {
+        width: 100%;
+        float: left;
+        margin-bottom: 10px;
+        padding: 0 15px;
+    }
+
+    .label-span, .profile-sub {
+        width: 150px;
+        display: inline-block;
+        font-weight: 600;
+    }
+
+
+
+    .nav-stacked, .bio-detail {
+        flex-direction: column;
+    }
+
+    .profile-container {
+        min-height: calc(100vh - 183.5px);
+        background-color: #dee2e63d;
+    }
+
+    @@media screen and (max-width: 426px) {
+        .bio-row {
+            padding: 0px;
+        }
+
+        .label-span {
+            width: 100px;
+        }
+
+        .profile-sub {
+            width: 150px;
+        }
+    }
+
+    .editable-input, .pwd-input {
+        border: 1px solid #ccc;
+        padding: 5px;
+        margin: 5px 0;
+    }
+    /*.edit-btn {
+        border-radius: 20px;
+        background-color: #ddd;
+    }*/
+    .image-container {
+        position: relative;
+        display: inline-block;
+    }
+
+    .image-input {
+        display: none;
+    }
+
+    .image-label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: #ddd;
+        padding: .2em;
+        height: 2em;
+        z-index: 1;
+        transition: background-color 0.2s ease-in-out;
+        opacity: 0;
+        pointer-events: none;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        -webkit-border-radius: 50%;
+    }
+
+    .image-container:hover .image-label {
+        opacity: 1;
+        pointer-events: auto;
+        background-color: rgba(0, 0, 0, 0.6);
+        cursor: pointer;
+    }
+
+    .image-label span {
+        display: inline-flex;
+        font-size:14px;
+        padding: .2em;
+        height: 2em;
+    }
+
+</style>
+<div class="container pt-1 pb-5 px-3 profile-container">
+    <div class="row">
+        <div class="profile-nav col-md-3">
+            <div class="panel">
+                <div class="user-heading text-black round">
+                    <a href="#" class="image-container">
+                        <img src="~/images/user.png" alt="">
+                        <label class="image-label d-flex justify-content-center align-items-center" for="file">
+                            <span><i class="fa-solid fa-camera pe-2"></i> Change</span>
+                        </label>
+                        <input id="file" type="file" class="image-input" />
+                    </a>
+                    <h1>@Model.FirstName</h1>
+                    <p>@Model.EmailId</p>
+                </div>
+
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active" role="button"><a href="#value"> <i class="fa fa-user"></i> My Account</a></li>
+                   @* <li role="button"><a href="#tutor-scdl"><i class="fa-solid fa-calendar-days"></i> My Schedule</a></li>*@
+                    <li role="button" id="edit-profile"><a href="#edit-acnt"> <i class="fa fa-edit"></i> Edit profile</a></li>
+                    @*<li role="button"><a href="#"> <i class="fa-solid fa-gears"></i> Settings</a></li>*@
+                </ul>
+            </div>
+        </div>
+        <div class="profile-info col-md-9">
+
+            <div id="value">
+                <div class="panel">
+                    <div class="bio-graph-heading">
+                        <h6 class="m-0">Your profile</h6>
+                    </div>
+                    <div class="panel-body p-3 bio-graph-info">
+                        <div class="d-flex justify-content-between">
+                           @* <h1 class="m-0">Info</h1>*@
+                            @* <div class="edit-btn btn text-black" id="edit-profile"><a href="#edit-acnt"><i class="fa fa-edit"></i> Edit profile</a></div>*@
+                        </div>
+                        <div class="bio-detail d-flex">
+                            <div class="bio-row">
+                                <p><span class="label-span">First Name </span>: @Model.FirstName</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span class="label-span">Last Name </span>: @Model.LastName</p>
+                            </div>
+                            <div class="bio-row">
+                                <p><span class="label-span">Email </span>: @Model.EmailId</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel mt-4 ">
+                    <div class="bio-graph-heading">
+                        <h6 class="m-0">Your Subscriptions </h6>
+                    </div>
+                    <div class="panel-body p-3 bio-graph-info">
+
+                        @if (Model.UserSubscriptions != null && Model.UserSubscriptions.Count > 0)
+                        {
+                            UserSubscription usersubsription = Model.UserSubscriptions.FirstOrDefault(u => u.Status == true);
+                           @* <h1>Subscriptions Details</h1>*@
+                            <div class="bio-detail d-flex">
+                                <div class="bio-row">
+                                    <p><span class="text-nowrap profile-sub">Subscription Name </span>: @usersubsription?.Subscription?.SubscriptionName</p>
+                                </div>
+                                <div class="bio-row">
+                                    <p><span class="label-span">Start date </span>: @createdDate</p>
+                                </div>
+                                <div class="bio-row">
+                                    <p><span class="label-span">Expires on</span>: @endDate (@remainingDays days left)</p>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="bio-detail d-flex flex-column justify-content-center align-items-center text-muted h5 p-0 m-0" style="min-height: 196.39px;">
+                                <div class="display-value pb-4">You don’t have any active subscriptions</div>
+                                <a role="button" class=" add-subscription" href="/Membership/Join">Subscribe Now >></a>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+            <div id="edit-acnt" style="display:none;">
+                <div class="panel">
+                    <div class="bio-graph-heading">
+                        <h6 class="m-0">Edit profile</h6>
+                    </div>
+                    <form class="ix-edit-form">
+
+                        <div class="panel-body p-3 bio-graph-info">
+                            <div class="d-flex"> <h1>Info</h1><a class="ms-auto ix-change-pwd" href="#"><i class="fa-solid fa-key"></i> Change password</a></div>
+                            <div class="bio-detail d-flex">
+
+                                <div class="bio-row">
+                                    <div class="d-flex align-items-center"><span class="label-span">First Name </span>:<input type="text" class="editable-input form-control w-50 ms-1" value="@Model.FirstName" name="FirstName" /> @*<span id="firstNameSpan">@Model.FirstName</span>*@</div>
+                                </div>
+                                <div class="bio-row">
+                                    <div class="d-flex align-items-center"><span class="label-span">Last Name </span>: <input type="text" class="editable-input form-control w-50 ms-1" value="@Model.LastName" name="LastName" /></div>
+                                </div>
+                                <div class="bio-row">
+                                    <div class="d-flex align-items-center"><span class="label-span">Email </span>: <input type="text" class="editable-input form-control w-50 ms-1 email" value="@Model.EmailId" name="EmailId" disabled /><span class="text-danger ms-1 email-error" style="display:none">Enter valid email</span></div>
+                                </div>
+                            </div>
+                            <div class="modal-footer p-0 border-0 ">
+                                <button type="button" class="btn btn-success ms-auto profile-save" disabled>Save</button>
+                            </div>
+                        </div>
+                        <input type="hidden" class="hdnId" value="@Model.AppUserId" name="AppUserId" />
+                        <input type="hidden" value="@Model.AppRoleId" name="AppRoleId" />
+                        <input type="hidden" value="@Model.Password" name="Password" />
+                    </form>
+
+                </div>
+            </div>
+            <div id="ix-pwd-edit" style="margin-top:30px; display:none">
+                <div class="panel">
+                    <div class="bio-graph-heading">
+                        <h6 class="m-0">Change password</h6>
+                    </div>
+                    <div class="panel-body p-3 bio-graph-info">
+                        <div class="bio-detail d-flex">
+                            <form id="changePasswordForm" action="change_password.php" method="post">
+                                <div class="bio-detail d-flex">
+
+                                    <div class="bio-row">
+                                        <div class="d-flex align-items-center"><span class="label-span">Current Password</span>:<input type="password" class="form-control w-50 ms-1 pwd-input currentPwd" value="" /> </div>
+                                    </div>
+                                    <div class="bio-row">
+                                        <div class="d-flex align-items-center"><span class="label-span">New Password</span>:<input type="password" class="form-control w-50 ms-1 pwd-input newPwd" value="" /></div>
+                                    </div>
+                                    <div class="bio-row">
+                                        <div class="d-flex align-items-center"><span class="label-span">Confirm New Password</span>:<input type="password" class="form-control w-50 ms-1 pwd-input confirm_pwd" value="" /></div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer p-0 border-0 ">
+                                    <div class="ms-5 mt-0 text-danger pwd_error"></div>
+                                    <button type="button" class="btn btn-success ms-auto update-btn" disabled>Update</button>
+                                </div>
+                            </form>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <div id="tutor-scdl" style="display:none;">
+                <div class="panel">
+                    <div class="bio-graph-heading">
+                        <h6 class="m-0">Your tutor scheduels</h6>
+                    </div>
+                    <div class="panel-body p-3 bio-graph-info">
+                       @* <h1>Info</h1>*@
+                        <div class="bio-detail d-flex">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Handle click on "My Account" list item
+            $('li:has(a[href="#value"])').click(function () {
+                $('#value').show();
+                $('#edit-acnt').hide();
+                $('#tutor-scdl').hide();
+                $(this).addClass('active').siblings().removeClass('active');
+            });
+
+            // Handle click on "Edit profile" list item
+
+            //$(document).on('click', '#edit-profile', function () {
+            //    $('#savedDetail').hide();
+            //    $('#tutor-scdl').hide();
+            //    $('#edit-acnt').show();
+            //});
+            $('li:has(a[href="#edit-acnt"])').click(function () {
+                $('#value').hide();
+                $('#tutor-scdl').hide();
+                $('#edit-acnt').show();
+                $(this).addClass('active').siblings().removeClass('active');
+            });
+
+            // Handle click on "Tutor Schedule" list item
+            $('li:has(a[href="#tutor-scdl"])').click(function () {
+                $('#value').hide();
+                $('#edit-acnt').hide();
+                $('#tutor-scdl').show();
+                $(this).addClass('active').siblings().removeClass('active');
+            });
+
+            $(".ix-change-pwd").on('click', function () {
+                $("#ix-pwd-edit").fadeIn(500);
+            });
+            $(".editable-input").on("input", function (event) {
+                $(".profile-save").prop("disabled", false);
+            });
+            $(".pwd-input").on("input", function (event) {
+                $(".update-btn").prop("disabled", false);
+            });
+        });
+        $(document).on('click', '.profile-save', function () {
+            let isValid = true;
+            $(".editable-input").removeClass("is-invalid");
+            $(".email-error").hide();
+            $(".editable-input").each(function () {
+                if ($(this).val().trim() === "") {
+                    $(this).addClass("is-invalid");
+                    isValid = false;
+                }
+            });
+            if (isValid) {
+                if (!emailvalidation($(".email").val())) {
+                    $(".email").addClass("is-invalid");
+                    $(".email-error").show();
+                    isValid = false;
+                }
+            }
+            if (isValid) {
+                var form = $('.ix-edit-form');
+                var formData = new FormData(form[0]);
+                $.ajax({
+                    url: '/User/UpdateUser',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        if (response) {
+                            showtoast("success", "Profile updated successfully...");
+                        }
+                        else {
+                            showtoast("error", "Something went wrong try again later");
+                        }
+                    }, error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+        });
+        $(document).on('click', '.update-btn', function () {
+            let isValid = true;
+            let id = $(".hdnId").val();
+            let c = $(".currentPwd").val();
+            let n = $(".newPwd").val();
+            let confirmPwd = $(".confirm_pwd").val();
+            $(".pwd-input").removeClass("is-invalid");
+            $(".pwd_error").text("");
+            $(".pwd-input").each(function () {
+                if ($(this).val().trim() === "") {
+                    $(this).addClass("is-invalid");
+                    isValid = false;
+                }
+            });
+            if (isValid) {
+                if (!isPasswordValid(c) || !isPasswordValid(n)) {
+                    $(".pwd_error").text("Password must have at least one uppercase letter, one lowercase letter, one symbol, and one number.");
+                    isValid = false;
+                }
+                else if (n !== confirmPwd) {
+                    $(".pwd_error").text("New password and confirm password must match");
+                    isValid = false;
+                }
+            }
+            if (isValid) {
+                $.ajax({
+                    url: '/User/ChangePassword',
+                    type: 'POST',
+                    data: {
+                        userId: id,
+                        currentPwd: c,
+                        newPwd: n
+                    },
+                    success: function (response) {
+                        if (response.result) {
+                            $(".pwd-input").val("");
+                            showtoast("success", "Password changed successfully...");
+                        } else {
+                            showtoast("error", response.message);
+                        }
+                    },
+                    error: function (error) {
+                        showtoast("error", "Something went wrong, try again later");
+                        console.log(error);
+                    }
+                });
+
+            }
+        });
+        function showtoast(type, message) {
+            toastr.options = {
+                "closeButton": true,
+                "newestOnTop": true,
+                "progressBar": true,
+                "positionClass": "toast-top-center",
+                "timeOut": "5000",
+            };
+            $('.toast-message').css('white-space', 'nowrap');
+            toastr[type](message);
+        }
+    </script>
+}

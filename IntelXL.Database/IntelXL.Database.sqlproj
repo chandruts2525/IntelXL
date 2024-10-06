@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>IntelXL.Database</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{ffaa6c14-32ea-483e-ac7f-e344aa2a7807}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql160DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>IntelXL.Database</RootNamespace>
+    <AssemblyName>IntelXL.Database</AssemblyName>
+    <ModelCollation>1033,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\AppRole.sql" />
+    <Build Include="dbo\Tables\AppUser.sql" />
+    <Build Include="dbo\Tables\SubscriptionMaster.sql" />
+    <Build Include="dbo\Tables\ClassMaster.sql" />
+    <Build Include="dbo\Tables\SubjectMaster.sql" />
+    <Build Include="dbo\Tables\UnitMaster.sql" />
+    <Build Include="dbo\Tables\TopicMaster.sql" />
+    <Build Include="dbo\Tables\SubTopicMaster.sql" />
+    <Build Include="dbo\Tables\QuestionMaster.sql" />
+    <Build Include="dbo\Tables\ChoiceMaster.sql" />
+    <Build Include="dbo\Tables\AnswerMaster.sql" />
+    <Build Include="dbo\Tables\AnnimationMaster.sql" />
+    <Build Include="dbo\Tables\CourseMaster.sql" />
+    <Build Include="dbo\Tables\PaymentTypeMaster.sql" />
+    <Build Include="dbo\Tables\UserSubscriptions.sql" />
+    <Build Include="dbo\Tables\UserPayment.sql" />
+    <Build Include="dbo\Tables\UserLogin.sql" />
+    <Build Include="dbo\Tables\UserExam.sql" />
+    <Build Include="dbo\Tables\StudentTutorSchedules.sql" />
+    <Build Include="dbo\Tables\TutorDetails.sql" />
+    <Build Include="dbo\Tables\TutorEducation.sql" />
+    <Build Include="dbo\Tables\TutorCertification.sql" />
+    <Build Include="dbo\Tables\LanguageOfInstructionMaster.sql" />
+    <Build Include="dbo\Tables\LanguageMaster.sql" />
+    <Build Include="dbo\Tables\TimingMaster.sql" />
+    <Build Include="dbo\Tables\TutorTimingConfig.sql" />
+    <Build Include="dbo\Tables\TimeZoneMaster.sql" />
+    <Build Include="dbo\Tables\DayMaster.sql" />
+    <Build Include="dbo\Tables\Chats.sql" />
+    <Build Include="dbo\Tables\CouponMaster.sql" />
+  </ItemGroup>
+</Project>

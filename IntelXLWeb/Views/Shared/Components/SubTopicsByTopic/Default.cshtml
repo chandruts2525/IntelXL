@@ -1,0 +1,61 @@
+﻿@model IEnumerable<IntelXLWeb.ViewComponents.ClassesWithSubTopics>
+@*<link href="~/css/style.css" rel="stylesheet" />*@
+@{
+    ViewData["Title"] = "Topics";
+    string[] colors = { "0374d3", "2cce8c", "a95edb", "f96855", "fece36", "3aa9fc", "15a085", "f48521", "587bf8", "f24422", "8bc427", "7a57ce", "2ac", "fd9726", "0374d3" };   
+    string[] img = { "/images/maths.png", "/images/english-language.png", "/images/test-tube.png", "/images/social.png" };
+    int Icons = 0;
+}
+@{
+    ViewData["Title"] = "SubTopics";
+    //var topics = ViewBag.Topics
+}
+<div class="container">
+    <nav class="nav nav-pills nav-fill">
+        @foreach (var subject in @ViewBag.Subjects)
+        {
+            var border = subject?.TrimEnd() == ViewBag.Subject?.TrimEnd() ? "border-bottom:2px solid #009491;border-radius:0px;" : "";
+            <a class="nav-item nav-link sub-nav-item subject-navigator" style="@border" data-name="@subject">@subject</a>
+            Icons = (Icons + 1) % img.Length;
+        }
+       @* <a class="nav-item nav-link sub-nav-item" style="color:#009491;" href="#"><img src="~/images/flags.png" style="height:20px;width:20px;" /> National curriculum</a>
+        <a class="nav-item nav-link sub-nav-item" style="color:#009491;" href="#"><img src="~/images/award.png" style="height:20px;width:20px;" /> Awards</a>*@
+    </nav>
+</div>
+<div class="container-fluid" style="background-color:#edffff">
+    <div class="container d-flex ViewBy-Container">
+        <div class="mx-2 py-2">View by:</div>
+        <a href="/learning/index?courseid=10&subject=@ViewBag.Subject"><div class="mx-2 py-2" style="color:#38acec">Classes</div></a>
+       @* <div class="mx-2 px-2 py-2" style="background-image:linear-gradient(to bottom, #edffff,#c2ffd6);color:#000;border-bottom:2px solid #0000ff;">Topics</div>*@
+    </div>
+</div>
+<div class="container-fluid" style="background-image:linear-gradient(to bottom, #fff,#a6f3ff);min-height: calc(100vh - 267.5px);">
+    <div class="container lkg-container topics_mainDiv">
+        <h2 class="mb-4 pt-4" style="color:#10a0b6;"><b>@ViewBag.Topic</b></h2>
+        <p style="color:#919191;">
+            Here is a list of all of the skills that cover @ViewBag.Topic! These skills are organized by grade,
+            and you can move your mouse over any skill name to preview the skill. To start practicing,
+            just click on any link. IntelXL will track your score, and the questions will automatically
+            increase in difficulty as you improve!123
+        </p>
+        <div class="row py-3 topics_with_subtopics">
+            @foreach (var item in Model)
+            {
+                var i = 1;
+                if (item.SubTopicMasters!=null && item.SubTopicMasters.Count > 0)
+                {
+                    <div class="col-sm-4 shapes">
+                        <h6 class="py-2 class_click" style="color:#4ea601; cursor:pointer">@item.ClassMaster?.ClassName</h6>
+                        <input type="hidden" value="@item.ClassMaster?.ClassId" />
+                        @foreach (var subTopic in item.SubTopicMasters)
+                        {
+                            <p class="sub-top-content"><b>@i </b> <a href="/learning/practice?subtopicid=@subTopic.SubTopicId" style="padding-left:8px;word-break:break-word;">@subTopic.SubTopic</a></p>
+                            i += 1;
+                        }
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = ViewBag.Data[1];
+}
+@*<link href="~/css/style.css" rel="stylesheet" />*@
+
+<div class="main-container">
+    <partial name="_LearningLoading" />
+</div>
+
+@section Scripts{
+    <script>
+        let course_id = "@ViewBag.Data[0]";       
+        let sub_name = "@ViewBag.Data[1]";
+        //var courseId = 10;
+        $.ajax({
+            url: "/Learning/GetSubjects",
+            type: "Get",
+            data: { courseId: course_id, subject: sub_name, viewBy: "class" },
+            success: function (result) {               
+                $("main").html(result);
+            },
+            error: function (xhr, status, error) {
+                console.error("Error: " + error);
+            }
+        });
+
+        $(document).on('click', '.subject-navigator', function (event) {
+            event.preventDefault();
+            //Data to pass to the controller.
+          
+            var subject = $(this).data("name");
+            console.log("subject when click: " + subject);
+            var viewBy = "class";
+
+            // Create the URL with query parameters.
+            var url = '/Learning/Index?courseId=' + course_id + '&subject=' + subject + '&viewBy=' + viewBy;
+
+            // Navigate to the new URL.
+            window.location.href = url;
+        });
+
+        //Topic click
+        $(document).on('click', '.topic_click', function (event) {
+          
+            event.preventDefault();          
+            // Create the URL with query parameters.
+            var url = '/Learning/Topics?courseId=' + course_id + '&subjectName=' + encodeURIComponent(sub_name);
+
+            window.location.href = url;
+        });
+
+        function allSkills(classid) {
+            window.location.href = '/Learning/SubTopicsByClass?courseId=' + course_id + '&classId=' + classid + '&subName=' + encodeURIComponent(sub_name);
+        }
+    </script>
+}

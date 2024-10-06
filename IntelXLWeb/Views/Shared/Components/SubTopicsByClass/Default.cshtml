@@ -1,0 +1,319 @@
+﻿@model IntelXLWeb.ViewModels.ClassBasedSubTopicsViewModel;
+<link href="https://fonts.googleapis.com/css2?family=Schoolbell&display=swap" rel="stylesheet">
+@*<link href="~/css/style.css" rel="stylesheet" />*@
+@{
+    string[] img = { "/images/maths.png", "/images/english-language.png", "/images/test-tube.png", "/images/social.png" };
+    int Icons = 0;
+    int sub_id = 0;
+}
+<style>
+    .previous-year {
+        border: 1px solid #52B701;
+    }
+
+    .probable-year {
+        border: 1px solid #52B701;
+    }
+
+    .PreviusText, .expectText {
+        font-size: 14px;
+        color: #676767;
+    }
+
+    .joinImage {
+        height: 15vh;
+        width: 20vw;
+    }
+
+    /*.joinImage {
+                animation: zoomInOut 1s infinite alternate;  Adjust duration as needed
+            }*/
+
+    .QusPracticeImage {
+        height: 35vh;
+        width: 20vw;
+        object-fit: contain;
+    }
+
+    .yesbtn {
+        background-color: #52B701;
+        color: #fff;
+    }
+
+    .nobtn {
+        border: 1px solid #52B701;
+    }
+
+    @@keyframes zoomInOut {
+        0% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.1); /* Zoom in */
+        }
+
+        100% {
+            transform: scale(1); /* Back to normal */
+        }
+    }
+
+    @@media (max-width:991px) {
+        .subtopic-content {
+            flex-wrap: wrap;
+        }
+    }
+
+    @@media (max-width:430px) {
+        .year-dropdown {
+            flex-wrap: wrap;
+        }
+    }
+
+    .subtopic-container {
+        background-image: linear-gradient(to bottom, #fff,#a6f3ff);
+        min-height: calc(100vh - 258.5px);
+    }
+
+    @@media (max-width:997px) {
+        .subtopic-container {
+            min-height: calc(100vh - 246.5px);
+        }
+    }
+
+    @@media (max-width:767px) {
+        .subtopic-container {
+            min-height: calc(100vh - 168.5px);
+        }
+    }
+
+    .fa-lock {
+        cursor: pointer;
+    }
+</style>
+<div class="container">
+    <nav class="nav nav-pills nav-fill">
+        @if (Model.Subjects != null)
+        {
+            @foreach (var subject in Model.Subjects)
+            {
+                if (subject?.SubjectName?.TrimEnd() == Model.SubjectName?.TrimEnd())
+                {
+                    sub_id = subject.SubjectId;
+                }
+                var border = subject?.SubjectName?.TrimEnd() == Model.SubjectName?.TrimEnd() ? "border-bottom:2px solid #009491;border-radius:0px;" : "";
+                <a class="nav-item nav-link sub-nav-item subject-navigator" href="" style="@border" data-name="@subject.SubjectName">@subject.SubjectName</a>
+                Icons = (Icons + 1) % img.Length;
+            }
+        }
+        @* <a class="nav-item nav-link sub-nav-item" style="color:#009491;" href="#"><img src="~/images/flags.png" style="height:20px;width:20px;" /> National curriculum</a>
+        <a class="nav-item nav-link sub-nav-item" style="color:#009491;" href="#"><img src="~/images/award.png" style="height:20px;width:20px;" /> Awards</a>*@
+    </nav>
+</div>
+<div class="container-fluid" style="background-color:#edffff">
+    <div class="container d-flex ViewBy-Container">
+        <div class="mx-2 py-2">View by:</div>
+        <div class="mx-2 px-2 py-2 active" style="background-image:linear-gradient(to bottom, #edffff,#c2ffd6);color:#000;border-bottom:2px solid #0000ff;">Classes</div>
+        @* <a href="#" class="nav_topic"><div class="mx-2 py-2" style="color:#38acec">Topics</div></a>*@
+    </div>
+</div>
+<div class="container-fluid subtopic-container">
+    <div class="container lkg-container topics_mainDiv">
+        <div class="d-flex subtopic-content justify-content-between py-4">
+            <div>
+                <h2 style="color:#10a0b6;"><b>@Model.ClassName @Model.SubjectName</b></h2>
+
+                <p style="color:#919191;" class="me-3">
+                    Here is a list of all of the @Model.SubjectName skills students learn in @Model.ClassName!
+                    These skills are organised into categories, and you can move your
+                    mouse over any skill name to preview the skill. To start practising,
+                    just click on any link. IntelXL will track your score, and the questions
+                    will automatically increase in difficulty as you improve!
+                </p>
+            </div>
+
+            @if (User?.Identity?.IsAuthenticated == true)
+            {
+                if (Model.HasSubscription)
+                {
+                    <div class="d-flex year-dropdown align-items-center" style="white-space: nowrap">
+                        <div class="me-3">
+                            <label for="previous_year" class="me-1 my-2 PreviusText">Practice previous year question</label>
+                            <select class="previous-year form-select" asp-items="ViewBag.Years">
+                                <option selected disabled value="">Select Year...</option>
+                            </select>
+                        </div>
+                        @* @if (Model.IsEnabled)
+                {*@
+                        <div>
+                            <label for="probable_year" class="me-1 my-2 expectText">Practice expected questions on</label>
+                            <select class="probable-year form-select">
+                                <option class="" selected disabled value="">Select Year...</option>
+                                <option class="" value="@DateTime.Now.Year">@DateTime.Now.Year</option>
+                            </select>
+                        </div>
+                        @*}*@
+                    </div>
+                }
+                else
+                {
+                    <div class="d-flex year-dropdown align-items-center" style="white-space: nowrap">
+                        <div class="me-3 disabled-year">
+                            <label for="previous_year" class="me-1 my-2 PreviusText">Practice previous year question</label>
+                            <div class="d-flex align-items-center">
+                                <select class="previous-year disabled-year form-select" disabled>
+                                    <option selected disabled value="">Select Year...</option>
+                                </select>
+                                <span class="ms-2" style="color: #8c8c8c;">
+                                    <i class="fa-solid fa-lock"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="disabled-year">
+                            <label for="probable_year" class="me-1 my-2 expectText">Practice expected questions on</label>
+                            <div class="d-flex align-items-center">
+                                <select class="probable-year form-select" disabled>
+                                    <option class="" selected disabled value="">Select Year...</option>
+                                </select>
+                                <span class="ms-2" style="color: #8c8c8c;">
+                                    <i class="fa-solid fa-lock"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="d-flex year-dropdown align-items-center" style="white-space: nowrap">
+                    <div class="me-3 disabled-year">
+                        <label for="previous_year" class="me-1 my-2 PreviusText">Practice previous year question</label>
+                        <div class="d-flex align-items-center">
+                            <select class="previous-year disabled-year form-select" disabled>
+                                <option selected disabled value="">Select Year...</option>
+                            </select>
+                            <span class="ms-2" style="color: #8c8c8c;">
+                                <i class="fa-solid fa-lock"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="disabled-year">
+                        <label for="probable_year" class="me-1 my-2 expectText">Practice expected questions on</label>
+                        <div class="d-flex align-items-center">
+                            <select class="probable-year  form-select" disabled>
+                                <option class="" selected disabled value="">Select Year...</option>
+                            </select>
+                            <span class="ms-2" style="color: #8c8c8c;">
+                                <i class="fa-solid fa-lock"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="row py-3 topics_with_subtopics">
+            @if (Model.Topics != null && Model.Topics.Count > 0)
+            {
+                var topicIndex1 = 'A';
+                var topicIndex2 = ' ';
+                int i = 1;
+                foreach (var data in Model.Topics)
+                {
+                    var innerIndex = 1;
+                    <div class="col-lg-4 col-sm-6 mt-3 shapes">
+                        <h6 class="py-2" style="color:#4ea601"><span>@topicIndex2@topicIndex1. </span>@data.Topic</h6>
+                        @foreach (var item in data.SubTopicMasters.OrderBy(c => c.Order))
+                        {
+                            @if (Model.AllowIndex + 1 <= i && !Model.HasSubscription)
+                            {
+                                <p class="sub-top-content">
+                                    <b>@innerIndex.  </b><a class="sub-top-name not-subscribed" href="#" style="padding-left:8px;word-break:break-word;">
+                                        @item.SubTopic  <span class="ms-2" style="color: #8c8c8c;">
+                                            <i class="fa-solid fa-lock"></i>
+                                        </span>
+                                    </a>
+                                </p>
+                            }
+                            else
+                            {
+                                <p class="sub-top-content">
+                                    <b>@innerIndex.  </b><a class="sub-top-name" href="/Learning/Practice?subtopicid=@item.SubTopicId&classId=@Model.ClassId" style="padding-left:8px;word-break:break-word;"> @item.SubTopic</a>
+                                </p>
+                            }
+                            innerIndex++;
+                            i++;
+                        }
+                    </div>
+                    if (topicIndex1 == 'Z')
+                    {
+                        topicIndex1 = 'A';
+                        if (topicIndex2 == ' ')
+                            topicIndex2 = 'A';
+                        else
+                            topicIndex2++;
+                    }
+                    else
+                        topicIndex1++;
+                }
+            }
+            else
+            {
+                <div class="justify-content-center d-flex" style="color:#b7b7b7;"><h4 class="mb-3 mx-2 ">No data found</h4></div>
+
+            }
+        </div>
+    </div>
+
+</div>
+
+<div class="modal" id="previous-practice-modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content practice-content overflow-hidden">
+            <div class="modal-header p-3" style="border-bottom:none;">
+                <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="practiceContainer d-flex justify-content-center">
+                    <img src="~/images/practicImage.png" class="QusPracticeImage" />
+                </div>
+                <p class="ps-4 m-0 fw-800">Are you ready to practice previous year questions in this subject</p>
+            </div>
+            <div class="btn ms-auto p-2 m-4">
+                <button type="button" class="btn px-5 me-2 nobtn" data-bs-dismiss="modal">No</button>
+                <button type="button" id="practice-ques" class="btn px-5 yesbtn">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="probable-practice-modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content practice-content overflow-hidden">
+            <div class="modal-header p-3" style="border-bottom:none;">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="practiceContainer d-flex justify-content-center">
+                    <img src="~/images/calendar.gif" class="QusPracticeImage" />
+                </div>
+                <p class="py-3 m-0 fw-800 ps-2">This option will be available before<span style="color:#52B701;font-weight:600"> 3 days</span>  of exam</p>
+            </div>
+            <div class="btn ms-auto p-2 me-4 mb-4">
+                <button type="button" class="btn px-5 me-2 nobtn" data-bs-dismiss="modal">Cancel</button>
+                @*   <button type="button" id="practice-ques" class="btn px-5 yesbtn">Continue</button> *@
+            </div>
+        </div>
+    </div>
+</div>
+<partial name="_SubscriptionAlertModal" />
+
+<script>
+    let sub_id = @sub_id;
+    $(document).on('click', '.not-subscribed', function (event) {
+        event.preventDefault();
+        $("#subscribeAlertModel").modal("show");
+    });
+    $(document).on('click', '.disabled-year', function (event) {
+        $("#subscribeAlertModel").modal("show");
+    });
+</script>

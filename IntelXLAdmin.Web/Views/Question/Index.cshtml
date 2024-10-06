@@ -1,0 +1,222 @@
+﻿@model IntelXLDataAccess.Models.CourseMaster;
+@{
+    ViewData["Title"] = "Questions";
+}
+
+@section Styles{
+    <link href="~/css/style.css" rel="stylesheet" />
+}
+
+<div class="container-fluid">
+    <form>
+        <div class="d-flex justify-content-center container-wrap">
+            <div class="main-container">
+                <div class="me-auto mt-3">
+                    <a href="#" style="color: #207bff; text-decoration: none;" onclick="goBackWithSelectedOptions()"><i class="fa-solid fa-arrow-left-long me-2"></i>Back</a>
+                </div>
+                <h1 class="main-heading mt-2 text-center text-secondary">Choose the curriculum</h1>
+                <div class="p-2 warning-msg text-center"></div>
+                <div class="d-flex p-3" id="ix_language">
+
+                    <div class="d-flex mx-1 label"> <label class="form-label text-secondary"><b>Language:</b></label></div>
+
+                    <div class="ms-5 me-2">
+                        <select class="form-select text-secondary ix_language" required asp-items="ViewBag.languages">
+                            <option selected disabled value="">Select language...</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button type="button" class="add-btn px-2 mx-1 ix_addlanguage btn"><i class="fa-solid fa-plus fa-sm"></i>Add</button>
+                    </div>
+                    <div class="">
+                        <button type="button" class="ix_editlanguage px-2 mx-1 btn"><i class="fa-solid fa-pencil mx-1"></i>Edit</button>
+                    </div>
+                </div>
+                <div class="d-flex p-3" id="selectRow">
+
+                    <div class="d-flex mx-1 label"> <label class="form-label text-secondary"><b>Course:</b></label></div>
+
+                    <div class="ms-5 me-2">
+                        <select class="form-select text-secondary" id="courses" required data-target="classes" disabled>
+                            <option selected disabled value="">Select here...</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button type="button" class="add-btn px-2 mx-1 otherCourse btn" disabled><i class="fa-solid fa-plus fa-sm"></i>Add</button>
+                    </div>
+                    <div class="">
+                        <button type="button" class="getAll px-2 mx-1 btn" data-target="Course" disabled><i class="fa-solid fa-pencil mx-1"></i>Edit</button>
+                    </div>
+                </div>
+
+                <div class="d-flex p-3" id="selectRow">
+
+                    <div class="d-flex mx-1 label"> <label for="courses" class="form-label text-secondary"><b>Class:</b></label></div>
+
+                    <div class="ms-5 me-2">
+                        <select class="form-select text-secondary" id="classes" data-target="subjects" required disabled>
+                            <option selected disabled value="">Select here...</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button type="button" class="add-btn otherClass px-2 mx-1 btn" disabled><i class="fa-solid fa-plus fa-sm"></i>Add</button>
+                    </div>
+                    <div class="">
+                        <button type="button" class="getAll px-2 mx-1 btn" data-target="Classes" disabled><i class="fa-solid fa-pencil mx-1"></i>Edit</button>
+                    </div>
+
+                </div>
+
+                <div class="d-flex p-3" id="selectRow">
+
+                    <div class="d-flex mx-1 label"> <label class="form-label text-secondary"><b>Subject:</b></label></div>
+
+                    <div class="ms-5 me-2">
+                        <select class="form-select text-secondary" id="subjects" data-target="units" required disabled>
+                            <option selected disabled value="">Select here...</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button type="button" class="add-btn otherSubject px-2 mx-1 btn" disabled><i class="fa-solid fa-plus fa-sm"></i>Add</button>
+                    </div>
+                    <div class="">
+                        <button type="button" class="getAll px-2 mx-1 btn" data-target="Subjects" disabled><i class="fa-solid fa-pencil mx-1"></i>Edit</button>
+                    </div>
+
+                </div>
+
+                <div class="d-flex p-3" id="selectRow">
+
+                    <div class="d-flex mx-1 label"><label class="form-label text-secondary"><b>Unit:</b></label></div>
+
+                    <div class="ms-5 me-2">
+                        <select class="form-select text-secondary" id="units" data-target="topics" required disabled>
+                            <option selected disabled value="">Select here...</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button type="button" class="add-btn otherUnit px-2 mx-1 btn" disabled><i class="fa-solid fa-plus fa-sm"></i>Add</button>
+                    </div>
+                    <div class="">
+                        <button type="button" class="getAll px-2 mx-1 btn" data-target="Units" disabled><i class="fa-solid fa-pencil mx-1"></i>Edit</button>
+                    </div>
+                </div>
+
+                <div class="d-flex p-3" id="selectRow">
+
+                    <div class="d-flex mx-1 label"> <label class="form-label text-secondary"><b>Topic:</b></label></div>
+
+                    <div class="ms-5 me-2">
+                        <select class="form-select text-secondary" id="topics" data-target="subtopics" required disabled>
+                            <option selected disabled value="">Select here...</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button type="button" class="add-btn otherTopic px-2 mx-1 btn" disabled><i class="fa-solid fa-plus fa-sm"></i>Add</button>
+                    </div>
+                    <div class="">
+                        <button type="button" class="getAll px-2 mx-1 btn" data-target="Topics" disabled><i class="fa-solid fa-pencil mx-1"></i>Edit</button>
+                    </div>
+                </div>
+
+                <div class="d-flex p-3" id="selectRow">
+
+                    <div class="d-flex mx-1 label"><label for="subtopic" class="form-label text-secondary"><b>Subtopic:</b></label></div>
+
+                    <div class="ms-5 me-2">
+                        <select class="form-select text-secondary" id="subtopics" required disabled>
+                            <option selected disabled value="">Select here...</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button type="button" class="add-btn otherSubtopic px-2 mx-1 btn" disabled><i class="fa-solid fa-plus fa-sm"></i>Add</button>
+                    </div>                   
+                    <div class="">
+                        <button type="button" class="getAll px-2 mx-1 btn" data-target="Subtopics" disabled><i class="fa-solid fa-pencil mx-1"></i>Edit</button>
+                    </div>
+
+                </div>
+                <div class="d-flex  justify-content-center my-5">
+                    <button type="button" class="btn all-btn mx-3" disabled>All questions</button>
+                    <button type="button" class="btn add-qus" disabled>Add question <i class="fa-solid fa-angles-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<!-- Bootstrap Modal -->
+<div class="modal" id="myModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content " style="width:700px; height: 400px;">
+            <div class="modal-body add-new-body p-0" style="display: flex;">
+                <div class="" style="width: 250px;">
+                    <img src="/images/cours-img.jpg" style="width: 100%; height: 100%; border-radius: 0.3rem 0 0 0.3rem;" alt="Image Description" />
+                </div>
+                <div class="add-new-container p-3" style="width: 450px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal" id="EditModal">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content edit-container">
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/js/questions.js"></script>
+    <script>
+        //let currentId = @Html.Raw(ViewBag.Id);
+        //loaddata();
+        $(document).ready(function () {
+            $(".add-qus,.all-btn").on('click', function (event) {               
+                let sub_topic_id = $("#subtopics").val();
+                storeBreadcrumb()
+                let url = '/Question/AddQuestion?id='
+                if ($(this).hasClass("all-btn")) {
+                    url = '/Question/AllQuestions?id='
+                }
+                if (sub_topic_id){
+                    window.location.href = url + sub_topic_id;
+                }
+                else
+                {
+                    $(".warning-msg").text("Select any SubTopic!");
+                }
+            });            
+        });
+        function goBackWithSelectedOptions() {
+            window.location.href = "/Home/Index";
+        }       
+        function storeBreadcrumb(){
+            localStorage.setItem('Course', $('#courses option:selected').text());
+            localStorage.setItem('Class', $('#classes option:selected').text());
+            localStorage.setItem('Subject', $('#subjects option:selected').text());
+            localStorage.setItem('Unit', $('#units option:selected').text());
+            localStorage.setItem('Topic', $('#topics option:selected').text());
+            localStorage.setItem('Subtopic', $('#subtopics option:selected').text());
+        }
+        //function loaddata(){
+        //    if (currentId != 0) {
+        //        $.ajax({
+        //            type: "POST",
+        //            url: "/SubTopics/GetTopicbySubtopic",
+        //            data: { id: currentId },
+        //            success: function (data) {
+        //                console.log(data)
+        //            },
+        //            error: function (error) {
+        //                console.error("Error: " + error);
+        //            }
+        //        });
+        //    }
+        //}
+    </script>
+}

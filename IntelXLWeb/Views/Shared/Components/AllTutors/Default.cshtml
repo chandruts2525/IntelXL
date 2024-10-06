@@ -1,0 +1,112 @@
+﻿@model List<IntelXLDataAccess.Models.AppUser>;
+@{
+    var bookbtnClass = "no_auth_book";
+    if (User.Identity.IsAuthenticated)
+    {
+        bookbtnClass = "auth_book";
+    }
+}
+<style>
+    .ix-bookBtn {
+        border: 1.5px solid #03a776;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        .ix-bookBtn:hover {
+            background-color: #03a776;
+        }
+
+            .ix-bookBtn:hover button {
+                color: #fff;
+            }
+
+    .ix-sendmsg {
+        border: 1.5px solid #dcdce5;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        .ix-sendmsg:hover {
+            background-color: #1211170f;
+        }
+
+    .ix-bio {
+        color: #4d4c5c;
+    }
+
+    .ix-tutor-wrap, .ix-tutor-anime {
+        border: 1px solid #c5c5c5;
+        border-radius: 5px;
+    }
+
+        .ix-tutor-wrap:hover {
+            border: 1px solid #03a776;
+        }
+
+    #heartIcon {
+        cursor: pointer;
+    }
+
+        #heartIcon.clicked {
+            color: #03a776; /* Color of the heart icon when clicked */
+        }
+
+</style>
+
+
+<div class="container" style="max-width:1024px;">
+    @if (Model != null && Model.Count >0)
+    {
+        @foreach (var item in Model)
+        {
+            <div class="row p-4 mb-3 ix-tutor-wrap">
+                <div class="col-md-3">
+                   @if (!string.IsNullOrEmpty(item.TutorDetails?.ProfileUrl))
+                    {
+                        <div class="border border-1">
+                            <img src="@item.TutorDetails?.ProfileUrl" alt="Profile Picture" style="width:100%;height:150px;border-radius: 5px;">
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+                            <img src="~/images/user.png" alt="Profile Picture" style="width:150px;height:150px;border-radius: 5px;">
+                        </div>
+                   }
+                </div>
+                <div class="col-md-5">
+                    <div class="profile-details">
+                        <div><p><strong> @item.FirstName @item.LastName</strong></p></div>
+                        <div class="ix-bio"><span class="me-2"><i class="fa-solid fa-graduation-cap"></i></span><span> @item.TutorDetails?.LanguagesSpeak</span></div>
+                        <div class="ix-bio"><span class="me-2"><i class="fa-regular fa-user"></i></span><span> 24 active students</span><span> &#x2022 33 lessions </span></div>
+                        <div class="ix-bio"><span class="me-2"><i class="fa-solid fa-language"></i></span><span> Speaks English</span></div>
+                        @* <p class="text-muted">@item.Email</p>*@
+                        <p>@item.TutorDetails?.ShortBio</p>
+                    </div>
+                </div>
+                <div class="col-md-4 ix-tutor">
+                    <div class="row mb-5">
+                        <div class="col-4"><span><i class="fa-solid fa-star"></i> 4.6</span></div>
+                        <div class="col-4"><span><i class="fa-solid fa-indian-rupee-sign"></i> @item.TutorDetails?.Pricing</span></div>
+                        <div class="col-4" id="heartContainer">
+                            <span class="heartIcon" id="heartIcon"><i class="far fa-heart"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center align-items-center ix-bookBtn mb-3 @bookbtnClass"><button type="button" class="btn @bookbtnClass" style="font-weight:600">Book a trial</button></div>
+                    <div class="d-flex justify-content-center align-items-center ix-sendmsg @bookbtnClass" id="chat-open">
+                        <button type="button" class="btn @bookbtnClass" style="font-weight:600">Send message</button>
+                    </div>
+                    <input type="hidden" id="hdnTutorName" value="@item.FirstName">
+                    <input type="hidden" id="hdnTutorId" value="@item.AppUserId">
+                    <input type="hidden" id="hdnTimeZone" value="@item.TutorDetails?.TimeZone">
+                </div>
+            </div>           
+        }       
+    }
+    else
+    {
+        <div class="text-muted d-flex justify-content-center">No tutors available</div>
+    }
+</div>

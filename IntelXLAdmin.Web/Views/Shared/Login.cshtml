@@ -1,0 +1,105 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<style>
+    .login-form:focus {
+        box-shadow: none;
+    }
+
+    .add-account-link {
+        color: #0a58ca;
+        text-decoration:none;
+    }
+</style>
+<div class="container-fluid login-bg p-0">
+    <div class="login-box m-2 p-4">        
+        <h2 class="text-center">Login</h2>
+        <div class="login">
+            <form id="loginForm" asp-controller="Users" asp-action="Login" method="post">
+                <div class="error-msg text-danger"></div>
+                <div class="form-group my-2">
+                    <label class="my-1">Email</label>
+                    <input type="email" id="email" maxlength="25" class="form-control login-form" placeholder="Enter an email" name="EmailId">
+                </div>
+                <div class="form-group my-4">
+                    <label class="my-1">Password</label>
+                    <input type="password" id="password" maxlength="20" class="form-control login-form" placeholder="Enter a password" name="Password">
+                </div>
+                <div class="form-check my-2">
+                    <input type="checkbox" class="form-check-inputab-content login-form" id="remember">
+                    <label class="form-check-label" for="remember">Remember</label>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button id="loginBtn" type="button" class="btn my-3 px-5 sub-btn">Login</button>
+                    <button id="loging" type="button" class="btn my-3 px-5 sub-btn" style="display:none;cursor:no-drop">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Logging in...
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#loginBtn').on("click", function () {
+                let isValid=true;
+                $("input").each(function () {
+                    if (!$(this).val().trim()) {
+                        $(this).addClass("is-invalid");
+                        isValid=false;
+                    }
+                    else{
+                        $(this).removeClass("is-invalid");                        
+                    }
+                });
+                if (isValid){
+                    $(".error-msg").text("");
+                    let id = $("#email").val().trim().toLowerCase();
+                    let password = $("#password").val();
+                    validateUser(id, password)
+                    //$("#loginForm").submit();
+                }
+                else{
+                    $(".error-msg").text("Enter an email and password")
+                }               
+            });
+
+            function validateUser(emailId, password) {
+                $("#loginBtn").hide();
+                $("#loging").show();
+                let isPersist = $("#remember").is(':checked');                
+                $.ajax({
+                    url: "/Users/ValidateUser?userId=" + emailId + "&password=" + password,
+                    type: "POST",
+                    success: function (response) {
+                        if (!response.userName) {
+                            $('.error-msg').text("Email id or password is invalid!"); 
+                            $("#loginBtn").show();
+                            $("#loging").hide();
+                        }
+                        else if (response.appRole.roleName.toLowerCase()=="user") {                           
+                            $('.error-msg').text("Sorry, only administrators can access this site");
+                            $("#loginBtn").show();
+                            $("#loging").hide();
+                        }
+                        else {
+                            window.location.href = "/Users/SignIn?emailId=" + emailId + "&password=" + password + "&isPersist=" + isPersist;
+                        }
+                        
+                      
+                    }, error: function (xhr, status, error) {
+                        alert("Unable to login"); 
+                        $("#loginBtn").show();
+                        $("#loging").hide();
+                        console.error("Error: " + error);
+                    }
+                });
+            }
+           // $(".join-btn").remove();
+        });
+       
+    </script>
+}

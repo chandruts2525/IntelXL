@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "Subject";
+}
+<link href="~/css/style.css" rel="stylesheet" />
+
+<div class="container">
+    <nav class="nav nav-pills nav-fill my-2">
+    </nav>
+</div>
+<div class="container-fluid py-1" style="background-color:#e6e6e6">
+    <div class="container d-flex my-2">
+        <div class="mx-2">View by:</div>     
+        <div class="mx-2 px-2" style="background-color:#0067bb;color:#fff;border-radius:5px;">Classes</div>
+        <div class="mx-2 px-2 topic_navigator"><a href="/Learning/Topics">Topics</a></div>
+    </div>
+</div>
+<div class="container-fluid topics p-0 d-flex flex-column align-items-center justify-content-center">
+    <img src="~/images/topics-banner.png" />
+    <div class="topics-bancontent text-center p-4 shadow" style="color:#000;background-color:#fff;opacity:0.7;border-radius:5px;">
+        <h3>IXL Maths</h3>
+        <p>
+            On IXL, maths is more than just numbers. With unlimited questions,
+            engaging item types, and real-world scenarios, IXL helps learners
+            experience maths at its most mesmerising!
+        </p>
+    </div>
+</div>
+
+<div class="container-fluid topics-content" style="background-color:#d6fff2;">
+    @for (var i = 0; i < 4; i++)
+    {
+        <div class="container d-flex justify-content-center px-5 ">
+            <div class="card-body lkgcard-anime my-3" style="border:1px solid #c2c2c2; border-radius: 5px;width:50vw;height:140px;">
+                <div class="ps-5 ">
+                    <div class="" style="display:flex;justify-content:space-between;position:relative">
+                        <div class="sub1-anime animated-background  w-25" style="height:40px;border-radius: 5px;"></div>
+                        <div class="sub1-anime animated-background w-25" style="height:40px;width:100px;border-radius: 5px;position:absolute;z-index:-1;left:75%;top:70%;"></div>
+                    </div>
+                    <div class="py-2">
+                        <div class="sub2-anime animated-background  w-50 my-3" style="height:10px;border-radius: 5px;"></div>
+                        <div class="sub2-anime animated-background  w-25" style="height:10px;border-radius: 5px;"></div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    }
+</div>
+
+@section Scripts{
+    <script>
+        $.ajax({
+            url: "/Learning/GetSubjects",
+            type: "Get",
+            data: { courseId: 1, subject: "Geography", viewBy: "class" },
+            success: function (result) {               
+                let $result = $(result);               
+                let skills = $result.find(".grade-node").html();
+                let subjects = $result.find(".sub-nav").html();                
+                $(".topics-content").html(skills);
+                $(".nav-pills.nav-fill").html(subjects);
+            },
+            error: function (xhr, status, error) {
+                console.error("Error: " + error);
+            }
+        });
+
+    </script>
+}

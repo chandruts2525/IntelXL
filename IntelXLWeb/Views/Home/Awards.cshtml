@@ -1,0 +1,165 @@
+﻿@{
+    ViewData["Title"] = "Awards";
+}
+@section Styles{
+    <style>
+        .award-container {
+            min-height: calc(100vh - 183.5px);
+        }
+
+        .award-ctnt{
+            font-size:20px;
+        }
+
+        .award-hdr{
+            color: #52b700;
+        }
+        .award-hdr1{
+            color: #0a58ca;
+        }
+
+        .for-afterlogin{
+            border:30px solid #0dcaf0;
+        }
+
+        .award-row {
+            width: 100%;
+            float: left;
+            margin-bottom: 30px;
+            padding: 0 15px;
+        }
+
+        .label-span, .profile-sub {
+            width: 150px;
+            display: inline-block;
+            color: #0068ff;
+            font-weight: 600;
+        }
+
+        .award-detail {
+            flex-direction: column;
+        }
+
+        .detail-hdr h4{
+            font-size:18px;
+            font-weight:700;
+            color: #198754;
+        }
+
+        .detail-hdr {
+            background-color: #c3fdd8;
+        }
+        .value-cnt{
+            float:left;
+            color: #52b700;
+        }
+        .ix-award{
+            background-image: linear-gradient(to bottom,#fff 20%,#c3fdd8 80%);
+        }
+    </style>
+}
+<div class="container award-container">
+    <div class="py-3"><h1 class="text-center award-hdr">IntelXL Awards</h1></div>
+     @if (User?.Identity?.IsAuthenticated == true)
+ {
+        <div class="for-afterlogin m-3">
+            <div class="row">
+                <div class="award-image col-md-7 p-0 d-flex justify-content-center">
+                    <img src="~/images/Award test img.jpg" class="img-fluid" alt="Award Image">
+                </div>
+                <div class="col-md-5 p-0 ix-award">
+                    <div class="detail-hdr p-2"><h4>This is what's been keeping you busy</h4></div>
+                    <div class="award-detail">
+                        <div class="award-row mt-3">
+                            <div class="d-flex justify-content-between">
+                                <div class="label-span col-8">You've earned</div>
+                                <div class="value-cnt col-4"><div>1 medal</div></div>
+                            </div>
+                        </div>
+                        <div class="award-row">
+                            <div class="d-flex justify-content-between">
+                                <div class="label-span col-8">You've answered </div>
+                                <div class="value-cnt col-4"><div>19 questions</div></div>
+                            </div>
+                        </div>
+                        <div class="award-row">
+                            <div class="d-flex justify-content-between">
+                                <div class="label-span col-8">You've practiced for </div>
+                                <div class="value-cnt col-4"><div>2 min</div></div>
+                            </div>
+                        </div>
+                        <div class="award-row">
+                            <div class="d-flex justify-content-between">
+                                <div class="label-span col-8">You've mastered </div>
+                                <div class="value-cnt col-4"><div>1 skill</div></div>
+                            </div>
+                        </div>
+                        <div class="award-row">
+                            <div class="d-flex justify-content-between">
+                                <div class="label-span col-8">You've revealed </div>
+                                <div class="value-cnt col-4"><div>2 prize</div></div>
+                            </div>
+                        </div>
+                        <div class="award-row">
+                            <div class="d-flex justify-content-between">
+                                <div class="label-span col-8">Till your next win </div>
+                                <div class="value-cnt col-4">
+                                    <div>4 min</div>
+                                    <div>100 qns</div>
+                                    <div>2 skills</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+  }
+  else
+  {
+        <div class="m-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="award-image"><img src="~/images/award-img-80.jpg" class="img-fluid" alt="Award Image" /></div>
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <h3 class="text-center award-hdr">
+                            Show off your achievements
+                        </h3>
+                    </div>
+                    <div>
+                        <p class="award-ctnt">
+                            Reaching a major learning milestone deserves an equally spectacular celebration.
+                            Kids will earn certificates to commemorate their achievements and triumphs on IntelXL.
+                            Print them out and display them proudly on the refrigerator, bulletin board, or bedroom wall!
+                            As students work to win their next certificate, they're sure to gain new skills and confidence along the way.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-6 order-md-1">
+                    <div>
+                        <h3 class="text-center award-hdr1">
+                            Uncover hidden treasures
+                        </h3>
+                    </div>
+                    <div>
+                        <p class="award-ctnt">
+                            One of the ways IntelXL makes learning fun is through hundreds of virtual awards that reflect kids’
+                            favorite animals, foods, places, and hobbies. On IntelXL Math, learners embark on one big
+                            treasure hunt to uncover hidden prizes, while on IntelXL Language Arts,
+                            kids try to complete their collections of stickers, stamps, balloon animals, and more!
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 order-md-2">
+                    <div class="award-image"><img src="~/images/award-detail.png" class="img-fluid" alt="Award Detail Image" /></div>
+                </div>
+            </div>
+        </div>
+
+  }
+</div>

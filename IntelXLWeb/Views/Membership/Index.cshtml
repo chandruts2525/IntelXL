@@ -1,0 +1,470 @@
+﻿@{
+    ViewData["Title"] = "Membership";
+}
+@{
+    var joinbtnClass = "no_auth_join";
+    if (User.Identity.IsAuthenticated)
+    {
+        joinbtnClass = "auth_join";
+    }
+}
+<style>
+    .members-section {
+        background-image: url('/images/card-banner.png');
+        object-fit: fill;
+        background-position: center center;
+        background-repeat: no-repeat;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+
+    .members-content {
+        padding: 20px;
+        padding-bottom: inherit;
+        box-sizing: border-box;
+        margin: 0 auto;
+        max-width: 1040px;
+        min-width: 320px;
+        width: 100%;
+    }
+
+    .font-weight-normal {
+        font-weight: 400;
+    }
+
+    .circle-separator {
+        display: inline-block;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: #fff;
+        margin: 0 8px 2px;
+    }
+
+    .vertical-separator {
+        width: 1px;
+        height: 11px;
+        margin: 0 12px;
+        background: #fff;
+    }
+
+    .subheader-grades, .header-section .vertical-separator {
+        display: inline-block;
+    }
+
+    .fta-card-container {
+    }
+
+        .fta-card-container .fta-card {
+        }
+
+    .fta-card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 5px 10px 0 rgba(0,0,0,.19);
+        box-sizing: border-box;
+        margin: 0 auto 30px auto;
+        max-width: 300px;
+        padding: 12px 10px;
+        width: 100%;
+        height: 317px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .fta-bg-lk {
+        background-color: transparent;
+        font-size: 0;
+        height: 100%;
+        left: 0;
+        line-height: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+
+    .fta-title {
+        font-size: 24px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .fta-icon-container {
+        height: 130px;
+        margin-bottom: 10px;
+    }
+
+    .fta-btn-container:not(.tallest-btn-container) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .fta-card .fta-btn-container {
+        flex: 1 0 auto;
+        z-index: 1;
+        width: 100%;
+    }
+
+    .fta-btn-container .cta-btn {
+        display: block;
+        height: 33px;
+        line-height: 31px;
+        max-width: 215px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .cta-btn {
+        border-radius: 5px;
+        box-sizing: border-box;
+        cursor: pointer;
+        display: inline-block;
+        font: normal 15px Verdana,sans-serif;
+        height: 33px;
+        line-height: 32px;
+        min-width: 140px;
+        padding: 0 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .cta-style-solid-crisp-green {
+        color: #fff;
+        background-color: #52b700;
+    }
+
+        .cta-style-solid-crisp-green:hover {
+            background-image: linear-gradient(to right, #3e8703,#52b700, #3e8703 );
+            color: #fff;
+        }
+
+    .cta-style-hollow-crisp-green-tall {
+        background-color: #fff;
+        color: #000;
+        border: 1px solid #52b700;
+    }
+
+    .cta-style-solid-teal {
+        color: #fff;
+        background-color: #4fd7c0;
+    }
+
+        .cta-style-solid-teal:hover {
+            color: #fff;
+            background-image: linear-gradient(to right, #3bad9a,#4fd7c0, #3bad9a );
+        }
+
+    .cta-style-border-teal {
+        background-color: #fff;
+        color: #000;
+        border: 1px solid #4fd7c0;
+    }
+
+    .cta-style-solid-blue {
+        color: #fff;
+        background-color: #00aaef;
+    }
+
+        .cta-style-solid-blue:hover {
+            color: #fff;
+            background-image: linear-gradient(to right, #068dc4,#00aaef, #068dc4 );
+        }
+
+    .cta-style-border-blue {
+        background-color: #fff;
+        color: #000;
+        border: 1px solid #00aaef;
+    }
+
+    @@media screen and (min-width: 1014px) {
+        .header-section h3 {
+            font-size: 17px;
+        }
+    }
+
+    @@media screen and (min-width: 661px) {
+        .header-section h3 {
+            margin-bottom: 20px;
+        }
+    }
+
+
+    .header-section h3 {
+        margin-bottom: 20px;
+    }
+
+    .members-content-awards {
+        text-align: center;
+        max-width: 100%;
+    }
+
+    .memb-awards-container {
+        padding: 20px;
+        box-sizing: border-box;
+        margin: 0 auto;
+        max-width: 1040px;
+        min-width: 320px;
+        width: 100%;
+    }
+
+    .codie {
+        width: 200px;
+    }
+
+    .memb-award-container {
+        display: inline-block;
+        margin: 10px;
+        padding: 5px;
+    }
+
+        .memb-award-container img {
+            width: 150px;
+            height: auto;
+        }
+
+    .empty-spacer {
+        width: 150px;
+    }
+
+    @@media (max-width: 940px) {
+        .empty-spacer {
+            width: auto;
+        }
+    }
+
+    @@media (max-width: 750px) {
+        .empty-spacer {
+            display: inline-block;
+        }
+    }
+
+    @@media (max-width: 576px) {
+        .empty-spacer {
+            width: auto;
+        }
+
+        .memb-award-container img {
+            width: 100px;
+            height: auto;
+        }
+
+        .footer-fta-section {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-fta-lk {
+            font-size: 14px;
+            margin: 10px 0;
+        }
+
+        .footer-fta-splitter {
+            display: inline-block;
+        }
+
+        .footer-fta-section .members-content-footer {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .footer-fta-lk {
+            width: 100%;
+            font-size: 16px;
+        }
+    }
+
+    .personal-quote-text {
+        font-size: 25px;
+    }
+
+    .personal-quote-author {
+        font-size: 18px;
+    }
+
+    .personal-quote-location {
+        font-size: 18px;
+    }
+
+    .members-content-quote,
+    .members-content-footer {
+        padding: 20px;
+        box-sizing: border-box;
+        margin: 0 auto;
+        max-width: 1040px;
+        min-width: 320px;
+        width: 100%;
+    }
+
+    .footer-fta-section .members-content-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .fta-lk-family {
+        color: #52b700;
+    }
+
+    .fta-lk-teacher {
+        color: #4fd7c0;
+    }
+
+    .fta-lk-admin {
+        color: #00aaef;
+    }
+
+</style>
+<section class="members-section header-section">
+    <div class="members-content">
+
+        <h2 class="d-flex justify-content-center text-white my-3">
+            IntelXL is personalized learning
+        </h2>
+
+        <div class="text-center text-white my-4">
+            <h5>
+                TNPSC<span class="circle-separator"></span>TNUSRB<span class="circle-separator"></span>UPSC<span class="circle-separator"></span> SSC<span class="circle-separator"></span><span class="subheader-grades">BANKING</span>
+            </h5>
+        </div>
+
+        <div class="fta-card-container row">
+            <div class="fta-card family-card col-md-4">
+                <h2 class="fta-title">
+                    Membership
+                </h2>
+                <div class="fta-icon-container">
+                    <img src="~/images/family-card.png" />
+                </div>
+
+
+                <div class="fta-btn-container two-btn-container">
+                    <a class="cta-btn mb-2 cta-style-solid-crisp-green @joinbtnClass" href="#">Join now</a>
+                    <a class="cta-btn cta-style-hollow-crisp-green-tall">Learn more</a>
+                </div>
+            </div>
+           @*  <div class="fta-card teacher-card col-md-4">
+                <h2 class="fta-title">
+                    Classrooms
+                </h2>
+                <div class="fta-icon-container">
+                    <img src="~/images/classroom-card.png" />
+                </div>
+                <div class="fta-btn-container three-btn-container tallest-btn-container">
+                    <a class="cta-btn cta-style-solid-teal" href="/membership/teacherstrial">Start a trial</a>
+                    <a class="cta-btn cta-style-solid-teal my-2" href="/membership/quote?from=teacher">Get a quote</a>
+                    <a class="cta-btn cta-style-border-teal">Learn more</a>
+                </div>
+            </div>
+            <div class="fta-card admin-card col-md-4">
+                <h2 class="fta-title">
+                    Schools &amp; districts
+                </h2>
+                <div class="fta-icon-container mt-2">
+                    <img src="~/images/school-card.png" />
+                </div>
+                <div class="fta-btn-container two-btn-container">
+                    <a class="cta-btn mb-2 cta-style-solid-blue">Get a quote</a>
+                    <a class="cta-btn cta-style-border-blue">Learn more</a>
+                </div>
+            </div> *@
+        </div>
+    </div>
+</section>
+<section class="membership-personal-quote bg-img-section text-white px-5 py-3" style="background-image: url('/images/qoutes-banner.png');">
+    <div class="members-content-quote">
+        <div class="personal-quote-text">
+            <span class="personal-quote-quotation-mark open"><b>“</b></span>I adore the way the awards segment presents you with recognition,
+            as it allows you to genuinely take pride in accomplishing an activity! Furthermore, I appreciate the progression of questions,
+            starting from simple ones and gradually becoming more challenging! Learning in IntelXL is enjoyable, and whenever my mom suggests 
+            some study time, I head straight to IntelXL!<span class="personal-quote-quotation-mark close"><b>”</b></span>
+        </div>
+    </div>
+</section>
+@* <section class="footer-fta-section">
+    <div class="members-content-footer d-flex justify-content-between my-3">
+        <a class="footer-fta-lk col-3 fta-lk-family" href="">
+            IntelXL for families  <span><i class="fa-solid fa-circle-chevron-right"></i></span>
+        </a>
+        <a class="footer-fta-lk col-3 fta-lk-teacher" href="">
+            IntelXL for classrooms  <span><i class="fa-solid fa-circle-chevron-right"></i></span>
+        </a>
+        <a class="footer-fta-lk col-3 fta-lk-admin" href="">
+            IntelXL for schools &amp; districts <span><i class="fa-solid fa-circle-chevron-right"></i></span>
+        </a>
+    </div>
+</section> *@
+
+@* <div class="container-fluid p-0 membershipbanner">
+    <img src="~/images/memberbanner1.png" />
+    <div class="container member-content ">
+        <h2 class="text-center mt-4 text-white">IXL is personalized learning</h2>
+        <div class="d-flex justify-content-center text-white">
+            <div>Math</div>
+            <div>English language arts</div>
+            <div>Science</div>
+            <div>Social studies</div>
+            <div>Spanish</div>
+            <div>Pre-K–12</div>
+        </div>
+        <div class="row my-3">
+            <div class="col-sm-4">
+                <div class="card-body shadow-lg w-75" style="background-color:#fff;border-radius:8px;">
+                    <div class="">
+                        <h5 class="card-title text-center" style="color:#52b700;font-size:25px;">Families</h5>
+                    </div>
+                    <div class="family-image">
+                        <img class="text-center" src="~/images/family.png" />
+                    </div>
+                    <a href="/Home/joinnow"><div class="text-center text-white p-1 my-2 joinnow-btn" style="background-color:#52b700;border-radius:5px;">Join now</div></a>
+                    <div class="text-center p-1" style="border:1px solid #52b700;border-radius:5px;">Learn more</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card-body shadow-lg w-75" style="background-color:#fff;border-radius:8px;">
+                    <div class="">
+                        <h5 class="card-title text-center" style="color:#4fd7c0;font-size:25px;">Classrooms</h5>
+                    </div>
+                    <div class="family-image">
+                        <img class="text-center" src="~/images/family.png" />
+                    </div>
+                    <a href="/Home/trial"><div class="text-center text-white p-1 my-2 trial-btn" style="background-color:#4fd7c0;border-radius:5px;">Start a trial</div></a>
+                    <div class="text-center text-white p-1 my-2" style="background-color:#4fd7c0;border-radius:5px;">Get a quote</div>
+                    <div class="text-center p-1" style="border:1px solid #4fd7c0;border-radius:5px;">Learn more</div>
+                </div>
+            </div>
+            <div class="col-sm-4 ">
+                <div class="card-body shadow-lg w-75" style="background-color:#fff;border-radius:8px;">
+                    <div class="">
+                        <h5 class="card-title text-center" style="color:#00aaef;font-size:25px;">school & districts</h5>
+                    </div>
+                    <div class="family-image">
+                        <img class="text-center" src="~/images/family.png" />
+                    </div>
+                    <div class="text-center text-white p-1 my-2" style="background-color:#00aaef;border-radius:5px;">Get a quote</div>
+                    <div class="text-center p-1" style="border:1px solid #00aaef;border-radius:5px;">Learn more</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> *@
+@section Scripts{
+    <script>
+        $(document).on("click", ".no_auth_join,.auth_join", function (event) {
+            var clickedClassName = event.target.className;
+            if ($(event.target).hasClass("auth_join")) {
+                window.location.href = "/Membership/Join";               
+            } else {               
+                $("#LoginModal").modal("show");
+                $(".error-msg").text("To continue you must login");
+                CurrentPath = "/Membership/Join";
+            }
+        });
+        
+    </script>
+}

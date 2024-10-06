@@ -1,0 +1,30 @@
+﻿
+<!DOCTYPE html>
+<html lang="en" @ViewData["HtmlAttribute"]>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IntelXL-@ViewData["Title"]</title>
+    @* <link rel="icon" href="/int favicon.ico" /> *@
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicons.png" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="~/lib/font-awesome/css/fontawesome.css" rel="stylesheet" />
+    <link href="~/css/join.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/solid.css" rel="stylesheet" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+
+<body>
+    <div class="container-fluid p-0 main-container" style="min-height:100vh;">
+        <main role="main" class="">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

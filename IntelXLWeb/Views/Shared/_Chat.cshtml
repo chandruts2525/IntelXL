@@ -1,0 +1,450 @@
+﻿
+<style>
+    .wrapper {
+        max-width: 450px;
+        min-width: 350px;
+        width: 100%;
+    }
+
+    .chat-header {
+        background-color: #03a776;
+        color: #fff;
+    }
+
+    .chat-body {
+        padding: 15px;
+        max-height: 650px;
+        height:100%;
+        min-height: 550px;
+        overflow-y: auto;
+    }
+
+    .chat-form {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid #198754a3;
+    }
+
+        .chat-form input {
+            flex: 1;
+            border: none;
+            margin-right: 10px;
+        }
+
+    .form-control:focus,
+    .btn:focus {
+        box-shadow: none;
+    }
+
+    .image-container {
+        max-width: 300px;
+        margin: 10px;
+    }
+
+    .message-container {
+        overflow: hidden;
+        margin-bottom: 20px;
+    }
+
+    .avatar {
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        margin-top: 5px;
+    }
+
+    .message {
+        border-radius: 10px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        overflow-wrap: break-word;
+    }
+
+        .message p {
+            margin: auto;
+        }
+
+    .time {
+        color: #aaa;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    .img-container {
+        overflow: hidden;
+        display: flex;
+    }
+
+        .img-container img.right {
+            float: right; /* Align the image to the right */
+            margin-left: 10px; /* Add some space between the image and the message */
+            margin-right: 0;
+        }
+
+    .darker {
+        background-color: #ddd;
+        float: right;
+    }
+
+    .chat-close {
+        cursor: pointer;
+    }
+
+    .inbox_msg {
+        border: 1px solid #ddd;
+        clear: both;
+        overflow: hidden;
+    }
+
+    .top_spac {
+        margin: 20px 0 0;
+    }
+
+    .recent_heading {
+        float: left;
+    }
+
+    .headind_srch {
+        padding: 10px 29px 0px 20px;
+        overflow: hidden;
+        justify-content: space-between;
+        border-bottom: 1px solid #c4c4c4;
+    }
+
+    .recent_heading h4 {
+        color: #0465ac;
+        font-size: 16px;
+        margin: auto;
+    }
+
+    .chat_ib .h5 {
+        font-size: 15px;
+        color: #464646;
+        margin: 0 0 8px 0;
+    }
+
+        .chat_ib .h5 span {
+            font-size: 13px;
+            float: right;
+        }
+
+    .archive-btn{
+        right:25px;
+    }
+    .chat_ib p {
+        font-size: 12px;
+        color: #989898;
+        margin: auto;
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .chat_img {
+        float: left;
+        width: 11%;
+    }
+
+        .chat_img img {
+            width: 100%
+        }
+
+    .chat_ib {
+        float: left;
+        padding: 0 0 0 15px;
+        width: 88%;
+    }
+
+    .chat_people {
+        overflow: hidden;
+        clear: both;
+    }
+
+    .chat_list {
+        border-bottom: 1px solid #ddd;
+        margin: 0;
+        cursor: pointer;
+        padding: 18px 16px 10px;
+    }
+
+        .chat_list:hover {
+            background: #e8f6ff;
+        }
+
+    .ellipsis {
+        display: none;
+    }
+
+    .chat_list:hover .ellipsis {
+        display: block;
+    }
+
+    .chat_list:hover .chat_date {
+        display: none;
+    }
+
+    .active_chat {
+        background: #e8f6ff;
+    }
+
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #ddd;
+    }
+
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: #ddd transparent;
+    }
+
+    .list-type {
+        color: #495057;
+        background-color: #fff;
+        border: none !important;
+    }
+
+        .list-type.active {
+            color: #495057;
+            background-color: #fff;
+            border: none !important;
+            border-bottom: 3px solid #03a776 !important;
+        }
+
+        .list-type:hover {
+            border: none !important;
+            border-color: transparent;
+            border-bottom: 3px solid #03a776 !important;
+        }
+
+    .chat-tab {
+        border: none;
+    }
+
+    h5.unread {
+        color: #03a776;
+    }
+
+    .img-loading {
+        height: 35px;
+        width: 35px;
+    }
+
+    .name-loading {
+        height: 10px;
+        width: 148px;
+    }
+
+    .msg-loading {
+        height: 10px;
+        max-width: 250px;
+        min-width: 200px;
+        width: 100%;
+    }
+
+    .chat-modal {
+        bottom: 40px;
+        right: 50px;
+        min-width: 450px;
+        width: 100%;
+        height: auto;
+        top: auto;
+        left: auto;
+    }
+
+    .chat-modal {
+        width: auto;
+        height: auto;
+    }
+
+    @@media (max-width: 575px) {
+        .wrapper {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .chat-modal {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            bottom: auto;
+            right: auto;
+        }
+
+        .chat-body{
+            height: 100%;
+            max-height: 86%;
+        }
+    }
+
+    .typing-indicator {
+        align-items: center;
+        display: flex;
+        height: 17px;
+    }
+
+        .typing-indicator .dot {
+            animation: mercuryTypingAnimation 1.8s infinite ease-in-out;
+            background-color: #aaa; /* rgba(20,105,69,0.7); */
+            border-radius: 50%;
+            height: 5px;
+            margin-right: 4px;
+            vertical-align: middle;
+            width: 5px;
+            display: inline-block;
+        }
+
+            .typing-indicator .dot:nth-child(1) {
+                animation-delay: 200ms;
+            }
+
+            .typing-indicator .dot:nth-child(2) {
+                animation-delay: 300ms;
+            }
+
+            .typing-indicator .dot:nth-child(3) {
+                animation-delay: 400ms;
+            }
+
+            .typing-indicator .dot:last-child {
+                margin-right: 0;
+            }
+
+    @@keyframes mercuryTypingAnimation {
+        0% {
+            transform: translateY(0);
+            background-color: #6CAD96; /* rgba(20,105,69,0.7); */
+        }
+
+        28% {
+            transform: translateY(-7px);
+            background-color: #9ECAB9; /* rgba(20,105,69,0.4); */
+        }
+
+        44% {
+            transform: translateY(0);
+            background-color: #B5D9CB; /* rgba(20,105,69,0.2); */
+        }
+    }
+
+    .chat-footer label.upload-file input[type="file"] {
+        position: fixed;
+        top: -1000px;
+    }
+
+    .chat-footer .upload-file:hover {
+        opacity: 1;
+    }
+
+    .ellipsis:hover{
+        border:1px solid #ddd;
+        background-color: #ddddddba;
+        border-radius:5px;
+    }
+
+    .toggleellipsis{
+        display:block;
+        border: 1px solid #ddd;
+        background-color: #ddddddba;
+        border-radius: 5px;
+    }
+    .toggleBackground{
+        background-color: #e8f6ff;
+    }
+
+    .toggleBackground .chat_date{
+        display:none;
+    }
+</style>
+<div class="popup-box chat-popup" id="tutor_chat">
+    @*<input class="activate-chat" type="checkbox" id="check">*@
+    <div class="modal chat-modal fade" id="chatModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen-sm-down">
+            <div class="modal-content wrapper">
+                <div class="modal-header chat-header px-3  d-flex align-items-center">
+                    <div class="d-flex align-items-center">
+                        <div class="button-back"><div class=" d-flex align-items-center px-3" role="button"><i class="fa-solid fa-arrow-left"></i></div></div>
+                        <h3>Chat</h3>
+                    </div>
+                    <button type="button" class="btn-close chat-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="chat-body modal-body" id="chat-body">
+                    <div class="chat-inbox">
+                        <div class="inbox_people">
+                            <div class="headind_srch d-flex">
+                                <ul class="nav chat-tab nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item recent_heading">
+                                        <a class="nav-link list-type active" id="all-tab" data-toggle="tab" href="#All" role="tab" aria-controls="home" aria-selected="true"><h4 id="all-tab">All</h4></a>
+                                    </li>
+                                    <li class="nav-item recent_heading">
+                                        <a class="nav-link list-type" id="unread-tab" data-toggle="tab" href="#Unread" role="tab" aria-controls="profile" aria-selected="false"><h4 id="unread-tab">Unread</h4></a>
+                                    </li>
+                                    <li class="nav-item recent_heading">
+                                        <a class="nav-link list-type" id="archived-tab" data-toggle="tab" href="#Archived" role="tab" aria-controls="profile" aria-selected="false"><h4 id="archived-tab">Archived</h4></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="inbox_chat tab-pane fade show active scroll" id="All" role="tabpanel" aria-labelledby="all-tab">
+                                    @for (int i = 0; i <= 5; i++)
+                                    {
+                                        <div class="mt-4">
+                                            <div class="">
+                                                <div class="d-flex">
+                                                    <div class="img-loading animated-background" style="border-radius: 50%;"></div>
+                                                    <div class="ms-2 p-2" style="max-width:320px;width:100%;">
+                                                        <div class="name-loading animated-background " style="border-radius: 5px;"></div>
+                                                        <div class="msg-loading animated-background mt-2" style="border-radius: 5px; max-width:400px;min-width:200px;width:100%;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+                                <div class="tab-pane fade show" id="Unread" role="tabpanel" aria-labelledby="unread-tab">
+                                    @*  <div class="text-center"><h3>No Unread messages</h3></div>*@
+                                    <div class="d-flex justify-content-center text-muted mt-5">You’ve read all your messages</div>
+                                </div>
+                                <div class=" tab-pane fade show" id="Archived" role="tabpanel" aria-labelledby="archived-tab">
+                                    @*  <div class="text-center"><h3>No Archived chats</h3></div> *@
+                                    <div class="d-flex justify-content-center text-muted mt-5">Archived tutors will be here</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="hdnData" value="" />
+                    <input type="hidden" id="hdnfileName" value="" />
+                    <input type="hidden" id="fileUrl" value="" />
+                    <div class="chat-conversation" style="display:none;">
+                    </div>
+                </div>
+                <div class="modal-footer chat-footer m-0 p-0" style="height:48px;border:none;">
+                    <div class="chat-form w-100 m-0" style="display:none;">
+                        <div class="h-0 position-relative"><div class="position-absolute px-3 py-2 bottom-0 uploaded-file w-100" style="z-index:2"></div></div>
+                        <div class="message-input d-flex" style="height:46px;">
+                            <div class="wrap d-flex align-items-center justify-content-between w-75">
+                                <input id="message" class="form-control" type="text" placeholder="Write your message..." />
+                            </div>
+                            <div class="d-flex align-items-center justify-content-end chat-footer w-25">
+                                <label class="upload-file btn text-success" role="button">
+                                    <input type="file" id="attachment" accept=".doc, .docx, .pdf, .jpg, .jpeg, .png">
+                                    <i class="fa fa-paperclip"></i>
+                                </label>
+                                <button class="btn text-success btn-submit" id="sendMsg"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

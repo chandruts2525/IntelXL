@@ -1,0 +1,192 @@
+﻿@model IEnumerable<IntelXLDataAccess.Models.AppUser>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<link href="~/css/style.css" rel="stylesheet" />
+<style>
+    .highlight {
+        background-color: yellow;
+    }
+
+    .search-input {
+        min-width: 25vw;
+        border-color: #008080;
+    }
+
+        .search-input:focus {
+            box-shadow: none;
+            border-color: #008080;
+        }
+
+    .hdr h1, h3 {
+        color: #008080;
+    }
+
+    .hdr {
+        color: #029978dd;
+    }
+
+    th {
+        color: #029978dd;
+    }
+
+    td {
+        border-bottom: 1px solid #02e5e5;
+    }
+
+    .search-bar .search-btn {
+        margin-left: -1px;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0
+    }
+
+    .search-bar .search-input {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .search-btn {
+        border-color: #008080;
+    }
+
+        .search-btn:hover {
+            color: #fff;
+            background-color: #008080;
+        }
+</style>
+
+<div class="container">
+    <div class="my-3 me-auto pt-3">
+        <a href="#" onclick="history.go(-1);" style="color: #207bff; text-decoration: none;"><i class="fa-solid fa-arrow-left-long me-2"></i>Back</a>
+    </div>
+    
+    <div id="users-section">
+        @await Component.InvokeAsync("Users", new {page=ViewBag.CurrentPage})
+    </div>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $(document).on('click', '.search-btn', function () {
+            Search();
+        });
+        $(document).on('keyup', '.search-input', function (event) {           
+            if (event.keyCode === 13) {
+                Search();
+            }
+            else if (event.keyCode === 8 && !$('.search-input').val().trim()) {              
+               window.location.reload();
+            }
+        });
+        $(document).on('click', '.page-link', function (e) {
+            e.preventDefault();
+            let url = $(this).attr('href');
+            let st = $(".search-input").val().trim();
+            if (st) {
+                url = url.replace("Index", "SearchUser") + "&searchTerm=" + st;
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    success: function (data) {
+                        $("#users-section").html(data)
+                    },
+                    error: function (error) {
+                        console.log(error)
+                    }
+                });
+            } else {              
+                window.location.href = url;
+            }
+        });
+        //$("table tbody tr").each(function () {
+        //    var row = $(this);
+        //    console.log(row)
+        //    // Loop through each cell in the row
+        //    row.find("td:not(:last-child)").each(function () {
+        //        var cell = $(this);
+
+        //        // Store the original content in a data attribute
+        //        cell.data("originalContent", cell.text());
+        //    });
+        //});
+
+        //$("#search-bar").on("input", function () {
+        //    var searchText = $(this).val();
+        //    var matchesFound = false;
+
+        //    $("table tbody tr").each(function () {
+        //        var row = $(this);
+        //        var showRow = false;
+
+        //        row.find("td:not(:last-child)").each(function () {
+        //            var cell = $(this);
+        //            var cellText = cell.data("originalContent");
+
+        //            // Create a regular expression for case-insensitive search
+        //            var regex = new RegExp(searchText, 'i');
+
+        //            // Use the replace method to maintain the original case while highlighting
+        //            cell.html(cellText.replace(regex, function (match) {
+        //                matchesFound = true;
+        //                return '<span class="highlight">' + match + '</span>';
+        //            }));
+        //            // Determine whether to show or hide the row
+        //            showRow = showRow || regex.test(cellText);
+        //        });
+
+        //        if (showRow) {
+        //            row.show();
+        //        } else {
+        //            row.hide();
+        //        }
+        //    });
+
+        //    // Display "No matches found" if no matches were found
+        //    if (!matchesFound) {
+        //        $("#no-matches-message").show();
+        //    } else {
+        //        $("#no-matches-message").hide();
+        //    }
+        //});
+
+
+        $(document).on('click','.switch', function () {
+            let checkBox = $(this).find("input[type='checkbox']");
+            let status = false;
+            let v = checkBox.val();
+            if (checkBox.prop("checked")) {
+                status = true;
+            }
+            $.ajax({
+                type: "PUT",
+                url: "/Users/UpdateUserStatus",
+                data: { id: v, status: status },
+                success: function (data) {
+                    showtoast("success", "User status updated successfully!");
+                },
+                error: function (error) {
+                    showtoast("error", "Something went wrong. Please try again");
+                }
+            });
+        });
+    });
+    function Search() {
+        let searchTerm = $(".search-input").val().trim();
+        if (searchTerm) {
+            $.ajax({
+                type: "GET",
+                url: "/Users/SearchUser",
+                data: { searchTerm: searchTerm },
+                success: function (data) {
+                    $("#users-section").html(data)
+                },
+                error: function (error) {
+                    console.log(error)
+                    showtoast("error", "Something went wrong. Please try again");
+                }
+            });
+        }        
+    }
+</script>

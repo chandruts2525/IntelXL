@@ -1,0 +1,147 @@
+﻿<style>
+
+    .login-content {
+        height: 400px;
+        background-image: url('/images/login-image.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        border: none;
+    }
+
+    .login-hdr {
+        border-bottom: none;
+    }
+
+    .sign_in_btn, #loginmodelbtn {
+        background-color: #08b3d5;
+        color: #fff;
+    }
+
+        .sign_in_btn:hover {
+            color: #fff;
+            background-color: #00a1c1;
+            box-shadow: 1px 1px 10px #0dcaf0;
+        }
+
+        .sign_in_btn:active {
+            transform: translateY(1.5px);
+        }
+
+    .gmail-link {
+        cursor: pointer;
+    }
+
+    .gmail-signin-text {
+        font-size: 14px;
+        color: #8d8888;
+    }
+
+    .add-new-container {
+        width: 450px;
+        height: 400px;
+        border-left: 1px solid #dee2e6;
+    }
+
+    .google-img {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 100%;
+        border: 1px solid #8f8c8c;
+        height: 35px;
+        width: 35px;
+    }
+
+    .register-link {
+        color: #0d6efd;
+        cursor: pointer;
+    }
+
+    @@media (max-width: 768px) {
+        .modal-dialog {
+            max-width: 100%;
+        }
+
+        .add-new-container {
+            border-left: none;
+        }
+    }
+
+    .modal-title {
+        line-height: 1.3;
+    }
+
+    .btn-close:focus {
+        box-shadow: none;
+    }
+
+    .tutor-login a {
+        font-size: 14px;
+        text-decoration: underline;
+    }
+</style>
+<div class="modal" id="LoginModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 700px;">
+        <div class="modal-content login-content">
+
+            <div class="modal-body add-new-body d-flex justify-content-end p-0">
+
+                <div class="add-new-container">
+                    <div class="modal-header login-hdr pt-1 p-3 pb-0 justify-content-between">
+                        <h2 class="modal-title" id="exampleModalLabel" style="color: #08b3d5;">Sign In</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="d-flex align-items-end">
+                        <div class="py-1 tutor-login px-3"><a href="#" class="reg-btn" data-role="1">Sign up as a student</a></div>
+                        <div class="py-1"><span>or</span></div>
+                        <div class="py-1 tutor-login px-3"><a href="#" class="reg-btn" data-role="4">Sign up as a tutor</a></div>
+                    </div>
+                    
+                    <div class="text-danger error-msg" style="font-size: small;">
+                    </div>
+                    <div class="login-body pt-0 pe-4 p-2">
+                        <div class="">
+                            <label for="User Name" class="form-label m-0 text-muted">Email<span class="text-danger">*</span></label>
+                            <input type="text" maxlength="25" class="form-control username-login log-control" placeholder="Enter an email" />
+                        </div>
+                        <div class="mt-2">
+                            <label for="Password" class="form-label m-0 text-muted">Password <span class="text-danger">*</span></label>
+                            <input type="password" maxlength="20" class="form-control password-login log-control" placeholder="Enter a password" />
+                        </div> <div class="loginerror text-danger"></div>
+                        <div class="gmail-signin-container pt-1 m-1">
+                            <p class="gmail-signin-text text-center m-0">Or continue with google</p>
+                            <div class="gmail-link d-flex pt-2 justify-content-center" onclick="window.location.href='/User/GoogleLogin'">
+                                <div class="google-img">
+                                    <img src="~/images/google-icon.png" style="width: 20px;" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-1 mb-2 justify-content-between align-items-center">
+                            <div class="form-check my-2">
+                                <input type="checkbox" class="form-check-inputab-content login-form remember" id="login-check">
+                                <label class="form-check-label" for="login-check">Remember me</label>
+                            </div>
+                            <div class="mt-2">
+                                <div id="submit-btn" class="loginbtn">
+                                    <button class="btn sign_in_btn px-4" type="button">Sign In</button>
+                                    <button id="loginmodelbtn" type="button" class="btn px-4" style="display:none;cursor:not-allowed">
+                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                        Logging in...
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="no-membership-container">
+                            <p class="no-account-text">Haven't any Intelxl account?<a class="register-link" id="reg-btn">Register Now <span class="join-now-right-arrow"><i class="fa-solid fa-chevron-right"></i></span></a> </p>
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

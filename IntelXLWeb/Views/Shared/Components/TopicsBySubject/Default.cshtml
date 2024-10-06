@@ -1,0 +1,156 @@
+﻿@model IEnumerable<IntelXLWeb.ViewComponents.SubTopicsThread>
+<link href="https://fonts.googleapis.com/css2?family=Schoolbell&display=swap" rel="stylesheet">
+@*<link href="~/css/style.css" rel="stylesheet" />*@
+@{
+    ViewData["Title"] = "Topics";
+    string[] colors = { "0374d3", "2cce8c", "a95edb", "f96855", "fece36", "3aa9fc", "15a085", "f48521", "587bf8", "f24422", "8bc427", "7a57ce", "2ac", "fd9726", "0374d3" };
+    int topicIndex = 0;
+    string[] img = { "/images/maths.png", "/images/english-language.png", "/images/test-tube.png", "/images/social.png" };
+    int Icons = 0;
+}
+
+<div class="container">
+    <nav class="nav nav-pills nav-fill">
+        @foreach (var subject in @ViewBag.Subjects)
+        {
+            var border = subject?.TrimEnd() == ViewBag.Subject?.TrimEnd() ? "border-bottom:2px solid #009491;border-radius:0px;" : "";
+            <a class="nav-item nav-link sub-nav-item subject-navigator" style="@border" data-name="@subject"> @subject</a>
+            Icons = (Icons + 1) % img.Length;
+        }
+
+        @*<a class="nav-item nav-link sub-nav-item" style="color:#009491;" href="#"><img src="~/images/flags.png" style="height:20px;width:20px;" /> National curriculum</a>
+        <a class="nav-item nav-link sub-nav-item" style="color:#009491;" href="#"><img src="~/images/award.png" style="height:20px;width:20px;" /> Awards</a>*@
+    </nav>
+</div>
+<div class="container-fluid" style="background-color:#edffff">
+    <div class="container d-flex ViewBy-Container">
+        <div class="mx-2 py-2">View by :</div>
+        <a href="/learning/index?courseid=@ViewBag.CourseId &subject=@ViewBag.Subject"><div class="mx-2 py-2" style="color:#38acec">Classes</div></a>
+       @* <div class="mx-2 px-2 py-2" style="background-image:linear-gradient(to bottom, #edffff,#c2ffd6);color:#000;border-bottom:2px solid #0000ff;">Topics</div>*@
+    </div>
+</div>
+<section class="container-fluid topics pb-2 align-items-center" style="position: relative;">
+    <div class="gradient-overlay"></div>
+    <div class="d-flex align-items-center justify-content-center">
+        <div class="text-center my-4">
+            <h1 class="display-4" style="font-family: 'Schoolbell', cursive;text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">
+                IntelXL  @ViewBag.Subject
+            </h1>
+        </div>
+
+    </div>
+    <div class="text-center my-3">
+        <p>
+            On IntelXL, @ViewBag.Subject.ToLower() is more than just numbers. With unlimited questions,
+            engaging item types, and real-world scenarios,<br /> IntelXL helps learners
+            experience math at its most mesmerizing!
+        </p>
+    </div>
+</section>
+
+<div class="container-fluid topics-content" style="background-image:linear-gradient(to top, #fff,#c4e7fa);">
+    @* <img class="mx-5 my-5" src="~/jerry-png-.png" /> *@
+    @if (!Model.Any())
+    {
+        <div class="text-muted" style="display: flex;justify-content: center;font-size: 40px;">
+            No Data found
+        </div>
+    }
+    @foreach (var item in Model)
+    {
+        string color = $"#{colors[topicIndex++]}";
+
+        topicIndex = (topicIndex + 1) % colors.Length;
+
+        var subTopicsCount = $"See all {item.SubTopicMasters?.Count} skills";
+
+        <div class="container d-flex justify-content-center">
+            <div class="d-flex my-4 p-2 content-card rounded-2 shadow-lg" style="border-left: 15px solid @color;">
+                <div class="col-10 skill-content">
+                    <div class="link-div">
+                        <div class="btn col topic-btn">
+                            <h4 class="topic_click topic-txt" style="color: @color;">
+                                @item.Topic
+                            </h4>
+                            <input type="hidden" class="topic_value" value="@item.Topic" />
+                        </div>
+
+                        <div class="col-3 skill-link-col">
+                            <a class="skills-link topic_click" style="color: @color; cursor:pointer;">@subTopicsCount>></a>
+                            <input type="hidden" class="topic_value" value="@item.Topic">
+                        </div>
+                    </div>
+                    <div class="d-flex px-2">
+                        <div>
+                            <p class="mb-0 text-wrap subtitles_wrap" style="color:#5c5c5c;line-height:20px;font-size:14px; max-height:40px;overflow:hidden;">
+                                Includes:
+                                @if (item.SubTopicMasters != null)
+                                {
+                                    @foreach (var subTopic in item.SubTopicMasters.Take(5))
+                                    {
+                                        <span class="contentSpan" style="visibility:hidden;">
+
+                                            @if (!ReferenceEquals(subTopic, item?.SubTopicMasters?.First()))
+                                            {
+                                                <b>|</b>
+                                            }
+                                            <span>
+                                                <a href="/learning/practice?subtopicid=@subTopic.SubTopicId">@subTopic.SubTopic</a>
+                                            </span>
+                                        </span>
+                                    }
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="skills-btn col-2 justify-content-center align-items-center">
+                    <button type="button" class="topic_click btn px-2 justify-content-center align-items-center skill-btn" style="background-color: @color; color: #fff; font-size: 14px;">@subTopicsCount</button>
+                    <input type="hidden" class="topic_value" value="@item.Topic">
+                </div>
+
+
+            </div>
+        </div>
+    }
+</div>
+<script>
+    $(document).ready(function () {
+        updateSkillNodeTextWrapping();
+        window.addEventListener("resize", debounceUpdateTextWrapping(200));
+    });
+
+    function debounceUpdateTextWrapping(e) {
+        var t;
+        return function () {
+            clearTimeout(t),
+                t = setTimeout(function () {
+                    t = null,
+                        updateSkillNodeTextWrapping()
+                }, e)
+        }
+    }
+
+    function updateSkillNodeTextWrapping() {
+        var e = document.querySelectorAll(".content-card");
+        //Iterating over each content card
+        Array.prototype.forEach.call(e, function (e) {
+            var t = e.querySelector(".subtitles_wrap")
+                //Getting bottom position of subtitles_wrap
+                , i = t.getBoundingClientRect().bottom
+                , o = t.querySelectorAll(".contentSpan")
+                , n = -1
+                , r = 0;
+            //Iterating over each content span
+            for (Array.prototype.forEach.call(o, function (e, index) {
+                "visible" === e.style.visibility && (n = index),
+                    e.getBoundingClientRect().bottom <= i && (r = index)
+            }); n > r;)
+                o[n].style.visibility = "hidden",
+                    n--;
+            for (; r > n;)
+                o[r].style.visibility = "visible",
+                    r--;
+        });
+    }
+</script>

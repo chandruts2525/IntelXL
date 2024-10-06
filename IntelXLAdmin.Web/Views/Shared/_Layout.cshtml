@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - IntelXLAdmin</title>
+    <link rel="icon" href="/int favicon.ico" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/IntelXLAdmin.Web.styles.css" asp-append-version="true" />
+    <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link href="~/toastr.js/toastr.min.css" rel="stylesheet" />
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+    <header class="fixed-top">
+      
+        <nav class="navbar  sitenav navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom">
+            <div class="container p-2">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="navbar-brand" href="/Home/Index">
+                            <img src="~/images/intelxl.png" alt="Logo" style="width:100px;" />
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" href="/Home/Index">Home</a>
+                    </li>
+                </ul>
+                @if (User?.Identity?.IsAuthenticated == true)
+                {
+                    <div class="d-flex justify-content-end">
+                        <div class="join-btn">
+                            <a href="/Users/Logout" type="button" class="btn btn-sm Joinnow px-4">Logout</a>
+                        </div>
+                    </div>
+                }
+                @*else
+                {
+                    <div class="d-flex justify-content-end">
+                        <div class="join-btn">
+                            <a href="/Users/Login" type="button" class="btn btn-sm Joinnow px-4">Login</a>
+                        </div>
+                    </div>
+                }   *@             
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid main-content p-0">
+        <main role="main" class="">
+            @RenderBody()
+        </main>
+    </div>
+
+    <partial name="_Footer" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/toastr.js/toastr.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

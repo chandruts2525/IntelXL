@@ -1,0 +1,75 @@
+﻿@model List<IntelXLDataAccess.Models.CourseMaster>;
+@{
+    var limitedModel = Model.Take(6).ToList();
+}
+<div class="d-flex justify-content-between p-5">
+    <div class="sub-slide">
+        @if (Model != null && Model.Count > 0)
+        {
+            foreach (var item in limitedModel.Take(3))
+            {
+                <div class="my-3 math-slide"><b>@item.CourseName</b></div>
+                <div class="d-flex">
+                @foreach (var data in item.ClassMasters.Take(3))
+                {
+                    var subName = "";
+                    @foreach (var subject in data.SubjectMasters.Take(1))
+                    {
+                        subName = subject.SubjectName;
+                    }
+                   
+                    <div class="bullet-point me-3"><a href="/Learning/SubTopicsByClass?courseId=@item.CourseId&classId=@data.ClassId&subName=@subName" style="color: #008bcf;">@data.ClassName</a></div>
+                    
+                    @*<div class="d-flex">
+                        @foreach (var subject in data.SubjectMasters.Take(3))
+                        {
+                            <div class="bullet-point me-3"><a href="/Learning/SubTopicsByClass?courseId=@item.CourseId&classId=@data.ClassId&subName=@subject.SubjectName" style="color: #008bcf;">@subject.SubjectName</a></div>
+                        }
+                    </div>*@
+                    }
+                </div>
+            }           
+        }
+    </div>
+    <div class="skill-slide">
+        @if (Model != null && Model.Count > 0)
+        {
+            foreach (var item in limitedModel.Skip(3))
+            {
+                <div class="my-3 math-slide"><b>@item.CourseName</b></div>
+                <div class="d-flex">
+                @foreach (var data in item.ClassMasters.Take(3))
+                {
+                    var subName = "";
+                    @foreach (var subject in data.SubjectMasters.Take(1))
+                    {
+                        subName = subject.SubjectName;
+                    }
+                    <div class="bullet-point me-3"><a href="/Learning/SubTopicsByClass?courseId=@item.CourseId&classId=@data.ClassId&subName=@subName" style="color: #008bcf;">@data.ClassName</a></div>
+                }
+                </div>
+            }
+        }
+    </div>
+    @*<div class="skill-slide">
+        @if (Model != null && Model.Count > 0)
+        {
+            foreach (var item in Model.Take(1))
+            {
+                foreach (var data in item.ClassMasters.Take(3))
+                {
+                    var subName = "";
+                    @foreach (var subject in data.SubjectMasters.Take(1))
+                    {
+                        subName = subject.SubjectName;
+                    }
+                    <div class="mb-3 skills-slide"><b><a href="/Learning/Index?courseId=@item.CourseId&subject=@subName" style="color: #008bcf;">@data.ClassName</a></b></div>
+                }
+            }
+        }
+    </div>*@
+    <div class="awards-slide">
+        <div class="my-3 award-slide"><b>Awards</b></div>
+        <div><a href="/Home/Awards" style="color: #008bcf;">Student awards</a></div>
+    </div>
+</div>

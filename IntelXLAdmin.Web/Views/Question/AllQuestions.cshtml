@@ -1,0 +1,220 @@
+﻿@model IEnumerable<IntelXLDataAccess.Models.QuestionMaster>;
+@{
+    ViewData["Title"] = "All Questions";
+    var selectedstatus = ViewBag.Status;
+
+}
+
+@section Styles{
+    <link href="~/css/style.css" rel="stylesheet" />
+}
+
+<div class="container head-container">
+    <div class="ques_wrap p-5">
+        @*<div class="back-btn me-auto  py-3" role="button" onclick="goBackWithSelectedOptions()"><h6><i class="fa-solid fa-arrow-left-long"></i> Back</h6></div>*@
+        <div class="headerDiv">
+            <div class="d-flex align-items-center">
+                <div class="me-auto">
+                    <div class="back-btn me-auto  py-3" role="button" onclick="goBackWithSelectedOptions()"><h6><i class="fa-solid fa-arrow-left-long"></i> Back</h6></div>
+                </div>
+                <div>                    
+                    <select class="form-select text-secondary status-selection">
+                        <option value="inActive">Inactive</option>
+                        <option value="active" selected=@selectedstatus>Active</option>
+                        @*<option value="all">All</option>*@
+                    </select>
+                </div>
+                
+                <button class="btn ms-3 btn-primary add-more" style="height: min-content;">
+                    Add question@*<i class="fa-solid fa-angles-right"></i>*@
+                </button>
+            </div>
+
+            <div class="breadcrumb mx-4 my-0"></div>
+       </div>
+        <div id="questions-section">
+            @await Component.InvokeAsync("Questions", new { id = ViewBag.SubTopicId,page=ViewBag.CurrentPage,status=ViewBag.Status})
+        </div>        
+    </div>
+    <div class="modal" id="qns-delDiscardModal" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered modal-lg" style="width: fit-content;">
+            <div class="modal-content">
+                <div class="modal-header text-white border-0 px-3 p-2" style="    background-color: #008080;">
+                    <h5 class="modal-title">Delete</h5>
+                    <button type="button" class="btn-close text-white float-end" id="cls-btn" style="box-shadow:none;" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body ps-20px pt-2 pb-0 d-flex align-items-center" style="height:70px;">
+                    <h5 class="text-secondary">Are you sure want to delete this Question?</h5>
+                </div>
+                <div class="modal-footer border-0">
+                    <button id="ok-btnDiscard" type="button" style="background-color: #008080;" class="btn text-white btn-sm px-4">OK</button>
+                    <button id="cancel_Discard" type="button" class="btn btn-sm btn-secondary " data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        let currentPage = @Html.Raw(ViewBag.CurrentPage);
+        let itemsPerPage = @Html.Raw(ViewBag.ItemsPerPage);
+        //let totalPages = @Html.Raw(ViewBag.TotalPages);
+        let subTopicId = @Html.Raw(@ViewBag.SubTopicId);
+        let del_id;
+        let delDiv;
+        $(document).ready(function () {
+            updateBreadcrumb()
+            $(".ans-coll-btn").click(function () {
+                let currentDiv = $(this).next(".ans_details")
+                currentDiv.slideToggle();
+                $(".ans_details").not(currentDiv).slideUp();
+            });
+            //$(".ques_delete").click(function (event) {
+            $(document).on('click', '.ques_delete', function (event) {
+                event.preventDefault();
+                del_id = $(this).data('id');
+                delDiv = $(this).closest('.ques_div');
+                $('#qns-delDiscardModal').modal('show');
+                
+            });
+            $(document).on('click', '#ok-btnDiscard', function (event) {
+                $('#qns-delDiscardModal').modal('hide');
+                $.ajax({
+                    type: "POST",
+                    url: "/Question/DeleteQuestion",
+                    data: { id: del_id },
+                    success: function (data) {
+                        if (data) {
+                            let index = (currentPage - 1) * itemsPerPage + 1;
+                            delDiv.slideUp(250, function () {
+                                $(this).remove();
+                                $(".index-value b").each(function () {
+                                    $(this).html(index + ".&nbsp;&nbsp;");
+                                    index++;
+                                });
+                            });
+                            showtoast("success", "Question deleted Successfully");
+                            
+                        }
+                        else {
+                            showtoast("error", "Something went wrong. Please try again");
+                        }
+                    },
+                    error: function (error) {
+                        showtoast("error", "Something went wrong. Please try again");
+                    }
+                });
+            });
+            $(document).on('click', '.ques_restore', function (event) {
+                event.preventDefault();
+                del_id = $(this).data('id');
+                delDiv = $(this).closest('.ques_div');
+                $.ajax({
+                    type: "POST",
+                    url: "/Question/RestoreQuestion",
+                    data: { id: del_id },
+                    success: function (data) {
+                        if (data) {
+                            let index = (currentPage - 1) * itemsPerPage + 1;
+                            delDiv.slideUp(250, function () {
+                                $(this).remove();
+                                $(".index-value b").each(function () {
+                                    $(this).html(index + ".&nbsp;&nbsp;");
+                                    index++;
+                                });
+                            });
+                            showtoast("success", "Question restored Successfully");
+
+                        }
+                        else {
+                            showtoast("error", "Something went wrong. Please try again");
+                        }
+                    },
+                    error: function (error) {
+                        showtoast("error", "Something went wrong. Please try again");
+                    }
+                });
+
+            });
+
+            $(document).on('click', '.ques_verify',function (event) {
+                event.preventDefault();
+                let id = $(this).data('id');
+                let ixVerify = $(this).closest('.ques_div');
+                $.ajax({
+                    type: "POST",
+                    url: "/Question/VerifyQuestion",
+                    data: { questionId: id },
+                    success: function (data) {
+                        if (data) {
+                            showtoast("success", "Question Verified Successfully");
+                            ixVerify.find(".ix-verifed").html('<b><i class="ps-2 fa-regular fa-circle-check"></i><span class="ps-1">Verified</span></b>');
+                            var element = ixVerify.find(".ques_verify");
+                            element.addClass("ques_unverify").removeClass("ques_verify");
+                            element.find('span').text("Unverify");
+                        }
+                        else {
+                            showtoast("error", "Something went wrong. Please try again");
+                        }
+                    },
+                    error: function (error) {
+                        showtoast("error", "Something went wrong. Please try again");
+                    }
+                });
+            });
+            $(document).on('click', '.ques_unverify', function (event) {            
+                event.preventDefault();
+                let id = $(this).data('id');
+                let ixVerify = $(this).closest('.ques_div');
+                $.ajax({
+                    type: "POST",
+                    url: "/Question/UnVerifyQuestion",
+                    data: { questionId: id },
+                    success: function (data) {
+                        if (data) {
+                            showtoast("success", "Question Unverified Successfully");
+                            ixVerify.find(".ix-verifed").html('');
+                            var element = ixVerify.find(".ques_unverify");
+                            element.addClass("ques_verify").removeClass("ques_unverify");
+                            element.find('span').text("Verify");
+                        }
+                        else {
+                            showtoast("error", "Something went wrong. Please try again");
+                        }
+                    },
+                    error: function (error) {
+                        showtoast("error", "Something went wrong. Please try again");
+                    }
+                });
+            });
+            $(".add-more").on('click',function(){
+                window.location.href = '/Question/AddQuestion?id=' + subTopicId;
+            });
+            $(".status-selection").on('change',function (event) {
+                let status=true;               
+                if ($(this).val() == 'inActive')
+                    status=false;
+                    else
+                    status = true;
+                window.location.href = '/Question/AllQuestions?id=' + subTopicId + '&status=' + status;
+            });
+        });
+        function goBackWithSelectedOptions() {            
+            //window.location.href = "/Question/Index";
+            history.back();
+        }
+        function updateBreadcrumb() {
+            var courseText = localStorage.getItem('Course');
+            var classText = localStorage.getItem('Class');
+            var subjectText = localStorage.getItem('Subject');
+            var unitText = localStorage.getItem('Unit');
+            var topicText = localStorage.getItem('Topic');
+            var subtopicText = localStorage.getItem('Subtopic');
+            var breadcrumbContent = `<span>${courseText} > ${classText} > ${subjectText} > ${unitText} > ${topicText} > ${subtopicText}</span>`;
+            $(".breadcrumb").html(breadcrumbContent);
+        }
+
+    </script>
+}

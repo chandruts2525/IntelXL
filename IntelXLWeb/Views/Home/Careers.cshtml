@@ -1,0 +1,139 @@
+﻿@{
+    Layout = "_LayoutWebsite";
+    ViewData["Title"] = "Careers";
+}
+<header class="mainheader sftwre-hdr">
+    <video autoplay="autoplay" loop="" muted="" playsinline="" id="bg-video" class="vd-width parallax" ><source src="~/images/websiteimages/img/Careers.mp4" type="video/mp4"></video>
+    <!-- =================---Desktop----====================== -->
+    <nav class="ix-nav ix-moved navbar navbar-expand-lg">
+        <div class="container">
+            <div class="logo mx-2">
+                <a class="navbar-brand" href="/Home/Company">
+                    <img class="desktopViewimg" loading="lazy" src="~/images/websiteimages/img/intelxl-high-resolution-logo.png" alt="Intelxl" />
+                </a>
+            </div>
+            <button type="button" class="navbar-toggler custom-toggler" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBackdrop" aria-controls="offcanvasWithBackdrop" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars fa-lg"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/Home/Company">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Home/AboutUs">About us</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/Home/Services">Services</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/Home/Contact">Contact Us</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/Home/Careers">Careers</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!--offcanvas for mobile responsive-->
+    <div class="offcanvas offcanvas-end text-bg-dark bg-dark" tabindex="-1" id="offcanvasWithBackdrop" aria-labelledby="offcanvasWithBackdropLabel" data-bs-backdrop="true">
+        <div class="offcanvas-header">
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body p-0">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item p-2 ps-5">
+                    <a class="nav-link" href="/Home/Company">Home</a>
+                </li>
+                <li class="nav-item p-2 ps-5">
+                    <a class="nav-link" href="/Home/AboutUs">About us</a>
+                </li>
+                <li class="nav-item  p-2 ps-5">
+                    <a class="nav-link" href="/Home/Services">Services</a>
+                </li>
+                <li class="nav-item p-2 ps-5">
+                    <a class="nav-link" href="/Home/Contact">Contact Us</a>
+                </li>
+                <li class="nav-item active ">
+                    <a class="nav-link" href="/Home/Careers">Careers</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="">
+        <div class="caption-txt">
+            <div class="captions">
+                <!-- <h1 class="text-2">IntelXL</h1> -->
+                <div class="text text-center">
+                    <h2>Our Careers</h2>
+                </div>
+                <p class="text-center">We drive career transformation through smart, inclusive, and resilient services..</p>
+
+            </div>
+        </div>
+        <div class="service-txt">
+            <div class="text-center"><h5 class="text-white">Know more</h5></div>
+            <div class="text-center align-items-center justify-content-center">
+                <a href="#contact-detail" data-scroll="" data-scroll-offset="100" class="btn text-white">
+                    <i class="fa-solid arrow1 fa-angles-down"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</header>
+<div class="container-fluid main-content p-0">
+    <div class="contact-detail" id="contact-detail">
+        <div class="last-heading">
+            <h4 class="text-center our-service-text">Is your career in need of a transformation through technology?</h4>
+        </div>
+        <p class="text-center last-heading-p">
+            To discover how we can enhance your career , reach out to us today at..
+            <b><a class="mail-id" href="mailto:intelxl.team@gmail.com">intelxl.team@gmail.com</a></b>
+        </p>
+        <div class="row ">
+            <div class="col-md-6">
+                <div class="mt-5 mb-5 border border-1 rounded-3 p-3 career-detail">
+                    <div class="detials">
+                       <div>
+                           <div class="d-flex">
+                                <div class="p-3 col-4 d-flex justify-content-center"><img src="~/images/websiteimages/ux-design.png" /></div>
+                                <div class="col-8 p-3 d-flex align-items-center"><h5>UI/ UX Designer</h5></div>
+                           </div>
+                            <div>
+                                <p>
+                                    A UI/UX designer creates easy-to-use and visually appealing digital interfaces.
+                                    They focus on user experience and collaborate with teams to meet user needs and 
+                                    business goals.
+                                </p>
+                            </div>
+                       </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mt-5 mb-5 border border-1 rounded-3 p-3 career-detail">
+                    <div class="detials">
+
+                        <div>
+                            <div class="d-flex">
+                                <div class="p-3 col-4 d-flex justify-content-center"><img src="~/images/websiteimages/it-systems.png" /></div>
+                                <div class="col-8 p-3 d-flex align-items-center"><h5>Software Developer</h5></div>
+                            </div>
+                            <div>
+                                <p>
+                                    A software developer designs, codes, tests, and maintains software applications,
+                                    working with teams to meet user needs and business goals.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
